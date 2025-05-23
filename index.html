@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtropico Springs - Mobile</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-color: #388E3C; /* Rich Green */
+            --secondary-color: #2E7D32; /* Darker Green for hover */
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --info-color: #FFC107; /* Amber/Yellow for info */
+            --warning-color: #FF9800; /* Orange for warning */
+            --danger-color: #c82333; /* For delete actions */
+            --danger-hover-color: #a31a27;
+            --accent-yellow: #FFC107;
+            --accent-orange: #FF9800;
+            --light-yellow-bg: #FFFDE7;
+            --light-orange-bg: #FFF3E0;
+            --light-gray: #F5F5F5;
+            --dark-gray: #333333;
+            --input-padding: 14px;
+            --button-padding: 14px 22px;
+            --font-size-normal: 1rem;
+            --font-size-small: 0.9rem;
+            --fresh-green: #E8F5E9;
+            --lighter-fresh-green: #D5F0D8;
+            --subtle-pattern-color: rgba(0, 0, 0, 0.03);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-gray);
+            background-image:
+                repeating-linear-gradient(45deg, var(--subtle-pattern-color) 25%, transparent 25%, transparent 75%, var(--subtle-pattern-color) 75%, var(--subtle-pattern-color)),
+                repeating-linear-gradient(-45deg, var(--subtle-pattern-color) 25%, transparent 25%, transparent 75%, var(--subtle-pattern-color) 75%, var(--subtle-pattern-color));
+            background-size: 60px 60px;
+            color: var(--dark-gray);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-size: var(--font-size-normal);
+            line-height: 1.6;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .header {
+            background: linear-gradient(to right, var(--primary-color), var(--accent-orange), var(--accent-yellow));
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 10px auto;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 6px rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.75);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            background-color: rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .logo:hover { transform: scale(1.08); box-shadow: 0 0 22px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5); }
+        h1 { margin: 0; font-size: 2.2rem; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+        .tagline { font-size: 1.1rem; margin-top: 8px; color: #f0f0f0; }
+        #current-date-time { color: #fff; font-size: 1rem; margin-top: 12px; min-height: 1em; }
+        .auth-container { display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; width: 100%; padding: 20px; }
+        .form-container {
+            display: none; text-align: center; padding: 30px; border: 1px solid #ddd; border-radius: 12px;
+            background: #ffffff; box-shadow: 0 5px 20px rgba(0,0,0,0.12); margin: 20px auto;
+            max-width: 500px; width: 90%; border-top: 5px solid var(--primary-color);
+        }
+        .form-container h2 { margin-top: 0; margin-bottom: 25px; color: var(--primary-color); font-size: 1.7rem; }
+        .form-container p { margin-top: 20px; font-size: var(--font-size-small); }
+        .form-container a { color: var(--accent-orange); text-decoration: none; font-weight: bold; }
+        .form-container a:hover { color: var(--accent-yellow); text-decoration: underline; }
+        .form-container a.disabled-link { color: #aaa; pointer-events: none; text-decoration: line-through; }
+        .form-container button:disabled { background-color: #ccc; cursor: not-allowed; }
+        .active { display: block; }
+        .main {
+            padding: 25px; max-width: 600px; margin: 20px auto; text-align: center;
+            background: var(--light-yellow-bg); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            flex-grow: 1; width: 90%; display: none; border: 1px solid var(--accent-yellow);
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: var(--input-padding); margin: 12px 0; border: 1px solid #ccc;
+            border-radius: 8px; font-size: var(--font-size-normal); transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+        }
+        input[type="file"] { margin: 12px 0; }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(var(--rgb-primary-color, 56, 142, 60), .35);
+            outline: none;
+        }
+        button, .button {
+            display: inline-block; padding: var(--button-padding); background-color: var(--primary-color);
+            color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; margin-top: 15px;
+            font-size: var(--font-size-normal); width: 100%; text-align: center; text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        button:hover, .button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .button-secondary { background-color: var(--accent-orange); }
+        .button-secondary:hover { background-color: var(--accent-yellow); }
+        .button-danger { background-color: var(--danger-color); }
+        .button-danger:hover { background-color: var(--danger-hover-color); }
+        button:disabled, .button:disabled {
+            background-color: #ccc !important; color: #666 !important; cursor: not-allowed !important;
+            transform: none !important; box-shadow: none !important;
+        }
+        #start-camera-scan { background-color: var(--success-color); }
+        #start-camera-scan:hover { background-color: #1e7e34; }
+        #stop-camera-scan, #clear-history { background-color: var(--error-color); }
+        #stop-camera-scan:hover, #clear-history:hover { background-color: #c82333; }
+        #refocus-camera-button { background-color: var(--info-color); color: var(--dark-gray); }
+        #refocus-camera-button:hover { background-color: var(--accent-yellow); }
+        .notification {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.88); color: #fff; padding: 14px 20px;
+            border-radius: 30px; font-size: var(--font-size-small); font-weight: 500;
+            display: none; z-index: 1000; animation: slideUpIn 0.5s ease-out;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.35); width: auto; min-width: 220px;
+            max-width: 90%; text-align: center;
+        }
+        .notification.success { background-color: var(--success-color); }
+        .notification.error { background-color: var(--error-color); }
+        .notification.info { background-color: var(--info-color); color: var(--dark-gray); }
+        .notification.warning { background-color: var(--warning-color); color: var(--dark-gray); }
+        @keyframes slideUpIn { from { transform: translate(-50%, 60px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+        .footer {
+            margin-top: auto; text-align: center; padding: 20px;
+            background: linear-gradient(to right, var(--accent-yellow), var(--accent-orange), var(--primary-color));
+            color: #fff; box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.25);
+            width: 100%; font-size: var(--font-size-small);
+        }
+        .barcode-display {
+            margin-top: 20px; display: none; text-align: center; border: 1px solid var(--accent-yellow);
+            padding: 20px; border-radius: 8px; background: #fff;
+        }
+        .barcode-image {
+            margin-top: 10px; max-width: 100%; height: auto; max-height: 100px;
+            border: 1px solid #ccc; display: block; margin-left: auto; margin-right: auto;
+            background-color: white;
+        }
+        .disclaimer { font-size: 0.75rem; color: #555; margin: 20px auto; text-align: center; padding: 0 10px; max-width: 100%; }
+        #camera-scanner-container {
+            width: 100%; max-width: 400px; margin: 20px auto; border: 3px solid var(--primary-color);
+            border-radius: 16px; overflow: hidden; display: none; background: #111;
+            position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        #reader { width: 100% !important; height: auto !important; position: relative; }
+        #reader video { width: 100% !important; height: auto !important; display: block; background: #000; }
+        .scanner-reticle {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 75%; height: 55%; border: 3px dashed rgba(255, 255, 255, 0.4);
+            box-sizing: border-box; pointer-events: none; overflow: hidden; border-radius: 10px;
+        }
+        .scan-line-animation {
+            position: absolute; left: 0; top: 0; width: 100%; height: 4px;
+            background-color: var(--accent-orange);
+            box-shadow: 0 0 12px var(--accent-orange), 0 0 5px var(--accent-yellow);
+            animation: animate-scan-line 2.5s infinite ease-in-out;
+        }
+        @keyframes animate-scan-line { 0% { top: 5%; opacity: 0.7; } 50% { top: 95%; transform: translateY(-100%); opacity: 1; } 100% { top: 5%; opacity: 0.7; } }
+        #camera-status { font-size: var(--font-size-small); color: var(--dark-gray); min-height: 1.2em; margin-top: 10px; font-style: italic; }
+        .scan-controls {
+            margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: space-around;
+            gap: 10px; flex-wrap: wrap;
+        }
+        .scan-controls button { width: 100%; margin-top: 0; }
+        @media (min-width: 480px) {
+            .scan-controls button { width: calc(33.333% - 8px); }
+            #stop-camera-scan, #refocus-camera-button { width: calc(50% - 5px); }
+        }
+        .counter p {
+            font-size: 1.3rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px;
+            background-color: var(--lighter-fresh-green); padding: 10px; border-radius: 8px;
+            border: 1px dashed var(--primary-color);
+        }
+        #barcode-form { margin-bottom: 20px; }
+        #barcode-form input[type="text"] { margin-bottom: 10px; }
+        .history-section {
+            margin-top: 30px; border-top: 2px solid var(--accent-yellow); padding-top: 20px;
+            text-align: left; background-color: var(--light-orange-bg); padding: 20px; border-radius: 8px;
+        }
+        .history-section h3 { margin-top: 0; color: var(--accent-orange); font-size: 1.4rem; text-align: center; margin-bottom: 15px; }
+        #scan-history-list {
+            list-style: none; padding: 0; max-height: 350px; overflow-y: auto;
+            border: 1px solid #ddd; border-radius: 8px; background: #fff; margin-top: 15px;
+        }
+        #scan-history-list li {
+            padding: 12px 18px; border-bottom: 1px solid #eee; font-size: var(--font-size-small);
+            display: flex; flex-direction: column; align-items: flex-start; transition: background-color 0.2s;
+        }
+        #scan-history-list li:hover { background-color: var(--light-yellow-bg); }
+        #scan-history-list li span { display: block; width: 100%; word-break: break-all; }
+        #scan-history-list li:last-child { border-bottom: none; }
+        #scan-history-list li strong { color: var(--dark-gray); margin-right: 10px; font-size: var(--font-size-normal); margin-bottom: 5px; }
+        #scan-history-list li .scan-info { font-size: 0.85em; color: #555; width: 100%; margin-top: 3px; }
+        #scan-history-list li .scan-info.username-indicator { font-weight: bold; color: var(--secondary-color); margin-bottom: 4px; }
+        #scan-history-list li .scan-info.duplicate { color: var(--warning-color); font-weight: bold; }
+        #scan-history-list li .scan-info.valid { color: var(--success-color); font-weight: bold; }
+        #scan-history-list li .scan-info.invalid-format { color: var(--error-color); font-weight: bold; }
+        #scan-history-list li.history-item-invalid { background-color: #ffebee; border-left: 4px solid var(--error-color); }
+        #scan-history-list li.history-item-duplicate { border-left: 4px solid var(--warning-color); }
+        #scan-history-list li.history-item-new { border-left: 4px solid var(--success-color); }
+        .history-controls { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+        .history-controls button { width: 100%; margin-top: 0; }
+        #import-csv-file { display: none; }
+        @media (min-width: 480px) { .history-controls button { flex-grow: 1; flex-basis: calc(33.333% - 10px); } }
+        @media (min-width: 600px) { .history-controls button { flex-basis: calc(25% - 12px); } }
+        #loading-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
+            z-index: 1001; transition: opacity 0.5s ease; opacity: 1; pointer-events: all;
+            animation: loading-bg-glow 5s infinite alternate ease-in-out;
+        }
+        #loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .loading-logo {
+            width: 150px; height: 150px; margin-bottom: 25px; animation: subtle-pulse-logo 2.2s infinite ease-in-out;
+            border-radius: 50%; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 3px solid var(--primary-color); background-color: #fff; padding: 3px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .loading-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .loading-text {
+            font-size: 1.8rem; color: var(--dark-gray); margin-bottom: 30px;
+            font-weight: 500; animation: pulse-loading-text 2s infinite ease-in-out;
+        }
+        .loading-dots::after { content: '.'; animation: dots 1.5s steps(5, end) infinite; display: inline-block; }
+        .loading-fruit-veg { width: 160px; height: auto; max-width: 70%; animation: bobbing-fruit 2.5s infinite ease-in-out; }
+        @keyframes subtle-pulse-logo {
+            0% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08); }
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1); }
+            100% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08); }
+        }
+        @keyframes dots {
+            0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            40% { color: var(--dark-gray); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
+            60% { text-shadow: .25em 0 0 var(--dark-gray), .5em 0 0 rgba(0,0,0,0); }
+            80%, 100% { text-shadow: .25em 0 0 var(--dark-gray), .5em 0 0 var(--dark-gray); }
+        }
+        @keyframes bobbing-fruit { 0% { transform: translateY(0px) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } 100% { transform: translateY(0px) rotate(-2deg); } }
+        @keyframes pulse-loading-text { 0% { opacity: 0.6; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.6; transform: scale(0.98); } }
+        @keyframes loading-bg-glow {
+            0% { background-color: var(--fresh-green); } 33% { background-color: var(--light-yellow-bg); }
+            66% { background-color: var(--light-orange-bg); } 100% { background-color: var(--lighter-fresh-green); }
+        }
+        .settings-controls-container { display: flex; justify-content: flex-end; margin-bottom: 15px; }
+        #settings-button { width: auto; padding: 10px 15px; font-size: 0.9rem; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
+            display: flex; justify-content: center; align-items: center; z-index: 1050; opacity: 0;
+            visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background-color: #fff; padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            width: 90%; max-width: 400px; text-align: center; position: relative;
+            transform: scale(0.9); transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-content h2 { margin-top: 0; margin-bottom: 20px; color: var(--primary-color); }
+        .modal-content p { font-size: var(--font-size-normal); margin-bottom: 15px; }
+        .modal-content button { width: 100%; margin-top: 10px; }
+        .close-modal-button { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #aaa; cursor: pointer; line-height: 1; }
+        .close-modal-button:hover { color: var(--dark-gray); }
+        #settings-user-info {
+            margin-bottom: 20px; font-size: 0.95rem; color: var(--dark-gray); background-color: var(--light-gray);
+            padding: 10px; border-radius: 6px;
+        }
+        #settings-user-info strong { color: var(--primary-color); }
+        .admin-user-management {
+            margin-top: 30px; padding: 20px; background-color: var(--lighter-fresh-green);
+            border-radius: 8px; border: 1px solid var(--primary-color);
+        }
+        .admin-user-management h3 { color: var(--primary-color); text-align: center; margin-bottom: 20px; }
+        #admin-user-list { list-style: none; padding: 0; }
+        #admin-user-list li {
+            background-color: #fff; padding: 15px; margin-bottom: 10px; border-radius: 6px;
+            border: 1px solid #ddd; display: flex; flex-direction: column; gap: 10px;
+        }
+        #admin-user-list li .user-info-admin { font-weight: bold; color: var(--dark-gray); font-size: 1.1rem; text-align: left; }
+        #admin-user-list li .user-actions-admin { display: flex; flex-direction: column; gap: 8px; }
+        #admin-user-list li .user-actions-admin button { width: 100%; padding: 10px 12px; font-size: 0.85rem; margin-top: 0; }
+        @media (min-width: 480px) {
+            #admin-user-list li { flex-direction: row; justify-content: space-between; align-items: center; }
+            #admin-user-list li .user-actions-admin { flex-direction: row; width: auto; }
+            #admin-user-list li .user-actions-admin button { width: auto; }
+        }
+        @media (max-width: 360px) {
+            .form-container { padding: 20px; }
+            .main { padding: 15px; }
+            h1 { font-size: 1.8rem; }
+            .tagline { font-size: 0.95rem; }
+            .logo { width: 70px; height: 70px; }
+            .loading-logo { width: 120px; height: 120px; }
+            .loading-text { font-size: 1.5rem; }
+            .notification { padding: 10px 15px; font-size: 0.8rem; }
+            input[type="text"], input[type="password"], button, .button { font-size: 0.95rem; }
+            var(--input-padding){ padding: 12px; }
+            var(--button-padding){ padding: 12px 18px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="loading-screen">
+        <div class="loading-logo">
+            <img src="https://wenpro.co.za/wp-content/uploads/2015/08/logo.png" alt="Subtropico Springs Loading Logo" onerror="this.alt='Subtropico Springs Logo'; this.src='https://placehold.co/150x150/E8F5E9/388E3C?text=Logo';">
+        </div>
+        <div class="loading-text">Loading Freshness<span class="loading-dots"></span></div>
+        <img src="https://th.bing.com/th/id/R.4c5cd20fc2eb897f2fe3508ceeb298bd?rik=Hqj6n5mNbRCCpQ&pid=ImgRaw&r=0" alt="Fresh Fruits and Vegetables" class="loading-fruit-veg" onerror="this.alt='Fruits & Veg'; this.src='https://placehold.co/160x100/FFFDE7/FF9800?text=Produce';">
+    </div>
+
+    <div class="header">
+        <div class="logo">
+            <img src="https://wenpro.co.za/wp-content/uploads/2015/08/logo.png" alt="Subtropico Springs Logo" onerror="this.alt='Subtropico Springs Logo'; this.src='https://placehold.co/90x90/E8F5E9/388E3C?text=Logo';">
+        </div>
+        <h1 id="app-title">Subtropico Springs</h1>
+        <div class="tagline" id="app-tagline">Fresh Produce Solutions</div>
+        <div id="current-date-time"></div>
+    </div>
+
+    <div class="auth-container">
+        <div class="form-container" id="login-form">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Username" required autocapitalize="none">
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button id="login-button">Login</button>
+            <p>No account? <a href="#" id="show-signup">Sign up</a></p>
+            <p id="login-max-accounts-msg" style="color: var(--error-color); display: none; font-size: var(--font-size-small);">Maximum of 2 accounts reached.</p>
+        </div>
+        <div class="form-container" id="signup-form">
+            <h2>Sign Up</h2>
+            <input type="text" id="signup-username" placeholder="Choose a Username" required autocapitalize="none">
+            <input type="password" id="signup-password" placeholder="Choose a Password" required>
+            <button id="signup-button">Sign Up</button>
+            <p>Have an account? <a href="#" id="show-login">Login</a></p>
+            <p id="signup-max-accounts-msg" style="color: var(--error-color); display: none; font-size: var(--font-size-small);">Maximum of 2 accounts already created.</p>
+        </div>
+    </div>
+
+    <div class="main" id="main-app">
+        <div class="settings-controls-container">
+            <button id="settings-button" class="button-secondary">
+                <img src="https://api.iconify.design/mdi/cog.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="settings icon">
+                Settings
+            </button>
+        </div>
+        <div class="counter">
+            <p><span id="item-counter-label">Items Scanned</span>: <span id="item-counter">0</span></p>
+        </div>
+        <form id="barcode-form">
+            <input type="text" id="barcode-input" placeholder="Enter Barcode Manually" required autocapitalize="characters">
+            <button type="submit">Submit Manual Entry</button>
+        </form>
+        <div class="scan-controls">
+            <button id="start-camera-scan">
+                <img src="https://api.iconify.design/mdi/barcode-scan.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="scan icon"> Scan with Camera
+            </button>
+            <button id="refocus-camera-button" style="display:none;">Refocus Camera</button>
+            <button id="stop-camera-scan" style="display:none;">Stop Camera</button>
+        </div>
+        <p id="camera-status"></p>
+        <div id="camera-scanner-container">
+            <div id="reader"></div>
+            <div class="scanner-reticle">
+                <div class="scan-line-animation"></div>
+            </div>
+        </div>
+        <div class="barcode-display" id="barcode-display">
+            <p><strong id="last-scanned-label">Last Valid Scanned Barcode</strong>:</p>
+            <img id="barcode-image" class="barcode-image" src="" alt="Scanned Barcode" style="display:none;" onerror="this.style.display='none'; this.nextElementSibling.innerText = 'Error loading barcode image';" />
+            <p id="last-scanned-value"></p>
+        </div>
+        <div class="history-section">
+            <div class="history-controls">
+                <button id="toggle-history" class="button-secondary">Show Previous Scans</button>
+                <button id="clear-history" style="display:none;">Clear All History</button>
+                <button id="export-history-button" class="button-secondary" style="display:none;">Export History (CSV)</button>
+                <button id="import-history-trigger" class="button-secondary" style="display:none;">Import History (CSV)</button>
+                <input type="file" id="import-csv-file" accept=".csv">
+            </div>
+            <div id="previous-scans" style="display:none;">
+                <h3 id="scan-history-title">Previous Scans</h3>
+                <ul id="scan-history-list"></ul>
+            </div>
+        </div>
+        <div id="admin-user-management-section" class="admin-user-management" style="display:none;">
+            <h3>User Account Management</h3>
+            <ul id="admin-user-list"></ul>
+        </div>
+    </div>
+
+    <div id="settings-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-modal-button" id="close-settings-modal">&times;</span>
+            <h2>Settings</h2>
+            <div id="settings-user-info">
+                <p>Logged in as: <strong id="settings-logged-in-username">N/A</strong></p>
+            </div>
+            <button id="logout-button-modal" class="button">Logout</button>
+            <button id="delete-account-button-modal" class="button button-danger">Delete Account</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <div class="disclaimer">
+        <p>© D.K Brand . All rights reserved. Unauthorized copying or distribution of the code is prohibited.<br>Dylan Karsten</p>
+    </div>
+
+    <div class="footer">
+        <p>&copy; <span id="current-year"></span> Subtropico Springs. All rights reserved.</p>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script>
+        // Prevent certain developer tools actions
+        document.onkeydown = function(e) {
+            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'i')) { e.preventDefault(); }
+            if (e.key === 'F12') { e.preventDefault(); }
+        };
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+        // Admin Credentials
+        const ADMIN_USERNAME = "DylanK";
+        const ADMIN_PASSWORD = "DylanKar13";
+        // DOM Elements
+        const loginFormEl = document.getElementById('login-form');
+        const signupFormEl = document.getElementById('signup-form');
+        const mainApp = document.getElementById('main-app');
+        const authContainer = document.querySelector('.auth-container');
+        const cameraStatusElement = document.getElementById('camera-status');
+        const scanHistoryList = document.getElementById('scan-history-list');
+        const previousScansContainer = document.getElementById('previous-scans');
+        const toggleHistoryButton = document.getElementById('toggle-history');
+        const clearHistoryButton = document.getElementById('clear-history');
+        const exportHistoryButton = document.getElementById('export-history-button');
+        const importHistoryTriggerButton = document.getElementById('import-history-trigger');
+        const importCsvFileInput = document.getElementById('import-csv-file');
+        const lastScannedValueElement = document.getElementById('last-scanned-value');
+        const barcodeDisplayElement = document.getElementById('barcode-display');
+        const barcodeImageElement = document.getElementById('barcode-image');
+        const loadingScreen = document.getElementById('loading-screen');
+        const signupButton = document.getElementById('signup-button');
+        const showSignupLink = document.getElementById('show-signup');
+        const loginMaxAccountsMsg = document.getElementById('login-max-accounts-msg');
+        const signupMaxAccountsMsg = document.getElementById('signup-max-accounts-msg');
+        const appTitleEl = document.getElementById('app-title');
+        const appTaglineEl = document.getElementById('app-tagline');
+        const itemCounterLabelEl = document.getElementById('item-counter-label');
+        const lastScannedLabelEl = document.getElementById('last-scanned-label');
+        const scanHistoryTitleEl = document.getElementById('scan-history-title');
+        const barcodeFormEl = document.getElementById('barcode-form');
+        const scanControlsEl = document.querySelector('.scan-controls');
+        const adminUserManagementSectionEl = document.getElementById('admin-user-management-section');
+        const adminUserListEl = document.getElementById('admin-user-list');
+        const refocusCameraButton = document.getElementById('refocus-camera-button');
+        // Settings Modal Elements
+        const settingsButton = document.getElementById('settings-button');
+        const settingsModal = document.getElementById('settings-modal');
+        const closeSettingsModalButton = document.getElementById('close-settings-modal');
+        const settingsLoggedInUsernameEl = document.getElementById('settings-logged-in-username');
+        const logoutButtonModal = document.getElementById('logout-button-modal');
+        const deleteAccountButtonModal = document.getElementById('delete-account-button-modal');
+
+        const primaryColorRGB = "56, 142, 60";
+        document.documentElement.style.setProperty('--rgb-primary-color', primaryColorRGB);
+
+        let audioCtx; // AudioContext for sound effects
+
+        // --- Sound Functions ---
+        function playBeep(frequency = 880, duration = 100, volume = 0.5, type = 'sine') {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!audioCtx) return console.warn("Web Audio API not supported for beep sound.");
+                if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.1);
+                gainNode.gain.setValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.8);
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + (duration / 1000));
+                oscillator.type = type;
+                oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + duration / 1000);
+            } catch (error) {
+                console.error("Error playing beep:", error);
+            }
+        }
+
+        function playWelcomeSound() {
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (!audioCtx) return console.warn("Web Audio API not supported for welcome sound.");
+                if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
+                const now = audioCtx.currentTime;
+                const volume = 0.5;
+                const noteDuration = 0.15;
+                const attackTime = 0.01;
+                const releaseTime = 0.1;
+                const notes = [
+                    { freq: 261.63, time: now },
+                    { freq: 329.63, time: now + noteDuration },
+                    { freq: 392.00, time: now + noteDuration * 2 },
+                    { freq: 523.25, time: now + noteDuration * 3 }
+                ];
+                notes.forEach(note => {
+                    const oscillator = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    oscillator.type = 'triangle';
+                    oscillator.frequency.setValueAtTime(note.freq, note.time);
+                    gainNode.gain.setValueAtTime(0, note.time);
+                    gainNode.gain.linearRampToValueAtTime(volume, note.time + attackTime);
+                    gainNode.gain.setValueAtTime(volume, note.time + noteDuration - releaseTime);
+                    gainNode.gain.linearRampToValueAtTime(0, note.time + noteDuration);
+                    oscillator.start(note.time);
+                    oscillator.stop(note.time + noteDuration + 0.05);
+                });
+            } catch (error) {
+                console.error("Error playing welcome sound:", error);
+            }
+        }
+
+        // --- Date/Time Formatting ---
+        function formatToSAST(isoString) {
+            if (!isoString) return 'N/A';
+            try {
+                const date = new Date(isoString);
+                const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Africa/Johannesburg' };
+                let formatted = new Intl.DateTimeFormat('en-GB', options).format(date);
+                return formatted.replace(/\//g, '-').replace(',', '');
+            } catch (error) {
+                console.warn("Error formatting date to SAST:", error, isoString);
+                return new Date(isoString).toLocaleString();
+            }
+        }
+
+        function parseSASTStringToUTCDate(sastString) {
+            if (!sastString) return null;
+            const match = sastString.match(/(\d{2})[\s-](\w{3})[\s-](\d{4})\s(\d{2}):(\d{2}):(\d{2})/);
+            if (!match) {
+                console.warn("Could not parse SAST string format:", sastString);
+                const d = new Date(sastString);
+                if (!isNaN(d.getTime())) return d;
+                return null;
+            }
+            const [, day, monthName, year, hours, minutes, seconds] = match.map((val, idx) => (idx > 0 && idx < 7 && idx !== 2) ? parseInt(val, 10) : val);
+            const monthMap = {'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
+            const monthIndex = monthMap[monthName];
+            if (typeof monthIndex === 'undefined') {
+                console.warn("Invalid month name in SAST string:", monthName);
+                return null;
+            }
+            return new Date(Date.UTC(year, monthIndex, day, hours - 2, minutes, seconds));
+        }
+
+        // --- Account Management ---
+        const MAX_ACCOUNTS = 2; // For user-creatable accounts
+
+        function getAccountsData() {
+            const data = localStorage.getItem('accountsData');
+            if (!data) return [];
+            try {
+                const parsedData = JSON.parse(data);
+                return Array.isArray(parsedData) ? parsedData : [];
+            } catch (error) {
+                console.error("Error parsing accountsData from localStorage:", error);
+                return [];
+            }
+        }
+
+        function saveAccountsData(accounts) {
+            localStorage.setItem('accountsData', JSON.stringify(accounts));
+        }
+
+        signupButton.addEventListener('click', function() {
+            const accounts = getAccountsData();
+            const userCreatableAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
+            if (userCreatableAccounts.length >= MAX_ACCOUNTS) {
+                showNotification(`Maximum of ${MAX_ACCOUNTS} user accounts already created. Cannot sign up.`, 'error');
+                signupMaxAccountsMsg.style.display = 'block';
+                return;
+            }
+            signupMaxAccountsMsg.style.display = 'none';
+            const username = document.getElementById('signup-username').value.trim();
+            const password = document.getElementById('signup-password').value.trim();
+            if (username === ADMIN_USERNAME) {
+                showNotification('This username is reserved. Please choose another.', 'error');
+                return;
+            }
+            if (!username || !password) {
+                showNotification('Please fill in all fields for signup.', 'error');
+                return;
+            }
+            if (accounts.find(acc => acc.username === username)) {
+                showNotification('Username already taken. Choose another.', 'error');
+                return;
+            }
+            accounts.push({ username, password, signupTimestamp: new Date().toISOString(), scanCount: 0, duplicates: {}, scanHistory: [] });
+            saveAccountsData(accounts);
+            showNotification('Signup successful! You can now log in.', 'success');
+            signupFormEl.classList.remove('active');
+            loginFormEl.classList.add('active');
+            document.getElementById('signup-username').value = '';
+            document.getElementById('signup-password').value = '';
+            checkAccountLimit();
+        });
+
+        document.getElementById('login-button').addEventListener('click', function() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            if (!username || !password) {
+                showNotification('Please enter username and password.', 'error');
+                return;
+            }
+            let isAdminLogin = false;
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                isAdminLogin = true;
+            }
+            const accounts = getAccountsData();
+            const account = accounts.find(acc => acc.username === username && acc.password === password);
+            if (isAdminLogin || account) {
+                sessionStorage.setItem('loggedInUser', username);
+                sessionStorage.setItem('isAdmin', isAdminLogin ? 'true' : 'false');
+                playWelcomeSound();
+                showNotification(`Login successful. Welcome, ${username}!`, 'success');
+                authContainer.style.display = 'none';
+                loadingScreen.style.display = 'flex';
+                loadingScreen.classList.remove('hidden');
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        mainApp.style.display = 'block';
+                        isAdminLogin ? loadInitialDataForAdmin() : loadInitialData();
+                    }, 500);
+                }, 2500);
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+            } else {
+                showNotification('Invalid login credentials.', 'error');
+            }
+        });
+
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            notification.innerText = message;
+            notification.className = 'notification';
+            notification.classList.add(type);
+            notification.style.display = 'block';
+            if (notification.timeoutId) clearTimeout(notification.timeoutId);
+            notification.timeoutId = setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3500);
+        }
+
+        showSignupLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (this.classList.contains('disabled-link')) return;
+            loginFormEl.classList.remove('active');
+            signupFormEl.classList.add('active');
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+        });
+
+        document.getElementById('show-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            signupFormEl.classList.remove('active');
+            loginFormEl.classList.add('active');
+            document.getElementById('signup-username').value = '';
+            document.getElementById('signup-password').value = '';
+        });
+
+        // --- Barcode Processing & Data Management ---
+        let scanCount = 0, duplicates = {}, scanHistory = [];
+        const barcodeRegex = /^T\d[A-Z0-9]{3}[A-Z0-9]{2}\d{4}$/;
+
+        function isValidBarcode(barcode) {
+            return barcodeRegex.test(barcode);
+        }
+
+        function setupAdminUI(isAdmin) {
+            if (isAdmin) {
+                appTitleEl.textContent = "Admin Dashboard";
+                appTaglineEl.textContent = "Aggregated User Scan Data";
+                itemCounterLabelEl.textContent = "Total Items Scanned (All Users)";
+                lastScannedLabelEl.textContent = "Last Valid Scan (Any User)";
+                scanHistoryTitleEl.textContent = "Aggregated Scan History";
+                adminUserManagementSectionEl.style.display = 'block';
+                barcodeFormEl.style.display = 'none';
+                scanControlsEl.style.display = 'none';
+                clearHistoryButton.style.display = 'none';
+                importHistoryTriggerButton.style.display = 'none';
+                deleteAccountButtonModal.style.display = 'none';
+                populateAdminUserList();
+            } else {
+                appTitleEl.textContent = "Subtropico Springs";
+                appTaglineEl.textContent = "Fresh Produce Solutions";
+                itemCounterLabelEl.textContent = "Items Scanned";
+                lastScannedLabelEl.textContent = "Last Valid Scanned Barcode";
+                scanHistoryTitleEl.textContent = "Previous Scans";
+                adminUserManagementSectionEl.style.display = 'none';
+                barcodeFormEl.style.display = 'block';
+                scanControlsEl.style.display = 'flex';
+                deleteAccountButtonModal.style.display = 'block';
+            }
+        }
+
+        function loadInitialDataForAdmin() {
+            setupAdminUI(true);
+            const allAccounts = getAccountsData();
+            const userAccounts = allAccounts.filter(acc => acc.username !== ADMIN_USERNAME);
+            let aggregatedScanCount = 0;
+            let aggregatedScanHistory = [];
+            userAccounts.forEach(acc => {
+                aggregatedScanCount += (acc.scanCount || 0);
+                if (acc.scanHistory && Array.isArray(acc.scanHistory)) {
+                    acc.scanHistory.forEach(scan => {
+                        aggregatedScanHistory.push({ ...scan, username: acc.username });
+                    });
+                }
+            });
+            scanCount = aggregatedScanCount;
+            scanHistory = aggregatedScanHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+            document.getElementById('item-counter').innerText = scanCount;
+            const lastValidScanOverall = scanHistory.find(s => s.status === 'new');
+            if (lastValidScanOverall) {
+                barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScanOverall.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+                barcodeImageElement.style.display = 'block';
+                barcodeDisplayElement.style.display = 'block';
+                lastScannedValueElement.innerText = `${lastValidScanOverall.barcode} (User: ${lastValidScanOverall.username})`;
+            } else {
+                barcodeDisplayElement.style.display = 'none';
+            }
+            renderScanHistory();
+        }
+
+        function loadInitialData() {
+            setupAdminUI(false);
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUsername) { initializeApp(); return; }
+            const accounts = getAccountsData();
+            const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
+            if (currentUserAccount) {
+                scanCount = currentUserAccount.scanCount || 0;
+                duplicates = currentUserAccount.duplicates || {};
+                scanHistory = currentUserAccount.scanHistory || [];
+                document.getElementById('item-counter').innerText = scanCount;
+                const lastValidScan = scanHistory.filter(s => s.status === 'new').sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
+                if (lastValidScan) {
+                    barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScan.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+                    barcodeImageElement.style.display = 'block';
+                    barcodeDisplayElement.style.display = 'block';
+                    lastScannedValueElement.innerText = lastValidScan.barcode;
+                } else {
+                    barcodeDisplayElement.style.display = 'none';
+                }
+                renderScanHistory();
+            } else {
+                console.error("Logged in user data not found. Logging out.");
+                performLogout(false);
+            }
+        }
+
+        function processBarcode(barcode, timestampOverride = null, suppressNotification = false) {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (isAdmin) { showNotification("Admin accounts cannot scan barcodes directly.", "info"); return false; }
+            if (!loggedInUsername) return false;
+            const accounts = getAccountsData();
+            const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
+            if (userAccountIndex === -1) return false;
+            let accData = accounts[userAccountIndex];
+            const originalInput = barcode;
+            const cleanedBarcode = barcode.trim().toUpperCase();
+            const currentTimeISO = timestampOverride ? new Date(timestampOverride).toISOString() : new Date().toISOString();
+            let scanStatus = '';
+            
+            if (!isValidBarcode(cleanedBarcode)) {
+                scanStatus = 'invalid';
+                if (!suppressNotification) {
+                    playBeep(300, 250, 0.7, 'sawtooth');
+                    showNotification(`Invalid barcode: "${originalInput}". Format: T1ABCDE1234.`, 'error');
+                }
+                accData.scanHistory.push({ barcode: originalInput, timestamp: currentTimeISO, status: scanStatus });
+            } else {
+                if (!suppressNotification) {
+                    barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(cleanedBarcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+                    barcodeImageElement.style.display = 'block';
+                    barcodeDisplayElement.style.display = 'block';
+                    lastScannedValueElement.innerText = cleanedBarcode;
+                }
+                if (accData.duplicates[cleanedBarcode]) {
+                    scanStatus = 'duplicate';
+                    if (!suppressNotification) {
+                        playBeep(600, 180, 0.6, 'triangle');
+                        const firstScanSAST = formatToSAST(accData.duplicates[cleanedBarcode].firstScan);
+                        showNotification(`Duplicate: ${cleanedBarcode}. First scan: ${firstScanSAST}`, 'warning');
+                    }
+                } else {
+                    scanStatus = 'new';
+                    if (!suppressNotification) playBeep(1000, 80, 0.5, 'sine');
+                    if (!timestampOverride) {
+                        accData.scanCount++;
+                        accData.duplicates[cleanedBarcode] = { firstScan: currentTimeISO };
+                    }
+                    if (!suppressNotification) showNotification(`New scan: ${cleanedBarcode}`, 'success');
+                }
+                accData.scanHistory.push({ barcode: cleanedBarcode, timestamp: currentTimeISO, status: scanStatus });
+            }
+
+            if (!timestampOverride) {
+                accData.scanHistory.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+                saveAccountsData(accounts);
+                scanCount = accData.scanCount;
+                duplicates = accData.duplicates;
+                scanHistory = accData.scanHistory;
+                document.getElementById('item-counter').innerText = scanCount;
+                document.getElementById('barcode-input').value = '';
+                renderScanHistory();
+                return true;
+            }
+            return scanStatus !== 'invalid';
+        }
+
+        document.getElementById('barcode-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (isAdmin) { showNotification("Manual entry disabled for admin.", "info"); return; }
+            const barcode = document.getElementById('barcode-input').value;
+            if (barcode.trim()) {
+                processBarcode(barcode);
+            } else {
+                showNotification('Please enter a barcode value.', 'error');
+            }
+        });
+
+        function renderScanHistory() {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (!loggedInUsername && !isAdmin) return;
+
+            let displayHistory = [];
+            let userDuplicatesMap = {};
+
+            if (isAdmin) {
+                displayHistory = [...scanHistory];
+                exportHistoryButton.style.display = displayHistory.length > 0 && previousScansContainer.style.display !== 'none' ? 'inline-block' : 'none';
+                clearHistoryButton.style.display = 'none';
+                importHistoryTriggerButton.style.display = 'none';
+            } else {
+                const accounts = getAccountsData();
+                const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
+                if (!currentUserAccount) return;
+                displayHistory = currentUserAccount.scanHistory ? [...currentUserAccount.scanHistory].sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) : [];
+                userDuplicatesMap = currentUserAccount.duplicates || {};
+                const historyIsVisible = previousScansContainer.style.display !== 'none';
+                const historyNotEmpty = displayHistory.length > 0;
+                const showControlButtons = historyIsVisible && historyNotEmpty;
+                clearHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none';
+                exportHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none';
+                importHistoryTriggerButton.style.display = historyIsVisible ? 'inline-block' : 'none';
+            }
+
+            scanHistoryList.innerHTML = '';
+            if (displayHistory.length === 0) {
+                const noScansItem = document.createElement('li');
+                noScansItem.innerText = isAdmin ? 'No scans recorded across all users.' : 'No scans recorded for this account.';
+                noScansItem.style.textAlign = 'center';
+                noScansItem.style.padding = '20px';
+                scanHistoryList.appendChild(noScansItem);
+            } else {
+                displayHistory.forEach(scan => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.remove('history-item-invalid', 'history-item-duplicate', 'history-item-new');
+                    let barcodeText = scan.barcode || "Entry Error";
+                    let scanDetailsHtml = `<strong><span>${barcodeText}</span></strong>`;
+                    let scanInfoText = '';
+                    const displayTimestampSAST = formatToSAST(scan.timestamp);
+
+                    if (isAdmin && scan.username) {
+                        scanDetailsHtml += `<span class="scan-info username-indicator">User: ${scan.username}</span>`;
+                    }
+                    
+                    const currentScanStatus = scan.status;
+                    const relevantDuplicatesMap = isAdmin ? (getAccountsData().find(acc=>acc.username === scan.username)?.duplicates || {}) : userDuplicatesMap;
+
+                    switch(currentScanStatus) {
+                        case 'invalid':
+                            listItem.classList.add('history-item-invalid');
+                            scanInfoText = `<span class="scan-info invalid-format">Invalid Format</span><span class="scan-info">Attempted: ${displayTimestampSAST}</span>`;
+                            break;
+                        case 'duplicate':
+                            listItem.classList.add('history-item-duplicate');
+                            const firstScanTimeISO = relevantDuplicatesMap[scan.barcode.toUpperCase()] ? relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan : null;
+                            const firstScanDisplaySAST = formatToSAST(firstScanTimeISO);
+                            scanInfoText = `<span class="scan-info duplicate">(Duplicate)</span><span class="scan-info">First Valid: ${firstScanDisplaySAST}</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
+                            break;
+                        case 'new':
+                            listItem.classList.add('history-item-new');
+                            scanInfoText = `<span class="scan-info valid">Valid Scan</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
+                            break;
+                        default:
+                            scanInfoText = `<span class="scan-info">Status: ${currentScanStatus || 'Unknown'}</span><span class="scan-info">Recorded: ${displayTimestampSAST}</span>`;
+                    }
+                    listItem.innerHTML = `${scanDetailsHtml}${scanInfoText}`;
+                    scanHistoryList.appendChild(listItem);
+                });
+            }
+        }
+
+        toggleHistoryButton.addEventListener('click', function() {
+            const isHidden = previousScansContainer.style.display === 'none';
+            previousScansContainer.style.display = isHidden ? 'block' : 'none';
+            toggleHistoryButton.innerText = isHidden ? 'Hide Previous Scans' : 'Show Previous Scans';
+            renderScanHistory();
+        });
+
+        clearHistoryButton.addEventListener('click', function() {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') return;
+            const accounts = getAccountsData();
+            const userAccount = accounts.find(acc => acc.username === loggedInUsername);
+            if (!userAccount) { showNotification('User account not found.', 'error'); return; }
+            const historyItemCount = userAccount.scanHistory ? userAccount.scanHistory.length : 0;
+            const currentScanTotal = userAccount.scanCount || 0;
+            const promptMessage = `WARNING: This will permanently delete ALL scan data for user '${loggedInUsername}'.\nThis includes ${historyItemCount} scan history entries and will reset the total scan count from ${currentScanTotal} to 0.\n\nThis action is IRREVERSIBLE.\n\nTo confirm, please enter your password:`;
+            const enteredPassword = prompt(promptMessage);
+            if (enteredPassword === null) { showNotification('Clear history cancelled.', 'info'); return; }
+            if (enteredPassword === userAccount.password) {
+                if (confirm('FINAL CONFIRMATION:\nAre you absolutely sure you wish to proceed with deleting all scan data for this account?')) {
+                    const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
+                    if (userAccountIndex !== -1) {
+                        accounts[userAccountIndex].scanCount = 0;
+                        accounts[userAccountIndex].duplicates = {};
+                        accounts[userAccountIndex].scanHistory = [];
+                        saveAccountsData(accounts);
+                        scanCount = 0; duplicates = {}; scanHistory = [];
+                        document.getElementById('item-counter').innerText = scanCount;
+                        showNotification('All scan history and counter data for this account has been permanently deleted.', 'success');
+                        previousScansContainer.style.display = 'none';
+                        toggleHistoryButton.innerText = 'Show Previous Scans';
+                        renderScanHistory();
+                        barcodeDisplayElement.style.display = 'none';
+                        barcodeImageElement.src = '';
+                        lastScannedValueElement.innerText = '';
+                    }
+                } else {
+                    showNotification('Clear history cancelled (final confirmation).', 'info');
+                }
+            } else {
+                showNotification('Incorrect password. Clear history operation aborted.', 'error');
+            }
+        });
+
+        function exportHistoryToCSV() {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            let dataToExport = [];
+            let filenameUserPart = loggedInUsername;
+            let headers = ['BarcodeValue', 'ScanTimestampSAST', 'ScanStatus', 'FirstValidScanTimestampSAST'];
+
+            if (isAdmin) {
+                filenameUserPart = "ADMIN_ALL_USERS";
+                headers.push('ScannedByUsername');
+                dataToExport = [...scanHistory];
+            } else {
+                if (!loggedInUsername) return;
+                const accounts = getAccountsData();
+                const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
+                if (!currentUserAccount || !currentUserAccount.scanHistory || currentUserAccount.scanHistory.length === 0) {
+                    showNotification('No history to export for this account.', 'info'); return;
+                }
+                dataToExport = [...currentUserAccount.scanHistory].sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+            }
+
+            if (dataToExport.length === 0) { showNotification(isAdmin ? 'No aggregated history to export.' : 'No history to export for this account.', 'info'); return; }
+            
+            let csvContent = '\uFEFF' + headers.map(h => `"${h}"`).join(',') + '\r\n';
+            dataToExport.forEach(scan => {
+                const fBarcode = `"${(scan.barcode || '').toString().replace(/"/g, '""')}"`;
+                const fScanTimestampSAST = `"${formatToSAST(scan.timestamp)}"`;
+                const fStatus = `"${(scan.status || '').toString().replace(/"/g, '""')}"`;
+                let fFirstValidScanTimestampSAST = '""';
+                let relevantDuplicatesMap = {};
+                
+                if (isAdmin && scan.username) {
+                    const originalUserAccount = getAccountsData().find(acc => acc.username === scan.username);
+                    relevantDuplicatesMap = originalUserAccount ? (originalUserAccount.duplicates || {}) : {};
+                } else if (!isAdmin) {
+                    const currentUserAccount = getAccountsData().find(acc => acc.username === loggedInUsername);
+                    relevantDuplicatesMap = currentUserAccount ? (currentUserAccount.duplicates || {}) : {};
+                }
+
+                if (scan.status === 'duplicate' && relevantDuplicatesMap[scan.barcode.toUpperCase()] && relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan) {
+                    fFirstValidScanTimestampSAST = `"${formatToSAST(relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan)}"`;
+                } else if (scan.status === 'new') {
+                    fFirstValidScanTimestampSAST = fScanTimestampSAST;
+                }
+                
+                let row = [fBarcode, fScanTimestampSAST, fStatus, fFirstValidScanTimestampSAST];
+                if (isAdmin) { row.push(`"${scan.username || 'N/A'}"`); }
+                csvContent += row.join(',') + '\r\n';
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            if (link.download !== undefined) {
+                const url = URL.createObjectURL(blob);
+                const now = new Date(), ts = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+                link.setAttribute("href", url);
+                link.setAttribute("download", `subtropico_scan_history_${filenameUserPart}_${ts}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                showNotification('History exported as CSV (Timestamps in SAST).', 'success');
+            } else {
+                showNotification('Export not supported by your browser.', 'error');
+            }
+        }
+        exportHistoryButton.addEventListener('click', exportHistoryToCSV);
+
+        importHistoryTriggerButton.addEventListener('click', () => {
+            if (sessionStorage.getItem('isAdmin') === 'true') return;
+            importCsvFileInput.click();
+        });
+
+        importCsvFileInput.addEventListener('change', function(event) {
+            if (sessionStorage.getItem('isAdmin') === 'true') return;
+            const file = event.target.files[0];
+            if (!file) return;
+            if (!file.name.toLowerCase().endsWith('.csv')) { showNotification('Invalid file type. Please select a .CSV file.', 'error'); event.target.value = null; return; }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const csvContent = e.target.result;
+                processImportedCSV(csvContent);
+                event.target.value = null;
+            };
+            reader.onerror = function() { showNotification('Error reading file for import.', 'error'); event.target.value = null; };
+            reader.readAsText(file);
+        });
+
+        function parseCsvRow(rowString) {
+            const result = [];
+            let currentField = '';
+            let inQuotes = false;
+            for (let i = 0; i < rowString.length; i++) {
+                const char = rowString[i];
+                if (char === '"') {
+                    if (inQuotes && i + 1 < rowString.length && rowString[i+1] === '"') {
+                        currentField += '"'; i++;
+                    } else { inQuotes = !inQuotes; }
+                } else if (char === ',' && !inQuotes) {
+                    result.push(currentField); currentField = '';
+                } else { currentField += char; }
+            }
+            result.push(currentField);
+            return result;
+        }
+
+        function processImportedCSV(csvData) {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') { showNotification("Import only available for user accounts.", "error"); return; }
+            const accounts = getAccountsData();
+            const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
+            if (userAccountIndex === -1) { showNotification("User account not found.", "error"); return; }
+
+            const lines = csvData.split(/\r\n|\n/);
+            if (lines.length <= 1) { showNotification('CSV file is empty or has no data rows.', 'warning'); return; }
+
+            const expectedHeaderNames = {barcode: 'barcodevalue', timestamp: 'scantimestampsast'};
+            const headerLineValues = parseCsvRow(lines[0]).map(h => h.toLowerCase().trim().replace(/"/g, ''));
+            const colIndices = {
+                barcode: headerLineValues.indexOf(expectedHeaderNames.barcode),
+                timestamp: headerLineValues.indexOf(expectedHeaderNames.timestamp)
+            };
+            if (colIndices.barcode === -1 || colIndices.timestamp === -1) { showNotification(`CSV header mismatch. Required: "BarcodeValue", "ScanTimestampSAST". Found: "${lines[0]}"`, 'error'); return; }
+
+            let importedScans = [];
+            let importErrors = 0;
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                const values = parseCsvRow(lines[i]);
+                if (values.length < Math.max(colIndices.barcode, colIndices.timestamp) + 1) { console.warn(`Skipping CSV row ${i+1}: Not enough columns.`); importErrors++; continue; }
+                const barcode = values[colIndices.barcode];
+                const timestampSASTStr = values[colIndices.timestamp];
+                if (!barcode || !timestampSASTStr) { console.warn(`Skipping CSV row ${i+1}: Missing barcode or SAST timestamp.`); importErrors++; continue; }
+                const utcDate = parseSASTStringToUTCDate(timestampSASTStr);
+                if (!utcDate) { console.warn(`Skipping CSV row ${i+1}: Invalid SAST timestamp "${timestampSASTStr}".`); importErrors++; continue; }
+                importedScans.push({ barcode: barcode.toUpperCase(), timestamp: utcDate.toISOString(), status: 'imported' });
+            }
+
+            if (importedScans.length === 0 && importErrors > 0) { showNotification(`Import failed. ${importErrors} errors parsing CSV. Check console.`, 'error'); return; }
+            if (importedScans.length === 0) { showNotification(`No valid scans found to import.`, 'warning'); return; }
+
+            accounts[userAccountIndex].scanHistory.push(...importedScans);
+            accounts[userAccountIndex].scanHistory.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+            recalculateUserStats(userAccountIndex);
+            saveAccountsData(accounts);
+            loadInitialData();
+            let successMsg = `${importedScans.length} scans processed. `;
+            if (importErrors > 0) successMsg += `${importErrors} rows had errors (see console).`;
+            showNotification(successMsg, 'success');
+        }
+
+        function recalculateUserStats(userAccountIndex) {
+            const accounts = getAccountsData();
+            if (!accounts[userAccountIndex]) return;
+            let currentAccount = accounts[userAccountIndex];
+            let newScanCount = 0;
+            let newDuplicates = {};
+            const reevaluatedHistory = [];
+            const sortedHistory = currentAccount.scanHistory;
+            
+            sortedHistory.forEach(scan => {
+                let finalStatus;
+                const cleanedBarcode = scan.barcode.trim().toUpperCase();
+                if (!isValidBarcode(cleanedBarcode)) {
+                    finalStatus = 'invalid';
+                } else {
+                    if (newDuplicates[cleanedBarcode]) {
+                        finalStatus = 'duplicate';
+                    } else {
+                        finalStatus = 'new';
+                        newScanCount++;
+                        newDuplicates[cleanedBarcode] = { firstScan: scan.timestamp };
+                    }
+                }
+                reevaluatedHistory.push({ barcode: scan.barcode, timestamp: scan.timestamp, status: finalStatus });
+            });
+            currentAccount.scanCount = newScanCount;
+            currentAccount.duplicates = newDuplicates;
+            currentAccount.scanHistory = reevaluatedHistory;
+        }
+
+        function startTime() {
+            const dateTimeElement = document.getElementById('current-date-time');
+            if (dateTimeElement) {
+                const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+                const monthNames= ["January","February","March","April","May","June","July","August","September","October","November","December"];
+                const updateTime = () => {
+                    const now = new Date();
+                    dateTimeElement.innerText = `${dayNames[now.getDay()]}, ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2,'0')}, ${now.getFullYear()} | ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+                };
+                updateTime();
+                setInterval(updateTime, 1000);
+            }
+        }
+        startTime();
+
+        // --- Camera Scanner ---
+        let html5QrCode;
+        const qrConfig = {
+            fps: 10,
+            qrbox: (viewfinderWidth, viewfinderHeight) => {
+                let minDimension = Math.min(viewfinderWidth, viewfinderHeight);
+                let qrBoxWidth = Math.floor(minDimension * 0.7);
+                let qrBoxHeight = Math.floor(minDimension * 0.4);
+                if (qrBoxHeight > viewfinderHeight * 0.8) qrBoxHeight = Math.floor(viewfinderHeight * 0.8);
+                if (qrBoxWidth > viewfinderWidth * 0.8) qrBoxWidth = Math.floor(viewfinderWidth * 0.8);
+                return { width: qrBoxWidth, height: qrBoxHeight };
+            },
+            rememberLastUsedCamera: true,
+            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+            videoConstraints: {
+                facingMode: "environment",
+                focusMode: "continuous"
+            }
+        };
+
+        const startCamBtn = document.getElementById('start-camera-scan');
+        const stopCamBtn = document.getElementById('stop-camera-scan');
+        const camScannerContainer = document.getElementById('camera-scanner-container');
+        const readerUiDiv = document.getElementById('reader');
+
+        startCamBtn.addEventListener('click', () => {
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (isAdmin) { showNotification("Camera scanning disabled for admin.", "info"); return; }
+            cameraStatusElement.textContent = 'Initializing camera...';
+            camScannerContainer.style.display = 'block';
+            startCamBtn.style.display = 'none';
+            stopCamBtn.style.display = 'inline-block';
+            refocusCameraButton.style.display = 'inline-block';
+            if (!html5QrCode) html5QrCode = new Html5Qrcode("reader", { verbose: false });
+            cameraStatusElement.textContent = 'Requesting camera access...';
+            html5QrCode.start(
+                { facingMode: "environment" },
+                qrConfig,
+                (decodedText) => {
+                    if (html5QrCode && html5QrCode.isScanning) {
+                        cameraStatusElement.textContent='Barcode detected! Ready for next scan.';
+                        processBarcode(decodedText);
+                    }
+                },
+                (errorMessage) => {
+                    if (html5QrCode && html5QrCode.isScanning && !cameraStatusElement.textContent.includes('detected')) {
+                        cameraStatusElement.textContent = 'Scanning... Align barcode in reticle.';
+                    }
+                }
+            ).catch((err) => {
+                let msg = 'Error starting camera.';
+                if (typeof err==='string'){
+                    if(err.toLowerCase().includes('permission denied')||err.toLowerCase().includes('notallowederror')) msg='Camera access denied by user.';
+                    else if(err.toLowerCase().includes('notfounderror')) msg='No suitable camera found.';
+                    else msg=`Camera error: ${err}`;
+                } else if(err instanceof Error){
+                    if(err.name==='NotAllowedError')msg='Camera access denied by user.';
+                    else if(err.name==='NotFoundError')msg='No suitable camera found.';
+                    else msg=`Camera error: ${err.message||err.name}`;
+                }
+                showNotification(msg,'error');
+                cameraStatusElement.textContent=msg;
+                camScannerContainer.style.display='none';
+                startCamBtn.style.display='inline-block';
+                stopCamBtn.style.display='none';
+                refocusCameraButton.style.display = 'none';
+                readerUiDiv.innerHTML='';
+            });
+        });
+
+        refocusCameraButton.addEventListener('click', () => {
+            if (html5QrCode && html5QrCode._localMediaStream) {
+                const videoTracks = html5QrCode._localMediaStream.getVideoTracks();
+                if (videoTracks && videoTracks.length > 0) {
+                    const track = videoTracks[0];
+                    track.applyConstraints({ advanced: [{ focusMode: 'continuous' }] })
+                        .then(() => { showNotification("Camera refocus attempted.", "info"); cameraStatusElement.textContent = 'Refocus attempted. Scanning...'; })
+                        .catch(err => { console.error("Error applying focus constraint:", err); showNotification("Failed to refocus camera.", "error"); });
+                } else { showNotification("No active video track found to refocus.", "warning"); }
+            } else { showNotification("Camera not active or stream not accessible for refocus.", "warning"); }
+        });
+
+        function stopCameraScan() {
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().then(() => {
+                    if(!cameraStatusElement.textContent.includes('Barcode detected!')) { cameraStatusElement.textContent='Camera stopped.'; }
+                }).catch((err) => {
+                    console.error("Failed to stop camera scanning.", err);
+                    cameraStatusElement.textContent='Error stopping camera.';
+                }).finally(() => {
+                    camScannerContainer.style.display='none';
+                    startCamBtn.style.display='inline-block';
+                    stopCamBtn.style.display='none';
+                    refocusCameraButton.style.display = 'none';
+                    readerUiDiv.innerHTML='';
+                    if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) { cameraStatusElement.textContent = ''; }
+                });
+            } else {
+                camScannerContainer.style.display='none';
+                startCamBtn.style.display='inline-block';
+                stopCamBtn.style.display='none';
+                refocusCameraButton.style.display = 'none';
+                if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) { cameraStatusElement.textContent = ''; }
+                readerUiDiv.innerHTML='';
+            }
+        }
+        stopCamBtn.addEventListener('click', stopCameraScan);
+
+        // --- Settings Modal Functionality ---
+        settingsButton.addEventListener('click', () => {
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (loggedInUsername) {
+                settingsLoggedInUsernameEl.textContent = isAdmin ? `${loggedInUsername} (Admin)` : loggedInUsername;
+            } else {
+                settingsLoggedInUsernameEl.textContent = 'N/A';
+            }
+            deleteAccountButtonModal.style.display = isAdmin ? 'none' : 'block';
+            settingsModal.classList.add('active');
+        });
+
+        closeSettingsModalButton.addEventListener('click', () => {
+            settingsModal.classList.remove('active');
+        });
+
+        settingsModal.addEventListener('click', (event) => {
+            if (event.target === settingsModal) {
+                settingsModal.classList.remove('active');
+            }
+        });
+
+        logoutButtonModal.addEventListener('click', () => {
+            settingsModal.classList.remove('active');
+            performLogout();
+        });
+
+        function performLogout(showLoading = true) {
+            sessionStorage.removeItem('loggedInUser');
+            sessionStorage.removeItem('isAdmin');
+            if (showLoading) {
+                mainApp.style.display = 'none';
+                loadingScreen.style.display = 'flex';
+                loadingScreen.classList.remove('hidden');
+                showNotification('Logging out...', 'info');
+                setTimeout(() => {
+                    loadingScreen.classList.add('hidden');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        initializeApp();
+                    }, 500);
+                }, 1500);
+            } else {
+                initializeApp();
+            }
+        }
+
+        deleteAccountButtonModal.addEventListener('click', () => {
+            settingsModal.classList.remove('active');
+            const loggedInUsername = sessionStorage.getItem('loggedInUser');
+            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') {
+                showNotification('Operation not permitted.', 'error');
+                return;
+            }
+            const accounts = getAccountsData();
+            const userAccount = accounts.find(acc => acc.username === loggedInUsername);
+            if (!userAccount) {
+                showNotification('User account not found. Cannot delete.', 'error');
+                performLogout(false);
+                return;
+            }
+            const enteredPassword = prompt(`To delete your account '${loggedInUsername}', please enter your password.\nWARNING: This action is IRREVERSIBLE and will delete all your scan data.`);
+            if (enteredPassword === null) {
+                showNotification('Account deletion cancelled.', 'info');
+                return;
+            }
+            if (enteredPassword === userAccount.password) {
+                if (confirm(`FINAL CONFIRMATION: Are you absolutely sure you want to delete account '${loggedInUsername}' and all its data?`)) {
+                    const updatedAccounts = accounts.filter(acc => acc.username !== loggedInUsername);
+                    saveAccountsData(updatedAccounts);
+                    showNotification(`Account '${loggedInUsername}' and all its data have been deleted.`, 'success');
+                    performLogout();
+                } else {
+                    showNotification('Account deletion cancelled (final confirmation).', 'info');
+                }
+            } else {
+                showNotification('Incorrect password. Account deletion aborted.', 'error');
+            }
+        });
+
+        // --- Admin User Management Functions ---
+        function populateAdminUserList() {
+            adminUserListEl.innerHTML = '';
+            const accounts = getAccountsData();
+            const userAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
+            if (userAccounts.length === 0) {
+                adminUserListEl.innerHTML = '<li>No user accounts to manage.</li>';
+                return;
+            }
+            userAccounts.forEach(user => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <span class="user-info-admin">User: ${user.username}</span>
+                    <div class="user-actions-admin">
+                        <button class="button-secondary change-username-btn" data-username="${user.username}">Change Username</button>
+                        <button class="button-secondary change-password-btn" data-username="${user.username}">Change Password</button>
+                        <button class="button-danger delete-user-btn" data-username="${user.username}">Delete Account</button>
+                    </div>
+                `;
+                adminUserListEl.appendChild(listItem);
+            });
+            document.querySelectorAll('.change-username-btn').forEach(button => { button.addEventListener('click', (e) => adminChangeUsernameHandler(e.target.dataset.username)); });
+            document.querySelectorAll('.change-password-btn').forEach(button => { button.addEventListener('click', (e) => adminChangePasswordHandler(e.target.dataset.username)); });
+            document.querySelectorAll('.delete-user-btn').forEach(button => { button.addEventListener('click', (e) => adminDeleteUserHandler(e.target.dataset.username)); });
+        }
+
+        function adminPromptForPassword() {
+            return prompt("Admin action requires your password. Please enter your admin password:");
+        }
+
+        function adminChangeUsernameHandler(usernameToChange) {
+            const adminPassword = adminPromptForPassword();
+            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
+            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
+            const newUsername = prompt(`Enter new username for '${usernameToChange}':`);
+            if (!newUsername || newUsername.trim() === "") { showNotification("New username cannot be empty. Action cancelled.", "info"); return; }
+            const trimmedNewUsername = newUsername.trim();
+            if (trimmedNewUsername === ADMIN_USERNAME) { showNotification("Cannot change username to the admin username.", "error"); return; }
+            const accounts = getAccountsData();
+            if (accounts.some(acc => acc.username === trimmedNewUsername && acc.username !== usernameToChange)) { showNotification(`Username "${trimmedNewUsername}" is already taken.`, "error"); return; }
+            const userAccountIndex = accounts.findIndex(acc => acc.username === usernameToChange);
+if (userAccountIndex !== -1) {
+                accounts[userAccountIndex].username = trimmedNewUsername;
+                saveAccountsData(accounts);
+                showNotification(`Username for '${usernameToChange}' changed to '${trimmedNewUsername}'.`, "success");
+                populateAdminUserList();
+                loadInitialDataForAdmin();
+            } else {
+                showNotification(`User '${usernameToChange}' not found.`, "error");
+            }
+        }
+
+        function adminChangePasswordHandler(usernameToChange) {
+            const adminPassword = adminPromptForPassword();
+            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
+            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
+            const newPassword = prompt(`Enter new password for user '${usernameToChange}':`);
+            if (!newPassword) { showNotification("New password cannot be empty. Action cancelled.", "info"); return; }
+            const confirmNewPassword = prompt(`Confirm new password for user '${usernameToChange}':`);
+            if (newPassword !== confirmNewPassword) { showNotification("Passwords do not match. Password not changed.", "error"); return; }
+            const accounts = getAccountsData();
+            const userAccountIndex = accounts.findIndex(acc => acc.username === usernameToChange);
+            if (userAccountIndex !== -1) {
+                accounts[userAccountIndex].password = newPassword;
+                saveAccountsData(accounts);
+                showNotification(`Password for user '${usernameToChange}' has been changed.`, "success");
+            } else {
+                showNotification(`User '${usernameToChange}' not found.`, "error");
+            }
+        }
+
+        function adminDeleteUserHandler(usernameToDelete) {
+            const adminPassword = adminPromptForPassword();
+            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
+            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
+            if (!confirm(`Are you sure you want to delete the account for user '${usernameToDelete}'? This action is IRREVERSIBLE.`)) { showNotification("Account deletion cancelled.", "info"); return; }
+            if (!confirm(`FINAL CONFIRMATION: Delete user '${usernameToDelete}' and all their data?`)) { showNotification("Account deletion cancelled (final confirmation).", "info"); return; }
+            let accounts = getAccountsData();
+            const updatedAccounts = accounts.filter(acc => acc.username !== usernameToDelete);
+            if (accounts.length === updatedAccounts.length) { showNotification(`User '${usernameToDelete}' not found.`, "error"); return; }
+            saveAccountsData(updatedAccounts);
+            showNotification(`Account for user '${usernameToDelete}' and all their data have been deleted.`, "success");
+            populateAdminUserList();
+            loadInitialDataForAdmin();
+        }
+
+        // --- Initialization and Account Limit Check ---
+        function checkAccountLimit() {
+            const accounts = getAccountsData();
+            const userCreatableAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
+            const limitReached = userCreatableAccounts.length >= MAX_ACCOUNTS;
+            signupButton.disabled = limitReached;
+            showSignupLink.classList.toggle('disabled-link', limitReached);
+            signupMaxAccountsMsg.style.display = limitReached ? 'block' : 'none';
+            loginMaxAccountsMsg.style.display = (limitReached && userCreatableAccounts.length > 0) ? 'block' : 'none';
+        }
+
+        function initializeApp() {
+            const loggedInUser = sessionStorage.getItem('loggedInUser');
+            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
+            if (loggedInUser) {
+                authContainer.style.display = 'none';
+                mainApp.style.display = 'block';
+                if (isAdmin) { loadInitialDataForAdmin(); } else { loadInitialData(); }
+            } else {
+                setupAdminUI(false);
+                authContainer.style.display = 'flex';
+                mainApp.style.display = 'none';
+                loadingScreen.style.display = 'none';
+                loadingScreen.classList.add('hidden');
+                checkAccountLimit();
+                const accounts = getAccountsData();
+                if (accounts.filter(acc => acc.username !== ADMIN_USERNAME).length === 0 && !signupFormEl.classList.contains('active')) {
+                    signupFormEl.classList.add('active');
+                    loginFormEl.classList.remove('active');
+                } else if (!loginFormEl.classList.contains('active') && !signupFormEl.classList.contains('active')) {
+                    loginFormEl.classList.add('active');
+                    signupFormEl.classList.remove('active');
+                }
+                document.getElementById('login-username').value = '';
+                document.getElementById('login-password').value = '';
+                document.getElementById('signup-username').value = '';
+                document.getElementById('signup-password').value = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadingScreen.style.display = 'flex';
+            loadingScreen.classList.remove('hidden');
+            setTimeout(() => {
+                loadingScreen.classList.add('hidden');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    initializeApp();
+                }, 500);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
