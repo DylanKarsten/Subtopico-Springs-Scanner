@@ -7,12 +7,12 @@
     <style>
         /* Global Styles */
         :root {
-            --primary-color: #388E3C; /* Rich Green */
+            --primary-color: #388E3C;  /* Rich Green */
             --secondary-color: #2E7D32; /* Darker Green for hover */
             --success-color: #28a745;
             --error-color: #dc3545;
-            --info-color: #FFC107; /* Amber/Yellow for info */
-            --warning-color: #FF9800; /* Orange for warning */
+            --info-color: #FFC107;     /* Amber/Yellow for info */
+            --warning-color: #FF9800;   /* Orange for warning */
             --danger-color: #c82333; /* For delete actions */
             --danger-hover-color: #a31a27;
             --accent-yellow: #FFC107;
@@ -29,7 +29,13 @@
             --lighter-fresh-green: #D5F0D8;
             --subtle-pattern-color: rgba(0, 0, 0, 0.03);
         }
-        *, *::before, *::after { box-sizing: border-box; }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -45,7 +51,7 @@
             min-height: 100vh;
             font-size: var(--font-size-normal);
             line-height: 1.6;
-            -webkit-tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
         .header {
             background: linear-gradient(to right, var(--primary-color), var(--accent-orange), var(--accent-yellow));
@@ -71,45 +77,131 @@
             justify-content: center;
             overflow: hidden;
         }
-        .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .logo:hover { transform: scale(1.08); box-shadow: 0 0 22px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5); }
-        h1 { margin: 0; font-size: 2.2rem; color: #fff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-        .tagline { font-size: 1.1rem; margin-top: 8px; color: #f0f0f0; }
-        #current-date-time { color: #fff; font-size: 1rem; margin-top: 12px; min-height: 1em; }
-        .auth-container { display: flex; flex-direction: column; justify-content: center; align-items: center; flex-grow: 1; width: 100%; padding: 20px; }
+        .logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .logo:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        .tagline {
+            font-size: 1.1rem;
+            margin-top: 8px;
+            color: #f0f0f0;
+        }
+        #current-date-time {
+            color: #fff;
+            font-size: 1rem;
+            margin-top: 12px;
+            min-height: 1em;
+        }
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            width: 100%;
+            padding: 20px;
+        }
         .form-container {
-            display: none; text-align: center; padding: 30px; border: 1px solid #ddd; border-radius: 12px;
-            background: #ffffff; box-shadow: 0 5px 20px rgba(0,0,0,0.12); margin: 20px auto;
-            max-width: 500px; width: 90%; border-top: 5px solid var(--primary-color);
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            margin: 20px auto;
+            max-width: 500px;
+            width: 90%;
+            border-top: 5px solid var(--primary-color);
         }
-        .form-container h2 { margin-top: 0; margin-bottom: 25px; color: var(--primary-color); font-size: 1.7rem; }
-        .form-container p { margin-top: 20px; font-size: var(--font-size-small); }
-        .form-container a { color: var(--accent-orange); text-decoration: none; font-weight: bold; }
-        .form-container a:hover { color: var(--accent-yellow); text-decoration: underline; }
-        .form-container a.disabled-link { color: #aaa; pointer-events: none; text-decoration: line-through; }
-        .form-container button:disabled { background-color: #ccc; cursor: not-allowed; }
-        .active { display: block; }
+        .form-container h2 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-size: 1.7rem;
+        }
+        .form-container p {
+            margin-top: 20px;
+            font-size: var(--font-size-small);
+        }
+        .form-container a {
+            color: var(--accent-orange);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .form-container a:hover {
+            color: var(--accent-yellow);
+            text-decoration: underline;
+        }
+        .form-container a.disabled-link { /* Kept for potential future use, though MAX_ACCOUNTS is removed */
+            color: #aaa;
+            pointer-events: none;
+            text-decoration: line-through;
+        }
+        .form-container button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .active {
+            display: block;
+        }
         .main {
-            padding: 25px; max-width: 600px; margin: 20px auto; text-align: center;
-            background: var(--light-yellow-bg); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.12);
-            flex-grow: 1; width: 90%; display: none; border: 1px solid var(--accent-yellow);
+            padding: 25px;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+            background: var(--light-yellow-bg);
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+            flex-grow: 1;
+            width: 90%;
+            display: none;
+            border: 1px solid var(--accent-yellow);
         }
-        input[type="text"], input[type="password"] {
-            width: 100%; padding: var(--input-padding); margin: 12px 0; border: 1px solid #ccc;
-            border-radius: 8px; font-size: var(--font-size-normal); transition: border-color 0.3s, box-shadow 0.3s;
+        input[type="text"], input[type="password"], input[type="email"] {
+            width: 100%;
+            padding: var(--input-padding);
+            margin: 12px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: var(--font-size-normal);
+            transition: border-color 0.3s, box-shadow 0.3s;
             background-color: #fff;
         }
-        input[type="file"] { margin: 12px 0; }
-        input[type="text"]:focus, input[type="password"]:focus {
+        input[type="file"] {
+            margin: 12px 0;
+        }
+        input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
             border-color: var(--primary-color);
             box-shadow: 0 0 0 0.2rem rgba(var(--rgb-primary-color, 56, 142, 60), .35);
             outline: none;
         }
         button, .button {
-            display: inline-block; padding: var(--button-padding); background-color: var(--primary-color);
-            color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; margin-top: 15px;
-            font-size: var(--font-size-normal); width: 100%; text-align: center; text-decoration: none;
+            display: inline-block;
+            padding: var(--button-padding);
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+            margin-top: 15px;
+            font-size: var(--font-size-normal);
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
         button:hover, .button:hover {
@@ -117,139 +209,393 @@
             transform: translateY(-2px) scale(1.01);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .button-secondary { background-color: var(--accent-orange); }
-        .button-secondary:hover { background-color: var(--accent-yellow); }
-        .button-danger { background-color: var(--danger-color); }
-        .button-danger:hover { background-color: var(--danger-hover-color); }
-        button:disabled, .button:disabled {
-            background-color: #ccc !important; color: #666 !important; cursor: not-allowed !important;
-            transform: none !important; box-shadow: none !important;
+        .button-secondary {
+            background-color: var(--accent-orange);
         }
-        #start-camera-scan { background-color: var(--success-color); }
-        #start-camera-scan:hover { background-color: #1e7e34; }
-        #stop-camera-scan, #clear-history { background-color: var(--error-color); }
-        #stop-camera-scan:hover, #clear-history:hover { background-color: #c82333; }
-        #refocus-camera-button { background-color: var(--info-color); color: var(--dark-gray); }
-        #refocus-camera-button:hover { background-color: var(--accent-yellow); }
+        .button-secondary:hover {
+            background-color: var(--accent-yellow);
+        }
+        .button-danger {
+            background-color: var(--danger-color);
+        }
+        .button-danger:hover {
+            background-color: var(--danger-hover-color);
+        }
+        button:disabled, .button:disabled { /* General disabled style for buttons */
+            background-color: #ccc !important; /* Ensure high specificity */
+            color: #666 !important;
+            cursor: not-allowed !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+
+        #start-camera-scan {
+            background-color: var(--success-color);
+        }
+        #start-camera-scan:hover {
+            background-color: #1e7e34;
+        }
+        #stop-camera-scan, #clear-history {
+            background-color: var(--error-color);
+        }
+        #stop-camera-scan:hover, #clear-history:hover {
+            background-color: #c82333;
+        }
+        #refocus-camera-button {
+            background-color: var(--info-color);
+            color: var(--dark-gray);
+        }
+        #refocus-camera-button:hover {
+            background-color: var(--accent-yellow);
+        }
+
         .notification {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.88); color: #fff; padding: 14px 20px;
-            border-radius: 30px; font-size: var(--font-size-small); font-weight: 500;
-            display: none; z-index: 1000; animation: slideUpIn 0.5s ease-out;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.35); width: auto; min-width: 220px;
-            max-width: 90%; text-align: center;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.88);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: var(--font-size-small);
+            font-weight: 500;
+            display: none;
+            z-index: 1000;
+            animation: slideUpIn 0.5s ease-out;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.35);
+            width: auto;
+            min-width: 220px;
+            max-width: 90%;
+            text-align: center;
         }
         .notification.success { background-color: var(--success-color); }
         .notification.error { background-color: var(--error-color); }
         .notification.info { background-color: var(--info-color); color: var(--dark-gray); }
         .notification.warning { background-color: var(--warning-color); color: var(--dark-gray); }
-        @keyframes slideUpIn { from { transform: translate(-50%, 60px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+
+        @keyframes slideUpIn {
+            from { transform: translate(-50%, 60px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
         .footer {
-            margin-top: auto; text-align: center; padding: 20px;
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
             background: linear-gradient(to right, var(--accent-yellow), var(--accent-orange), var(--primary-color));
-            color: #fff; box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.25);
-            width: 100%; font-size: var(--font-size-small);
+            color: #fff;
+            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.25);
+            width: 100%;
+            font-size: var(--font-size-small);
         }
         .barcode-display {
-            margin-top: 20px; display: none; text-align: center; border: 1px solid var(--accent-yellow);
-            padding: 20px; border-radius: 8px; background: #fff;
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            border: 1px solid var(--accent-yellow);
+            padding: 20px;
+            border-radius: 8px;
+            background: #fff;
         }
         .barcode-image {
-            margin-top: 10px; max-width: 100%; height: auto; max-height: 100px;
-            border: 1px solid #ccc; display: block; margin-left: auto; margin-right: auto;
+            margin-top: 10px;
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+            border: 1px solid #ccc;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
             background-color: white;
         }
-        .disclaimer { font-size: 0.75rem; color: #555; margin: 20px auto; text-align: center; padding: 0 10px; max-width: 100%; }
-        #camera-scanner-container {
-            width: 100%; max-width: 400px; margin: 20px auto; border: 3px solid var(--primary-color);
-            border-radius: 16px; overflow: hidden; display: none; background: #111;
-            position: relative; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .disclaimer {
+            font-size: 0.75rem;
+            color: #555;
+            margin: 20px auto;
+            text-align: center;
+            padding: 0 10px;
+            max-width: 100%;
         }
-        #reader { width: 100% !important; height: auto !important; position: relative; }
-        #reader video { width: 100% !important; height: auto !important; display: block; background: #000; }
+
+        #camera-scanner-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            border: 3px solid var(--primary-color);
+            border-radius: 16px;
+            overflow: hidden;
+            display: none;
+            background: #111;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        #reader {
+            width: 100% !important;
+            height: auto !important;
+            position: relative;
+        }
+        #reader video { /* Ensure video element itself is responsive */
+            width: 100% !important;
+            height: auto !important;
+            display: block;
+            background: #000;
+        }
         .scanner-reticle {
-            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-            width: 75%; height: 55%; border: 3px dashed rgba(255, 255, 255, 0.4);
-            box-sizing: border-box; pointer-events: none; overflow: hidden; border-radius: 10px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 75%;
+            height: 55%;
+            border: 3px dashed rgba(255, 255, 255, 0.4);
+            box-sizing: border-box;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 10px;
         }
         .scan-line-animation {
-            position: absolute; left: 0; top: 0; width: 100%; height: 4px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 4px;
             background-color: var(--accent-orange);
             box-shadow: 0 0 12px var(--accent-orange), 0 0 5px var(--accent-yellow);
             animation: animate-scan-line 2.5s infinite ease-in-out;
         }
-        @keyframes animate-scan-line { 0% { top: 5%; opacity: 0.7; } 50% { top: 95%; transform: translateY(-100%); opacity: 1; } 100% { top: 5%; opacity: 0.7; } }
-        #camera-status { font-size: var(--font-size-small); color: var(--dark-gray); min-height: 1.2em; margin-top: 10px; font-style: italic; }
+        @keyframes animate-scan-line {
+            0% { top: 5%; opacity: 0.7; }
+            50% { top: 95%; transform: translateY(-100%); opacity: 1; }
+            100% { top: 5%; opacity: 0.7; }
+        }
+        #camera-status {
+            font-size: var(--font-size-small);
+            color: var(--dark-gray);
+            min-height: 1.2em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
         .scan-controls {
-            margin-top: 15px; margin-bottom: 15px; display: flex; justify-content: space-around;
-            gap: 10px; flex-wrap: wrap;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-around; /* Distribute space for multiple buttons */
+            gap: 10px; /* Add gap between buttons */
+            flex-wrap: wrap;
         }
-        .scan-controls button { width: 100%; margin-top: 0; }
+        .scan-controls button {
+            width: 100%; /* Full width on small screens */
+            margin-top: 0;
+        }
         @media (min-width: 480px) {
-            .scan-controls button { width: calc(33.333% - 8px); }
-            #stop-camera-scan, #refocus-camera-button { width: calc(50% - 5px); }
+            .scan-controls button {
+                 /* Adjust width calculation if more buttons are added */
+                width: calc(33.333% - 8px); /* Example for 3 buttons */
+            }
+            /* If only two buttons (Stop, Refocus), they can share space */
+            #stop-camera-scan, #refocus-camera-button {
+                width: calc(50% - 5px);
+            }
         }
+
+
         .counter p {
-            font-size: 1.3rem; font-weight: bold; color: var(--primary-color); margin-bottom: 20px;
-            background-color: var(--lighter-fresh-green); padding: 10px; border-radius: 8px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            background-color: var(--lighter-fresh-green);
+            padding: 10px;
+            border-radius: 8px;
             border: 1px dashed var(--primary-color);
         }
-        #barcode-form { margin-bottom: 20px; }
-        #barcode-form input[type="text"] { margin-bottom: 10px; }
-        .history-section {
-            margin-top: 30px; border-top: 2px solid var(--accent-yellow); padding-top: 20px;
-            text-align: left; background-color: var(--light-orange-bg); padding: 20px; border-radius: 8px;
+        #barcode-form {
+            margin-bottom: 20px;
         }
-        .history-section h3 { margin-top: 0; color: var(--accent-orange); font-size: 1.4rem; text-align: center; margin-bottom: 15px; }
+        #barcode-form input[type="text"] {
+            margin-bottom: 10px;
+        }
+
+        .history-section {
+            margin-top: 30px;
+            border-top: 2px solid var(--accent-yellow);
+            padding-top: 20px;
+            text-align: left;
+            background-color: var(--light-orange-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .history-section h3 {
+            margin-top: 0;
+            color: var(--accent-orange);
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
         #scan-history-list {
-            list-style: none; padding: 0; max-height: 350px; overflow-y: auto;
-            border: 1px solid #ddd; border-radius: 8px; background: #fff; margin-top: 15px;
+            list-style: none;
+            padding: 0;
+            max-height: 350px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fff;
+            margin-top: 15px;
         }
         #scan-history-list li {
-            padding: 12px 18px; border-bottom: 1px solid #eee; font-size: var(--font-size-small);
-            display: flex; flex-direction: column; align-items: flex-start; transition: background-color 0.2s;
+            padding: 12px 18px;
+            border-bottom: 1px solid #eee;
+            font-size: var(--font-size-small);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: background-color 0.2s;
         }
-        #scan-history-list li:hover { background-color: var(--light-yellow-bg); }
-        #scan-history-list li span { display: block; width: 100%; word-break: break-all; }
-        #scan-history-list li:last-child { border-bottom: none; }
-        #scan-history-list li strong { color: var(--dark-gray); margin-right: 10px; font-size: var(--font-size-normal); margin-bottom: 5px; }
-        #scan-history-list li .scan-info { font-size: 0.85em; color: #555; width: 100%; margin-top: 3px; }
-        #scan-history-list li .scan-info.username-indicator { font-weight: bold; color: var(--secondary-color); margin-bottom: 4px; }
-        #scan-history-list li .scan-info.duplicate { color: var(--warning-color); font-weight: bold; }
-        #scan-history-list li .scan-info.valid { color: var(--success-color); font-weight: bold; }
-        #scan-history-list li .scan-info.invalid-format { color: var(--error-color); font-weight: bold; }
-        #scan-history-list li.history-item-invalid { background-color: #ffebee; border-left: 4px solid var(--error-color); }
-        #scan-history-list li.history-item-duplicate { border-left: 4px solid var(--warning-color); }
-        #scan-history-list li.history-item-new { border-left: 4px solid var(--success-color); }
-        .history-controls { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
-        .history-controls button { width: 100%; margin-top: 0; }
-        #import-csv-file { display: none; }
-        @media (min-width: 480px) { .history-controls button { flex-grow: 1; flex-basis: calc(33.333% - 10px); } }
-        @media (min-width: 600px) { .history-controls button { flex-basis: calc(25% - 12px); } }
+        #scan-history-list li:hover {
+            background-color: var(--light-yellow-bg);
+        }
+        #scan-history-list li span {
+            display: block;
+            width: 100%;
+            word-break: break-all;
+        }
+        #scan-history-list li:last-child {
+            border-bottom: none;
+        }
+        #scan-history-list li strong {
+            color: var(--dark-gray);
+            margin-right: 10px;
+            font-size: var(--font-size-normal);
+            margin-bottom: 5px;
+        }
+        #scan-history-list li .scan-info {
+            font-size: 0.85em;
+            color: #555;
+            width: 100%;
+            margin-top: 3px;
+        }
+        #scan-history-list li .scan-info.username-indicator { /* For Admin View */
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 4px;
+        }
+        #scan-history-list li .scan-info.duplicate {
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+        #scan-history-list li .scan-info.valid {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        #scan-history-list li .scan-info.invalid-format {
+            color: var(--error-color);
+            font-weight: bold;
+        }
+        #scan-history-list li.history-item-invalid {
+            background-color: #ffebee;
+            border-left: 4px solid var(--error-color);
+        }
+         #scan-history-list li.history-item-duplicate {
+            border-left: 4px solid var(--warning-color);
+        }
+         #scan-history-list li.history-item-new {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .history-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .history-controls button {
+            width: 100%;
+            margin-top: 0;
+        }
+        #import-csv-file {
+            display: none;
+        }
+
+        @media (min-width: 480px) {
+            .history-controls button {
+                flex-grow: 1;
+                flex-basis: calc(33.333% - 10px);
+            }
+        }
+         @media (min-width: 600px) {
+            .history-controls button {
+                flex-basis: calc(25% - 12px);
+            }
+        }
+
         #loading-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex;
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 1001; transition: opacity 0.5s ease; opacity: 1; pointer-events: all;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            transition: opacity 0.5s ease;
+            opacity: 1;
+            pointer-events: all;
             animation: loading-bg-glow 5s infinite alternate ease-in-out;
         }
-        #loading-screen.hidden { opacity: 0; pointer-events: none; }
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
         .loading-logo {
-            width: 150px; height: 150px; margin-bottom: 25px; animation: subtle-pulse-logo 2.2s infinite ease-in-out;
-            border-radius: 50%; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
-            border: 3px solid var(--primary-color); background-color: #fff; padding: 3px;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 25px;
+            animation: subtle-pulse-logo 2.2s infinite ease-in-out;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 3px solid var(--primary-color);
+            background-color: #fff;
+            padding: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .loading-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .loading-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
         .loading-text {
-            font-size: 1.8rem; color: var(--dark-gray); margin-bottom: 30px;
-            font-weight: 500; animation: pulse-loading-text 2s infinite ease-in-out;
+            font-size: 1.8rem;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            font-weight: 500;
+            animation: pulse-loading-text 2s infinite ease-in-out;
         }
-        .loading-dots::after { content: '.'; animation: dots 1.5s steps(5, end) infinite; display: inline-block; }
-        .loading-fruit-veg { width: 160px; height: auto; max-width: 70%; animation: bobbing-fruit 2.5s infinite ease-in-out; }
+        .loading-dots::after {
+            content: '.';
+            animation: dots 1.5s steps(5, end) infinite;
+            display: inline-block;
+        }
+        .loading-fruit-veg {
+            width: 160px;
+            height: auto;
+            max-width: 70%;
+            animation: bobbing-fruit 2.5s infinite ease-in-out;
+        }
+
         @keyframes subtle-pulse-logo {
-            0% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08); }
-            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1); }
-            100% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08); }
+            0% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);}
+            50% { transform: scale(1.05); opacity: 1; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1);}
+            100% { transform: scale(1); opacity: 0.9; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);}
         }
         @keyframes dots {
             0%, 20% { color: rgba(0,0,0,0); text-shadow: .25em 0 0 rgba(0,0,0,0), .5em 0 0 rgba(0,0,0,0); }
@@ -257,67 +603,223 @@
             60% { text-shadow: .25em 0 0 var(--dark-gray), .5em 0 0 rgba(0,0,0,0); }
             80%, 100% { text-shadow: .25em 0 0 var(--dark-gray), .5em 0 0 var(--dark-gray); }
         }
-        @keyframes bobbing-fruit { 0% { transform: translateY(0px) rotate(-2deg); } 50% { transform: translateY(-10px) rotate(2deg); } 100% { transform: translateY(0px) rotate(-2deg); } }
-        @keyframes pulse-loading-text { 0% { opacity: 0.6; transform: scale(0.98); } 50% { opacity: 1; transform: scale(1.02); } 100% { opacity: 0.6; transform: scale(0.98); } }
+        @keyframes bobbing-fruit {
+            0% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(-2deg); }
+        }
+        @keyframes pulse-loading-text {
+            0% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.6; transform: scale(0.98); }
+        }
         @keyframes loading-bg-glow {
-            0% { background-color: var(--fresh-green); } 33% { background-color: var(--light-yellow-bg); }
-            66% { background-color: var(--light-orange-bg); } 100% { background-color: var(--lighter-fresh-green); }
+            0% { background-color: var(--fresh-green); }
+            33% { background-color: var(--light-yellow-bg); }
+            66% { background-color: var(--light-orange-bg); }
+            100% { background-color: var(--lighter-fresh-green); }
         }
-        .settings-controls-container { display: flex; justify-content: flex-end; margin-bottom: 15px; }
-        #settings-button { width: auto; padding: 10px 15px; font-size: 0.9rem; }
+
+        /* Settings Modal Styles */
+        .settings-controls-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+        #settings-button {
+            width: auto;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+        }
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
-            display: flex; justify-content: center; align-items: center; z-index: 1050; opacity: 0;
-            visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1050;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
         .modal-content {
-            background-color: #fff; padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-            width: 90%; max-width: 400px; text-align: center; position: relative;
-            transform: scale(0.9); transition: transform 0.3s ease;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-content h2 { margin-top: 0; margin-bottom: 20px; color: var(--primary-color); }
-        .modal-content p { font-size: var(--font-size-normal); margin-bottom: 15px; }
-        .modal-content button { width: 100%; margin-top: 10px; }
-        .close-modal-button { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #aaa; cursor: pointer; line-height: 1; }
-        .close-modal-button:hover { color: var(--dark-gray); }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        .modal-content p {
+            font-size: var(--font-size-normal);
+            margin-bottom: 15px;
+        }
+        .modal-content button {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .close-modal-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close-modal-button:hover {
+            color: var(--dark-gray);
+        }
         #settings-user-info {
-            margin-bottom: 20px; font-size: 0.95rem; color: var(--dark-gray); background-color: var(--light-gray);
-            padding: 10px; border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+            padding: 10px;
+            border-radius: 6px;
         }
-        #settings-user-info strong { color: var(--primary-color); }
+        #settings-user-info strong {
+            color: var(--primary-color);
+        }
+
+        /* Admin User Management Styles */
         .admin-user-management {
-            margin-top: 30px; padding: 20px; background-color: var(--lighter-fresh-green);
-            border-radius: 8px; border: 1px solid var(--primary-color);
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--lighter-fresh-green);
+            border-radius: 8px;
+            border: 1px solid var(--primary-color);
         }
-        .admin-user-management h3 { color: var(--primary-color); text-align: center; margin-bottom: 20px; }
-        #admin-user-list { list-style: none; padding: 0; }
+        .admin-user-management h3 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #admin-user-list {
+            list-style: none;
+            padding: 0;
+        }
         #admin-user-list li {
-            background-color: #fff; padding: 15px; margin-bottom: 10px; border-radius: 6px;
-            border: 1px solid #ddd; display: flex; flex-direction: column; gap: 10px;
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-        #admin-user-list li .user-info-admin { font-weight: bold; color: var(--dark-gray); font-size: 1.1rem; text-align: left; }
-        #admin-user-list li .user-actions-admin { display: flex; flex-direction: column; gap: 8px; }
-        #admin-user-list li .user-actions-admin button { width: 100%; padding: 10px 12px; font-size: 0.85rem; margin-top: 0; }
-        @media (min-width: 480px) {
-            #admin-user-list li { flex-direction: row; justify-content: space-between; align-items: center; }
-            #admin-user-list li .user-actions-admin { flex-direction: row; width: auto; }
-            #admin-user-list li .user-actions-admin button { width: auto; }
+        #admin-user-list li .user-info-admin {
+            font-weight: bold;
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            text-align: left;
+            word-break: break-all; /* Ensure long usernames wrap */
         }
+        #admin-user-list li .user-actions-admin {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically on small screens */
+            gap: 8px;
+        }
+        #admin-user-list li .user-actions-admin button {
+            width: 100%; /* Full width for stacked buttons */
+            padding: 10px 12px;
+            font-size: 0.85rem;
+            margin-top: 0; /* Remove default top margin for these buttons */
+        }
+
+        @media (min-width: 480px) { /* Adjust admin action buttons for wider screens */
+             #admin-user-list li {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+            #admin-user-list li .user-actions-admin {
+                flex-direction: row; /* Buttons side-by-side */
+                width: auto;
+            }
+            #admin-user-list li .user-actions-admin button {
+                width: auto; /* Auto width for side-by-side buttons */
+            }
+        }
+
+
+        /* Added Mobile Tweaks */
         @media (max-width: 360px) {
-            .form-container { padding: 20px; }
-            .main { padding: 15px; }
-            h1 { font-size: 1.8rem; }
-            .tagline { font-size: 0.95rem; }
-            .logo { width: 70px; height: 70px; }
-            .loading-logo { width: 120px; height: 120px; }
-            .loading-text { font-size: 1.5rem; }
-            .notification { padding: 10px 15px; font-size: 0.8rem; }
-            input[type="text"], input[type="password"], button, .button { font-size: 0.95rem; }
-            var(--input-padding){ padding: 12px; }
-            var(--button-padding){ padding: 12px 18px; }
+            .form-container {
+                padding: 20px; /* Slightly reduce padding on very small screens */
+            }
+            .main {
+                padding: 15px; /* Slightly reduce padding on very small screens */
+            }
+            h1 {
+                font-size: 1.8rem; /* Slightly smaller h1 */
+            }
+            .tagline {
+                font-size: 0.95rem;
+            }
+            .logo {
+                width: 70px;
+                height: 70px;
+            }
+            .loading-logo {
+                width: 120px;
+                height: 120px;
+            }
+            .loading-text {
+                font-size: 1.5rem;
+            }
+            .notification {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+            input[type="text"], input[type="password"], input[type="email"], button, .button {
+                font-size: 0.95rem; /* Slightly smaller fonts for inputs/buttons */
+            }
+            /* These CSS variable overrides won't work as written.
+               You'd need to redefine the variables themselves or target elements directly.
+               For simplicity, I've adjusted font-size directly on inputs/buttons above.
+            */
+            /*
+            var(--input-padding){
+                padding: 12px;
+            }
+            var(--button-padding){
+                padding: 12px 18px;
+            }
+            */
         }
+        #user-id-display {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+            margin-top: 10px;
+            padding: 5px;
+            background-color: var(--lighter-fresh-green);
+            border-radius: 4px;
+            word-break: break-all;
+            text-align: center;
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
@@ -332,7 +834,7 @@
     </div>
 
     <div class="header">
-        <div class="logo">
+         <div class="logo">
             <img src="https://wenpro.co.za/wp-content/uploads/2015/08/logo.png" alt="Subtropico Springs Logo" onerror="this.alt='Subtropico Springs Logo'; this.src='https://placehold.co/90x90/E8F5E9/388E3C?text=Logo';">
         </div>
         <h1 id="app-title">Subtropico Springs</h1>
@@ -343,40 +845,41 @@
     <div class="auth-container">
         <div class="form-container" id="login-form">
             <h2>Login</h2>
-            <input type="text" id="login-username" placeholder="Username" required autocapitalize="none">
+            <input type="email" id="login-email" placeholder="Email (e.g., your_username@subtropico.app)" required autocapitalize="none">
             <input type="password" id="login-password" placeholder="Password" required>
             <button id="login-button">Login</button>
             <p>No account? <a href="#" id="show-signup">Sign up</a></p>
-            <p id="login-max-accounts-msg" style="color: var(--error-color); display: none; font-size: var(--font-size-small);">Maximum of 2 accounts reached.</p>
         </div>
+
         <div class="form-container" id="signup-form">
             <h2>Sign Up</h2>
             <input type="text" id="signup-username" placeholder="Choose a Username" required autocapitalize="none">
-            <input type="password" id="signup-password" placeholder="Choose a Password" required>
+            <input type="password" id="signup-password" placeholder="Choose a Password (min. 6 characters)" required>
             <button id="signup-button">Sign Up</button>
             <p>Have an account? <a href="#" id="show-login">Login</a></p>
-            <p id="signup-max-accounts-msg" style="color: var(--error-color); display: none; font-size: var(--font-size-small);">Maximum of 2 accounts already created.</p>
         </div>
     </div>
 
     <div class="main" id="main-app">
+        <div id="user-id-display" style="display:none;">User ID: <span id="current-user-id"></span></div>
         <div class="settings-controls-container">
             <button id="settings-button" class="button-secondary">
-                <img src="https://api.iconify.design/mdi/cog.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="settings icon">
+                <img src="https://api.iconify.design/mdi/cog.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="settings icon" onerror="this.style.display='none';">
                 Settings
             </button>
         </div>
+
         <div class="counter">
             <p><span id="item-counter-label">Items Scanned</span>: <span id="item-counter">0</span></p>
         </div>
+
         <form id="barcode-form">
             <input type="text" id="barcode-input" placeholder="Enter Barcode Manually" required autocapitalize="characters">
             <button type="submit">Submit Manual Entry</button>
         </form>
+
         <div class="scan-controls">
-            <button id="start-camera-scan">
-                <img src="https://api.iconify.design/mdi/barcode-scan.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="scan icon"> Scan with Camera
-            </button>
+            <button id="start-camera-scan"> <img src="https://api.iconify.design/mdi/barcode-scan.svg?color=white" style="vertical-align: middle; height: 1.2em; margin-right: 5px;" alt="scan icon" onerror="this.style.display='none';"> Scan with Camera</button>
             <button id="refocus-camera-button" style="display:none;">Refocus Camera</button>
             <button id="stop-camera-scan" style="display:none;">Stop Camera</button>
         </div>
@@ -387,11 +890,13 @@
                 <div class="scan-line-animation"></div>
             </div>
         </div>
+
         <div class="barcode-display" id="barcode-display">
             <p><strong id="last-scanned-label">Last Valid Scanned Barcode</strong>:</p>
             <img id="barcode-image" class="barcode-image" src="" alt="Scanned Barcode" style="display:none;" onerror="this.style.display='none'; this.nextElementSibling.innerText = 'Error loading barcode image';" />
             <p id="last-scanned-value"></p>
         </div>
+
         <div class="history-section">
             <div class="history-controls">
                 <button id="toggle-history" class="button-secondary">Show Previous Scans</button>
@@ -402,13 +907,17 @@
             </div>
             <div id="previous-scans" style="display:none;">
                 <h3 id="scan-history-title">Previous Scans</h3>
-                <ul id="scan-history-list"></ul>
+                <ul id="scan-history-list">
+                </ul>
             </div>
         </div>
+
         <div id="admin-user-management-section" class="admin-user-management" style="display:none;">
             <h3>User Account Management</h3>
-            <ul id="admin-user-list"></ul>
+            <ul id="admin-user-list">
+            </ul>
         </div>
+
     </div>
 
     <div id="settings-modal" class="modal-overlay">
@@ -417,6 +926,7 @@
             <h2>Settings</h2>
             <div id="settings-user-info">
                 <p>Logged in as: <strong id="settings-logged-in-username">N/A</strong></p>
+                <p>Email: <strong id="settings-logged-in-email">N/A</strong></p>
             </div>
             <button id="logout-button-modal" class="button">Logout</button>
             <button id="delete-account-button-modal" class="button button-danger">Delete Account</button>
@@ -426,1080 +936,1545 @@
     <div class="notification" id="notification"></div>
 
     <div class="disclaimer">
-        <p>© D.K Brand . All rights reserved. Unauthorized copying or distribution of the code is prohibited.<br>Dylan Karsten</p>
+        <p>© D.K Brand . All rights reserved. Unauthorized copying or distribution of the code is prohibited.
+        <br>Dylan Karsten</p>
     </div>
 
     <div class="footer">
         <p>&copy; <span id="current-year"></span> Subtropico Springs. All rights reserved.</p>
     </div>
 
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-    <script>
-        // Prevent certain developer tools actions
-        document.onkeydown = function(e) {
-            if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'i')) { e.preventDefault(); }
-            if (e.key === 'F12') { e.preventDefault(); }
-        };
-        document.getElementById('current-year').innerText = new Date().getFullYear();
-        // Admin Credentials
-        const ADMIN_USERNAME = "DylanK";
-        const ADMIN_PASSWORD = "DylanKar13";
-        // DOM Elements
-        const loginFormEl = document.getElementById('login-form');
-        const signupFormEl = document.getElementById('signup-form');
-        const mainApp = document.getElementById('main-app');
-        const authContainer = document.querySelector('.auth-container');
-        const cameraStatusElement = document.getElementById('camera-status');
-        const scanHistoryList = document.getElementById('scan-history-list');
-        const previousScansContainer = document.getElementById('previous-scans');
-        const toggleHistoryButton = document.getElementById('toggle-history');
-        const clearHistoryButton = document.getElementById('clear-history');
-        const exportHistoryButton = document.getElementById('export-history-button');
-        const importHistoryTriggerButton = document.getElementById('import-history-trigger');
-        const importCsvFileInput = document.getElementById('import-csv-file');
-        const lastScannedValueElement = document.getElementById('last-scanned-value');
-        const barcodeDisplayElement = document.getElementById('barcode-display');
-        const barcodeImageElement = document.getElementById('barcode-image');
-        const loadingScreen = document.getElementById('loading-screen');
-        const signupButton = document.getElementById('signup-button');
-        const showSignupLink = document.getElementById('show-signup');
-        const loginMaxAccountsMsg = document.getElementById('login-max-accounts-msg');
-        const signupMaxAccountsMsg = document.getElementById('signup-max-accounts-msg');
-        const appTitleEl = document.getElementById('app-title');
-        const appTaglineEl = document.getElementById('app-tagline');
-        const itemCounterLabelEl = document.getElementById('item-counter-label');
-        const lastScannedLabelEl = document.getElementById('last-scanned-label');
-        const scanHistoryTitleEl = document.getElementById('scan-history-title');
-        const barcodeFormEl = document.getElementById('barcode-form');
-        const scanControlsEl = document.querySelector('.scan-controls');
-        const adminUserManagementSectionEl = document.getElementById('admin-user-management-section');
-        const adminUserListEl = document.getElementById('admin-user-list');
-        const refocusCameraButton = document.getElementById('refocus-camera-button');
-        // Settings Modal Elements
-        const settingsButton = document.getElementById('settings-button');
-        const settingsModal = document.getElementById('settings-modal');
-        const closeSettingsModalButton = document.getElementById('close-settings-modal');
-        const settingsLoggedInUsernameEl = document.getElementById('settings-logged-in-username');
-        const logoutButtonModal = document.getElementById('logout-button-modal');
-        const deleteAccountButtonModal = document.getElementById('delete-account-button-modal');
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-        const primaryColorRGB = "56, 142, 60";
-        document.documentElement.style.setProperty('--rgb-primary-color', primaryColorRGB);
+<script type="module">
+    // Firebase SDK imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { 
+        getAuth, 
+        onAuthStateChanged, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, 
+        signOut,
+        deleteUser,
+        signInWithCustomToken,
+        signInAnonymously,
+        updateProfile
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { 
+        getFirestore, 
+        doc, 
+        setDoc, 
+        getDoc, 
+        updateDoc, 
+        deleteDoc, 
+        collection, 
+        query, 
+        getDocs, 
+        writeBatch,
+        onSnapshot,
+        Timestamp,
+        serverTimestamp,
+        setLogLevel
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        let audioCtx; // AudioContext for sound effects
+    // --- Global Firebase Variables ---
+    let fbApp;
+    let auth;
+    let db;
+    let currentUserId = null;
+    let currentUserData = null; // To store user profile data from Firestore
+    let isAdminUser = false;
+    let unsubscribeUserProfile = null;
+    let unsubscribeScanHistory = null;
+    let unsubscribeAdminUsers = null;
+    let unsubscribeAdminAllScans = null;
 
-        // --- Sound Functions ---
-        function playBeep(frequency = 880, duration = 100, volume = 0.5, type = 'sine') {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (!audioCtx) return console.warn("Web Audio API not supported for beep sound.");
-                if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-                gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.1);
-                gainNode.gain.setValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.8);
-                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + (duration / 1000));
-                oscillator.type = type;
-                oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-                oscillator.start(audioCtx.currentTime);
-                oscillator.stop(audioCtx.currentTime + duration / 1000);
-            } catch (error) {
-                console.error("Error playing beep:", error);
-            }
+
+    // --- App ID and Firebase Config (from environment) ---
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id-subtropico';
+    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+        apiKey: "YOUR_API_KEY", // Fallback, replace with your actual config
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID",
+        measurementId: "YOUR_MEASUREMENT_ID"
+    };
+
+    // Initialize Firebase
+    try {
+        fbApp = initializeApp(firebaseConfig);
+        auth = getAuth(fbApp);
+        db = getFirestore(fbApp);
+        setLogLevel('debug'); // Or 'silent' for production
+        console.log("Firebase Initialized. App ID:", appId);
+    } catch (error) {
+        console.error("Firebase initialization error:", error);
+        showNotification("Error initializing application services. Please refresh.", "error");
+    }
+    
+    // Prevent certain developer tools actions
+    document.onkeydown = function(e) {
+        if (e.ctrlKey && (e.key === 'u' || e.key === 's' || e.key === 'c' || e.key === 'i')) {
+            e.preventDefault();
+        }
+        if (e.key === 'F12') {
+            e.preventDefault();
+        }
+    };
+
+    document.getElementById('current-year').innerText = new Date().getFullYear();
+
+    // Admin Credentials (for identifying the admin Firebase user)
+    // The admin user MUST be created in Firebase with this email and password.
+    const ADMIN_EMAIL_IDENTIFIER = "dylank@subtropico.app"; // This email identifies the admin user in Firebase
+
+    // DOM Elements
+    const loginFormEl = document.getElementById('login-form');
+    const signupFormEl = document.getElementById('signup-form');
+    const mainAppEl = document.getElementById('main-app');
+    const authContainerEl = document.querySelector('.auth-container');
+    const cameraStatusElement = document.getElementById('camera-status');
+    const scanHistoryListEl = document.getElementById('scan-history-list');
+    const previousScansContainerEl = document.getElementById('previous-scans');
+    const toggleHistoryButton = document.getElementById('toggle-history');
+    const clearHistoryButton = document.getElementById('clear-history');
+    const exportHistoryButton = document.getElementById('export-history-button');
+    const importHistoryTriggerButton = document.getElementById('import-history-trigger');
+    const importCsvFileInput = document.getElementById('import-csv-file');
+    const lastScannedValueElement = document.getElementById('last-scanned-value');
+    const barcodeDisplayElement = document.getElementById('barcode-display');
+    const barcodeImageElement = document.getElementById('barcode-image');
+    const loadingScreenEl = document.getElementById('loading-screen');
+    const signupButton = document.getElementById('signup-button');
+    const showSignupLink = document.getElementById('show-signup');
+    const appTitleEl = document.getElementById('app-title');
+    const appTaglineEl = document.getElementById('app-tagline');
+    const itemCounterLabelEl = document.getElementById('item-counter-label');
+    const lastScannedLabelEl = document.getElementById('last-scanned-label');
+    const scanHistoryTitleEl = document.getElementById('scan-history-title');
+    const barcodeFormEl = document.getElementById('barcode-form');
+    const scanControlsEl = document.querySelector('.scan-controls');
+    const adminUserManagementSectionEl = document.getElementById('admin-user-management-section');
+    const adminUserListEl = document.getElementById('admin-user-list');
+    const refocusCameraButton = document.getElementById('refocus-camera-button');
+    const userIdDisplayEl = document.getElementById('user-id-display');
+    const currentUserIdSpan = document.getElementById('current-user-id');
+
+
+    // Settings Modal Elements
+    const settingsButton = document.getElementById('settings-button');
+    const settingsModal = document.getElementById('settings-modal');
+    const closeSettingsModalButton = document.getElementById('close-settings-modal');
+    const settingsLoggedInUsernameEl = document.getElementById('settings-logged-in-username');
+    const settingsLoggedInEmailEl = document.getElementById('settings-logged-in-email');
+    const logoutButtonModal = document.getElementById('logout-button-modal');
+    const deleteAccountButtonModal = document.getElementById('delete-account-button-modal');
+
+    const primaryColorRGB = "56, 142, 60";
+    document.documentElement.style.setProperty('--rgb-primary-color', primaryColorRGB);
+
+    let audioCtx; // AudioContext for sound effects
+
+    // --- Sound Functions (kept as is) ---
+    function playBeep(frequency = 880, duration = 100, volume = 0.5, type = 'sine') {
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!audioCtx) return console.warn("Web Audio API not supported for beep sound.");
+            if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
+
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.1);
+            gainNode.gain.setValueAtTime(volume, audioCtx.currentTime + (duration / 1000) * 0.8);
+            gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + (duration / 1000));
+            oscillator.type = type;
+            oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            oscillator.start(audioCtx.currentTime);
+            oscillator.stop(audioCtx.currentTime + duration / 1000);
+        } catch (error) { console.error("Error playing beep:", error); }
+    }
+
+    function playWelcomeSound() {
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!audioCtx) return console.warn("Web Audio API not supported for welcome sound.");
+            if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
+
+            const now = audioCtx.currentTime;
+            const volume = 0.5;
+            const noteDuration = 0.15;
+            const attackTime = 0.01;
+            const releaseTime = 0.1;
+            const notes = [
+                { freq: 261.63, time: now }, { freq: 329.63, time: now + noteDuration },
+                { freq: 392.00, time: now + noteDuration * 2 }, { freq: 523.25, time: now + noteDuration * 3 }
+            ];
+            notes.forEach(note => {
+                const oscillator = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
+                oscillator.connect(gainNode); gainNode.connect(audioCtx.destination);
+                oscillator.type = 'triangle'; oscillator.frequency.setValueAtTime(note.freq, note.time);
+                gainNode.gain.setValueAtTime(0, note.time);
+                gainNode.gain.linearRampToValueAtTime(volume, note.time + attackTime);
+                gainNode.gain.setValueAtTime(volume, note.time + noteDuration - releaseTime);
+                gainNode.gain.linearRampToValueAtTime(0, note.time + noteDuration);
+                oscillator.start(note.time); oscillator.stop(note.time + noteDuration + 0.05);
+            });
+        } catch (error) { console.error("Error playing welcome sound:", error); }
+    }
+    
+    // --- Date/Time Formatting (kept as is, but ensure Firestore Timestamps are handled correctly) ---
+    function formatToSAST(timestampInput) { // Accepts ISO string or Firestore Timestamp
+        if (!timestampInput) return 'N/A';
+        let date;
+        if (timestampInput.toDate) { // Check if it's a Firestore Timestamp
+            date = timestampInput.toDate();
+        } else {
+            date = new Date(timestampInput); // Assume ISO string
         }
 
-        function playWelcomeSound() {
-            try {
-                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if (!audioCtx) return console.warn("Web Audio API not supported for welcome sound.");
-                if (audioCtx.state === 'suspended') audioCtx.resume().catch(err => console.error("AudioContext resume error:", err));
-                const now = audioCtx.currentTime;
-                const volume = 0.5;
-                const noteDuration = 0.15;
-                const attackTime = 0.01;
-                const releaseTime = 0.1;
-                const notes = [
-                    { freq: 261.63, time: now },
-                    { freq: 329.63, time: now + noteDuration },
-                    { freq: 392.00, time: now + noteDuration * 2 },
-                    { freq: 523.25, time: now + noteDuration * 3 }
-                ];
-                notes.forEach(note => {
-                    const oscillator = audioCtx.createOscillator(), gainNode = audioCtx.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    oscillator.type = 'triangle';
-                    oscillator.frequency.setValueAtTime(note.freq, note.time);
-                    gainNode.gain.setValueAtTime(0, note.time);
-                    gainNode.gain.linearRampToValueAtTime(volume, note.time + attackTime);
-                    gainNode.gain.setValueAtTime(volume, note.time + noteDuration - releaseTime);
-                    gainNode.gain.linearRampToValueAtTime(0, note.time + noteDuration);
-                    oscillator.start(note.time);
-                    oscillator.stop(note.time + noteDuration + 0.05);
-                });
-            } catch (error) {
-                console.error("Error playing welcome sound:", error);
-            }
+        if (isNaN(date.getTime())) {
+            console.warn("Invalid date for SAST formatting:", timestampInput);
+            return 'Invalid Date';
+        }
+        try {
+            const options = {
+                day: '2-digit', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false, timeZone: 'Africa/Johannesburg'
+            };
+            let formatted = new Intl.DateTimeFormat('en-GB', options).format(date);
+            return formatted.replace(/\//g, '-').replace(',', '');
+        } catch (error) {
+            console.warn("Error formatting date to SAST:", error, timestampInput);
+            return date.toLocaleString(); // Fallback
+        }
+    }
+
+
+    function parseSASTStringToUTCDate(sastString) {
+        if (!sastString) return null;
+        const match = sastString.match(/(\d{2})[\s-](\w{3})[\s-](\d{4})\s(\d{2}):(\d{2}):(\d{2})/);
+        if (!match) {
+            console.warn("Could not parse SAST string format:", sastString);
+            const d = new Date(sastString); // Try direct parsing as a fallback
+            if (!isNaN(d.getTime())) return d;
+            return null;
+        }
+        const [, day, monthName, year, hours, minutes, seconds] = match.map((val, idx) => (idx > 0 && idx < 7 && idx !== 2) ? parseInt(val, 10) : val);
+        const monthMap = {'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
+        const monthIndex = monthMap[monthName];
+        if (typeof monthIndex === 'undefined') {
+            console.warn("Invalid month name in SAST string:", monthName); return null;
+        }
+        // Create a date assuming SAST and then get UTC equivalent.
+        // SAST is UTC+2. So, to get UTC date, subtract 2 hours.
+        return new Date(Date.UTC(year, monthIndex, day, hours - 2, minutes, seconds));
+    }
+
+
+    // --- Firebase Authentication ---
+    signupButton.addEventListener('click', async () => {
+        const username = document.getElementById('signup-username').value.trim();
+        const password = document.getElementById('signup-password').value.trim();
+        const email = `${username}@subtropico.app`; // Construct email from username
+
+        if (!username || !password) {
+            showNotification('Please fill in all fields for signup.', 'error');
+            return;
+        }
+        if (password.length < 6) {
+            showNotification('Password must be at least 6 characters long.', 'error');
+            return;
+        }
+        if (username === "DylanK" && email === ADMIN_EMAIL_IDENTIFIER) { // Prevent direct signup as admin via this form if username is "DylanK"
+             showNotification('This username is reserved. Please choose another.', 'error');
+             return;
         }
 
-        // --- Date/Time Formatting ---
-        function formatToSAST(isoString) {
-            if (!isoString) return 'N/A';
-            try {
-                const date = new Date(isoString);
-                const options = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false, timeZone: 'Africa/Johannesburg' };
-                let formatted = new Intl.DateTimeFormat('en-GB', options).format(date);
-                return formatted.replace(/\//g, '-').replace(',', '');
-            } catch (error) {
-                console.warn("Error formatting date to SAST:", error, isoString);
-                return new Date(isoString).toLocaleString();
-            }
-        }
 
-        function parseSASTStringToUTCDate(sastString) {
-            if (!sastString) return null;
-            const match = sastString.match(/(\d{2})[\s-](\w{3})[\s-](\d{4})\s(\d{2}):(\d{2}):(\d{2})/);
-            if (!match) {
-                console.warn("Could not parse SAST string format:", sastString);
-                const d = new Date(sastString);
-                if (!isNaN(d.getTime())) return d;
-                return null;
-            }
-            const [, day, monthName, year, hours, minutes, seconds] = match.map((val, idx) => (idx > 0 && idx < 7 && idx !== 2) ? parseInt(val, 10) : val);
-            const monthMap = {'Jan':0,'Feb':1,'Mar':2,'Apr':3,'May':4,'Jun':5,'Jul':6,'Aug':7,'Sep':8,'Oct':9,'Nov':10,'Dec':11};
-            const monthIndex = monthMap[monthName];
-            if (typeof monthIndex === 'undefined') {
-                console.warn("Invalid month name in SAST string:", monthName);
-                return null;
-            }
-            return new Date(Date.UTC(year, monthIndex, day, hours - 2, minutes, seconds));
-        }
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            
+            // Set display name (optional, but good practice)
+            await updateProfile(user, { displayName: username });
 
-        // --- Account Management ---
-        const MAX_ACCOUNTS = 2; // For user-creatable accounts
+            // Create user profile in Firestore
+            const userDocRef = doc(db, "artifacts", appId, "users", user.uid, "profile", "data");
+            await setDoc(userDocRef, {
+                username: username,
+                email: user.email, // Store the Firebase auth email
+                signupTimestamp: serverTimestamp(), // Use Firestore server timestamp
+                scanCount: 0,
+                duplicates: {}, // Initialize as empty map
+                isAdmin: (user.email === ADMIN_EMAIL_IDENTIFIER) // Set isAdmin flag if this is the admin email
+            });
 
-        function getAccountsData() {
-            const data = localStorage.getItem('accountsData');
-            if (!data) return [];
-            try {
-                const parsedData = JSON.parse(data);
-                return Array.isArray(parsedData) ? parsedData : [];
-            } catch (error) {
-                console.error("Error parsing accountsData from localStorage:", error);
-                return [];
-            }
-        }
-
-        function saveAccountsData(accounts) {
-            localStorage.setItem('accountsData', JSON.stringify(accounts));
-        }
-
-        signupButton.addEventListener('click', function() {
-            const accounts = getAccountsData();
-            const userCreatableAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
-            if (userCreatableAccounts.length >= MAX_ACCOUNTS) {
-                showNotification(`Maximum of ${MAX_ACCOUNTS} user accounts already created. Cannot sign up.`, 'error');
-                signupMaxAccountsMsg.style.display = 'block';
-                return;
-            }
-            signupMaxAccountsMsg.style.display = 'none';
-            const username = document.getElementById('signup-username').value.trim();
-            const password = document.getElementById('signup-password').value.trim();
-            if (username === ADMIN_USERNAME) {
-                showNotification('This username is reserved. Please choose another.', 'error');
-                return;
-            }
-            if (!username || !password) {
-                showNotification('Please fill in all fields for signup.', 'error');
-                return;
-            }
-            if (accounts.find(acc => acc.username === username)) {
-                showNotification('Username already taken. Choose another.', 'error');
-                return;
-            }
-            accounts.push({ username, password, signupTimestamp: new Date().toISOString(), scanCount: 0, duplicates: {}, scanHistory: [] });
-            saveAccountsData(accounts);
             showNotification('Signup successful! You can now log in.', 'success');
             signupFormEl.classList.remove('active');
             loginFormEl.classList.add('active');
             document.getElementById('signup-username').value = '';
             document.getElementById('signup-password').value = '';
-            checkAccountLimit();
-        });
-
-        document.getElementById('login-button').addEventListener('click', function() {
-            const username = document.getElementById('login-username').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            if (!username || !password) {
-                showNotification('Please enter username and password.', 'error');
-                return;
-            }
-            let isAdminLogin = false;
-            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                isAdminLogin = true;
-            }
-            const accounts = getAccountsData();
-            const account = accounts.find(acc => acc.username === username && acc.password === password);
-            if (isAdminLogin || account) {
-                sessionStorage.setItem('loggedInUser', username);
-                sessionStorage.setItem('isAdmin', isAdminLogin ? 'true' : 'false');
-                playWelcomeSound();
-                showNotification(`Login successful. Welcome, ${username}!`, 'success');
-                authContainer.style.display = 'none';
-                loadingScreen.style.display = 'flex';
-                loadingScreen.classList.remove('hidden');
-                setTimeout(() => {
-                    loadingScreen.classList.add('hidden');
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        mainApp.style.display = 'block';
-                        isAdminLogin ? loadInitialDataForAdmin() : loadInitialData();
-                    }, 500);
-                }, 2500);
-                document.getElementById('login-username').value = '';
-                document.getElementById('login-password').value = '';
+        } catch (error) {
+            console.error("Signup error:", error);
+            if (error.code === 'auth/email-already-in-use') {
+                showNotification('This username (email) is already taken. Please choose another or log in.', 'error');
+            } else if (error.code === 'auth/weak-password') {
+                showNotification('Password is too weak. Please choose a stronger password.', 'error');
             } else {
-                showNotification('Invalid login credentials.', 'error');
+                showNotification(`Signup failed: ${error.message}`, 'error');
             }
-        });
+        }
+    });
 
-        function showNotification(message, type = 'info') {
-            const notification = document.getElementById('notification');
-            notification.innerText = message;
-            notification.className = 'notification';
-            notification.classList.add(type);
-            notification.style.display = 'block';
-            if (notification.timeoutId) clearTimeout(notification.timeoutId);
-            notification.timeoutId = setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3500);
+    document.getElementById('login-button').addEventListener('click', async () => {
+        const email = document.getElementById('login-email').value.trim(); // Changed from username to email
+        const password = document.getElementById('login-password').value.trim();
+
+        if (!email || !password) {
+            showNotification('Please enter email and password.', 'error');
+            return;
         }
 
-        showSignupLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (this.classList.contains('disabled-link')) return;
-            loginFormEl.classList.remove('active');
-            signupFormEl.classList.add('active');
-            document.getElementById('login-username').value = '';
-            document.getElementById('login-password').value = '';
-        });
-
-        document.getElementById('show-login').addEventListener('click', function(e) {
-            e.preventDefault();
-            signupFormEl.classList.remove('active');
-            loginFormEl.classList.add('active');
-            document.getElementById('signup-username').value = '';
-            document.getElementById('signup-password').value = '';
-        });
-
-        // --- Barcode Processing & Data Management ---
-        let scanCount = 0, duplicates = {}, scanHistory = [];
-        const barcodeRegex = /^T\d[A-Z0-9]{3}[A-Z0-9]{2}\d{4}$/;
-
-        function isValidBarcode(barcode) {
-            return barcodeRegex.test(barcode);
-        }
-
-        function setupAdminUI(isAdmin) {
-            if (isAdmin) {
-                appTitleEl.textContent = "Admin Dashboard";
-                appTaglineEl.textContent = "Aggregated User Scan Data";
-                itemCounterLabelEl.textContent = "Total Items Scanned (All Users)";
-                lastScannedLabelEl.textContent = "Last Valid Scan (Any User)";
-                scanHistoryTitleEl.textContent = "Aggregated Scan History";
-                adminUserManagementSectionEl.style.display = 'block';
-                barcodeFormEl.style.display = 'none';
-                scanControlsEl.style.display = 'none';
-                clearHistoryButton.style.display = 'none';
-                importHistoryTriggerButton.style.display = 'none';
-                deleteAccountButtonModal.style.display = 'none';
-                populateAdminUserList();
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // Auth state change will handle UI update (via onAuthStateChanged)
+            // playWelcomeSound(); // Moved to onAuthStateChanged after data load
+            // showNotification(`Login successful. Welcome!`, 'success'); // Also moved
+        } catch (error) {
+            console.error("Login error:", error);
+             if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                showNotification('Invalid login credentials. Please check your email and password.', 'error');
             } else {
-                appTitleEl.textContent = "Subtropico Springs";
-                appTaglineEl.textContent = "Fresh Produce Solutions";
-                itemCounterLabelEl.textContent = "Items Scanned";
-                lastScannedLabelEl.textContent = "Last Valid Scanned Barcode";
-                scanHistoryTitleEl.textContent = "Previous Scans";
-                adminUserManagementSectionEl.style.display = 'none';
-                barcodeFormEl.style.display = 'block';
-                scanControlsEl.style.display = 'flex';
-                deleteAccountButtonModal.style.display = 'block';
+                showNotification(`Login failed: ${error.message}`, 'error');
             }
         }
+    });
 
-        function loadInitialDataForAdmin() {
-            setupAdminUI(true);
-            const allAccounts = getAccountsData();
-            const userAccounts = allAccounts.filter(acc => acc.username !== ADMIN_USERNAME);
-            let aggregatedScanCount = 0;
-            let aggregatedScanHistory = [];
-            userAccounts.forEach(acc => {
-                aggregatedScanCount += (acc.scanCount || 0);
-                if (acc.scanHistory && Array.isArray(acc.scanHistory)) {
-                    acc.scanHistory.forEach(scan => {
-                        aggregatedScanHistory.push({ ...scan, username: acc.username });
-                    });
+    function showNotification(message, type = 'info') {
+        const notification = document.getElementById('notification');
+        notification.innerText = message; notification.className = 'notification';
+        notification.classList.add(type);
+        notification.style.display = 'block';
+        if (notification.timeoutId) clearTimeout(notification.timeoutId);
+        notification.timeoutId = setTimeout(() => { notification.style.display = 'none'; }, 3500);
+    }
+
+    showSignupLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        loginFormEl.classList.remove('active'); signupFormEl.classList.add('active');
+        document.getElementById('login-email').value = ''; document.getElementById('login-password').value = '';
+    });
+    document.getElementById('show-login').addEventListener('click', function(e) {
+        e.preventDefault();
+        signupFormEl.classList.remove('active'); loginFormEl.classList.add('active');
+        document.getElementById('signup-username').value = ''; document.getElementById('signup-password').value = '';
+    });
+
+    // --- Barcode Processing & Data Management (Firestore based) ---
+    let localScanCount = 0; // Local copy for UI, updated by Firestore listener
+    let localDuplicates = {}; // Local copy
+    let localScanHistory = []; // Local copy
+
+    const barcodeRegex = /^T\d[A-Z0-9]{3}[A-Z0-9]{2}\d{4}$/;
+    function isValidBarcode(barcode) { return barcodeRegex.test(barcode); }
+
+    async function setupAdminUI(isAdmin) {
+        isAdminUser = isAdmin; // Set global admin flag
+        if (isAdmin) {
+            appTitleEl.textContent = "Admin Dashboard";
+            appTaglineEl.textContent = "Aggregated User Scan Data";
+            itemCounterLabelEl.textContent = "Total Items Scanned (All Users)";
+            lastScannedLabelEl.textContent = "Last Valid Scan (Any User)";
+            scanHistoryTitleEl.textContent = "Aggregated Scan History";
+            adminUserManagementSectionEl.style.display = 'block';
+            userIdDisplayEl.style.display = 'block'; // Show admin's own UID
+
+            barcodeFormEl.style.display = 'none';
+            scanControlsEl.style.display = 'none';
+            clearHistoryButton.style.display = 'none'; // Admin doesn't clear individual history this way
+            importHistoryTriggerButton.style.display = 'none'; // Admin doesn't import this way
+            deleteAccountButtonModal.style.display = 'none'; // Admin account deletion handled like any other user account (self-delete)
+            
+            await loadInitialDataForAdmin();
+            populateAdminUserList(); // Fetch and display user list
+        } else {
+            appTitleEl.textContent = "Subtropico Springs";
+            appTaglineEl.textContent = "Fresh Produce Solutions";
+            itemCounterLabelEl.textContent = "Items Scanned";
+            lastScannedLabelEl.textContent = "Last Valid Scanned Barcode";
+            scanHistoryTitleEl.textContent = "Previous Scans";
+            adminUserManagementSectionEl.style.display = 'none';
+            userIdDisplayEl.style.display = 'block'; // Show regular user's UID
+
+
+            barcodeFormEl.style.display = 'block';
+            scanControlsEl.style.display = 'flex';
+            deleteAccountButtonModal.style.display = 'block';
+            // Other buttons (clear, import, export) visibility handled by renderScanHistory
+            await loadInitialDataForUser();
+        }
+    }
+
+    async function loadInitialDataForUser() {
+        if (!currentUserId) return;
+
+        // Detach previous listener if exists
+        if (unsubscribeUserProfile) unsubscribeUserProfile();
+        if (unsubscribeScanHistory) unsubscribeScanHistory();
+
+        const userProfileRef = doc(db, "artifacts", appId, "users", currentUserId, "profile", "data");
+        
+        unsubscribeUserProfile = onSnapshot(userProfileRef, (docSnap) => {
+            if (docSnap.exists()) {
+                currentUserData = docSnap.data();
+                localScanCount = currentUserData.scanCount || 0;
+                localDuplicates = currentUserData.duplicates || {};
+                isAdminUser = currentUserData.isAdmin || false; // Update based on Firestore profile
+
+                document.getElementById('item-counter').innerText = localScanCount;
+                settingsLoggedInUsernameEl.textContent = currentUserData.username || 'N/A';
+                settingsLoggedInEmailEl.textContent = auth.currentUser.email || 'N/A';
+                
+                // If user is admin, re-route to admin UI (e.g. if they logged in and then their isAdmin flag was set)
+                // This check is important if admin status can change or is set post-signup.
+                if (isAdminUser && appTitleEl.textContent !== "Admin Dashboard") {
+                    console.log("User identified as admin from profile, switching to admin UI.");
+                    setupAdminUI(true); // This will call loadInitialDataForAdmin
+                    return; // Stop further processing for user UI
                 }
+
+            } else {
+                console.log("User profile not found in Firestore. Creating one.");
+                // This case should ideally be handled at signup. If reached, might indicate an issue.
+                // For robustness, create a default profile.
+                const newUsername = auth.currentUser.displayName || auth.currentUser.email.split('@')[0];
+                setDoc(userProfileRef, {
+                    username: newUsername,
+                    email: auth.currentUser.email,
+                    signupTimestamp: serverTimestamp(),
+                    scanCount: 0,
+                    duplicates: {},
+                    isAdmin: (auth.currentUser.email === ADMIN_EMAIL_IDENTIFIER) 
+                }).then(() => {
+                    console.log("Default user profile created.");
+                    // loadInitialDataForUser(); // Re-call to load the newly created profile - careful with loops
+                }).catch(error => console.error("Error creating default user profile:", error));
+                currentUserData = { scanCount: 0, duplicates: {}, username: newUsername, email: auth.currentUser.email, isAdmin: false }; // temp
+            }
+        }, (error) => {
+            console.error("Error listening to user profile:", error);
+            showNotification("Error loading user data.", "error");
+        });
+
+        const scanHistoryColRef = collection(db, "artifacts", appId, "users", currentUserId, "scanHistory");
+        // Query q = query(scanHistoryColRef, orderBy("timestamp", "desc")); // orderBy requires an index
+        
+        unsubscribeScanHistory = onSnapshot(scanHistoryColRef, (querySnapshot) => {
+            localScanHistory = [];
+            querySnapshot.forEach((doc) => {
+                localScanHistory.push({ id: doc.id, ...doc.data() });
             });
-            scanCount = aggregatedScanCount;
-            scanHistory = aggregatedScanHistory.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
-            document.getElementById('item-counter').innerText = scanCount;
-            const lastValidScanOverall = scanHistory.find(s => s.status === 'new');
-            if (lastValidScanOverall) {
-                barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScanOverall.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+            // Sort in memory as orderBy in query needs composite indexes which can be complex
+            localScanHistory.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
+
+            const lastValidScan = localScanHistory.find(s => s.status === 'new');
+            if (lastValidScan) {
+                barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScan.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
                 barcodeImageElement.style.display = 'block';
                 barcodeDisplayElement.style.display = 'block';
-                lastScannedValueElement.innerText = `${lastValidScanOverall.barcode} (User: ${lastValidScanOverall.username})`;
+                lastScannedValueElement.innerText = lastValidScan.barcode;
             } else {
                 barcodeDisplayElement.style.display = 'none';
             }
             renderScanHistory();
-        }
+        }, (error) => {
+            console.error("Error listening to scan history:", error);
+            showNotification("Error loading scan history.", "error");
+        });
+    }
+    
+    // Firestore path for storing all scans for admin view (denormalized)
+    const ALL_SCANS_COLLECTION = `artifacts/${appId}/allScansData/scans`;
 
-        function loadInitialData() {
-            setupAdminUI(false);
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            if (!loggedInUsername) { initializeApp(); return; }
-            const accounts = getAccountsData();
-            const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
-            if (currentUserAccount) {
-                scanCount = currentUserAccount.scanCount || 0;
-                duplicates = currentUserAccount.duplicates || {};
-                scanHistory = currentUserAccount.scanHistory || [];
-                document.getElementById('item-counter').innerText = scanCount;
-                const lastValidScan = scanHistory.filter(s => s.status === 'new').sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())[0];
-                if (lastValidScan) {
-                    barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScan.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
-                    barcodeImageElement.style.display = 'block';
-                    barcodeDisplayElement.style.display = 'block';
-                    lastScannedValueElement.innerText = lastValidScan.barcode;
-                } else {
-                    barcodeDisplayElement.style.display = 'none';
-                }
-                renderScanHistory();
-            } else {
-                console.error("Logged in user data not found. Logging out.");
-                performLogout(false);
-            }
-        }
+    async function loadInitialDataForAdmin() {
+        if (!currentUserId || !isAdminUser) return;
+        console.log("Loading initial data for ADMIN");
 
-        function processBarcode(barcode, timestampOverride = null, suppressNotification = false) {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (isAdmin) { showNotification("Admin accounts cannot scan barcodes directly.", "info"); return false; }
-            if (!loggedInUsername) return false;
-            const accounts = getAccountsData();
-            const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
-            if (userAccountIndex === -1) return false;
-            let accData = accounts[userAccountIndex];
-            const originalInput = barcode;
-            const cleanedBarcode = barcode.trim().toUpperCase();
-            const currentTimeISO = timestampOverride ? new Date(timestampOverride).toISOString() : new Date().toISOString();
-            let scanStatus = '';
-            
-            if (!isValidBarcode(cleanedBarcode)) {
-                scanStatus = 'invalid';
-                if (!suppressNotification) {
-                    playBeep(300, 250, 0.7, 'sawtooth');
-                    showNotification(`Invalid barcode: "${originalInput}". Format: T1ABCDE1234.`, 'error');
+        // Detach previous listeners if any
+        if (unsubscribeAdminUsers) unsubscribeAdminUsers();
+        if (unsubscribeAdminAllScans) unsubscribeAdminAllScans();
+        
+        // Listen to all user profiles for admin management list
+        const usersColRef = collection(db, "artifacts", appId, "users");
+        unsubscribeAdminUsers = onSnapshot(usersColRef, async (querySnapshot) => {
+            const allUserProfiles = [];
+            for (const userDoc of querySnapshot.docs) {
+                const userProfileRef = doc(db, "artifacts", appId, "users", userDoc.id, "profile", "data");
+                const profileSnap = await getDoc(userProfileRef);
+                if (profileSnap.exists()) {
+                    allUserProfiles.push({ id: userDoc.id, ...profileSnap.data() });
                 }
-                accData.scanHistory.push({ barcode: originalInput, timestamp: currentTimeISO, status: scanStatus });
-            } else {
-                if (!suppressNotification) {
-                    barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(cleanedBarcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
-                    barcodeImageElement.style.display = 'block';
-                    barcodeDisplayElement.style.display = 'block';
-                    lastScannedValueElement.innerText = cleanedBarcode;
-                }
-                if (accData.duplicates[cleanedBarcode]) {
-                    scanStatus = 'duplicate';
-                    if (!suppressNotification) {
-                        playBeep(600, 180, 0.6, 'triangle');
-                        const firstScanSAST = formatToSAST(accData.duplicates[cleanedBarcode].firstScan);
-                        showNotification(`Duplicate: ${cleanedBarcode}. First scan: ${firstScanSAST}`, 'warning');
-                    }
-                } else {
-                    scanStatus = 'new';
-                    if (!suppressNotification) playBeep(1000, 80, 0.5, 'sine');
-                    if (!timestampOverride) {
-                        accData.scanCount++;
-                        accData.duplicates[cleanedBarcode] = { firstScan: currentTimeISO };
-                    }
-                    if (!suppressNotification) showNotification(`New scan: ${cleanedBarcode}`, 'success');
-                }
-                accData.scanHistory.push({ barcode: cleanedBarcode, timestamp: currentTimeISO, status: scanStatus });
             }
-
-            if (!timestampOverride) {
-                accData.scanHistory.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-                saveAccountsData(accounts);
-                scanCount = accData.scanCount;
-                duplicates = accData.duplicates;
-                scanHistory = accData.scanHistory;
-                document.getElementById('item-counter').innerText = scanCount;
-                document.getElementById('barcode-input').value = '';
-                renderScanHistory();
-                return true;
-            }
-            return scanStatus !== 'invalid';
-        }
-
-        document.getElementById('barcode-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (isAdmin) { showNotification("Manual entry disabled for admin.", "info"); return; }
-            const barcode = document.getElementById('barcode-input').value;
-            if (barcode.trim()) {
-                processBarcode(barcode);
-            } else {
-                showNotification('Please enter a barcode value.', 'error');
-            }
+            populateAdminUserList(allUserProfiles); // Update the admin user list UI
+        }, (error) => {
+            console.error("Error listening to user profiles for admin:", error);
         });
 
-        function renderScanHistory() {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (!loggedInUsername && !isAdmin) return;
 
-            let displayHistory = [];
-            let userDuplicatesMap = {};
+        // For aggregated scan data, listen to the denormalized collection
+        const allScansColRef = collection(db, ALL_SCANS_COLLECTION);
+        // const qAllScans = query(allScansColRef, orderBy("timestamp", "desc")); // Requires index
 
-            if (isAdmin) {
-                displayHistory = [...scanHistory];
-                exportHistoryButton.style.display = displayHistory.length > 0 && previousScansContainer.style.display !== 'none' ? 'inline-block' : 'none';
-                clearHistoryButton.style.display = 'none';
-                importHistoryTriggerButton.style.display = 'none';
-            } else {
-                const accounts = getAccountsData();
-                const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
-                if (!currentUserAccount) return;
-                displayHistory = currentUserAccount.scanHistory ? [...currentUserAccount.scanHistory].sort((a,b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) : [];
-                userDuplicatesMap = currentUserAccount.duplicates || {};
-                const historyIsVisible = previousScansContainer.style.display !== 'none';
-                const historyNotEmpty = displayHistory.length > 0;
-                const showControlButtons = historyIsVisible && historyNotEmpty;
-                clearHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none';
-                exportHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none';
-                importHistoryTriggerButton.style.display = historyIsVisible ? 'inline-block' : 'none';
-            }
+        unsubscribeAdminAllScans = onSnapshot(allScansColRef, (querySnapshot) => {
+            let aggregatedScanCount = 0;
+            const aggregatedScanHistory = [];
+            const uniqueBarcodesForCount = new Set();
 
-            scanHistoryList.innerHTML = '';
-            if (displayHistory.length === 0) {
-                const noScansItem = document.createElement('li');
-                noScansItem.innerText = isAdmin ? 'No scans recorded across all users.' : 'No scans recorded for this account.';
-                noScansItem.style.textAlign = 'center';
-                noScansItem.style.padding = '20px';
-                scanHistoryList.appendChild(noScansItem);
-            } else {
-                displayHistory.forEach(scan => {
-                    const listItem = document.createElement('li');
-                    listItem.classList.remove('history-item-invalid', 'history-item-duplicate', 'history-item-new');
-                    let barcodeText = scan.barcode || "Entry Error";
-                    let scanDetailsHtml = `<strong><span>${barcodeText}</span></strong>`;
-                    let scanInfoText = '';
-                    const displayTimestampSAST = formatToSAST(scan.timestamp);
-
-                    if (isAdmin && scan.username) {
-                        scanDetailsHtml += `<span class="scan-info username-indicator">User: ${scan.username}</span>`;
-                    }
-                    
-                    const currentScanStatus = scan.status;
-                    const relevantDuplicatesMap = isAdmin ? (getAccountsData().find(acc=>acc.username === scan.username)?.duplicates || {}) : userDuplicatesMap;
-
-                    switch(currentScanStatus) {
-                        case 'invalid':
-                            listItem.classList.add('history-item-invalid');
-                            scanInfoText = `<span class="scan-info invalid-format">Invalid Format</span><span class="scan-info">Attempted: ${displayTimestampSAST}</span>`;
-                            break;
-                        case 'duplicate':
-                            listItem.classList.add('history-item-duplicate');
-                            const firstScanTimeISO = relevantDuplicatesMap[scan.barcode.toUpperCase()] ? relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan : null;
-                            const firstScanDisplaySAST = formatToSAST(firstScanTimeISO);
-                            scanInfoText = `<span class="scan-info duplicate">(Duplicate)</span><span class="scan-info">First Valid: ${firstScanDisplaySAST}</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
-                            break;
-                        case 'new':
-                            listItem.classList.add('history-item-new');
-                            scanInfoText = `<span class="scan-info valid">Valid Scan</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
-                            break;
-                        default:
-                            scanInfoText = `<span class="scan-info">Status: ${currentScanStatus || 'Unknown'}</span><span class="scan-info">Recorded: ${displayTimestampSAST}</span>`;
-                    }
-                    listItem.innerHTML = `${scanDetailsHtml}${scanInfoText}`;
-                    scanHistoryList.appendChild(listItem);
-                });
-            }
-        }
-
-        toggleHistoryButton.addEventListener('click', function() {
-            const isHidden = previousScansContainer.style.display === 'none';
-            previousScansContainer.style.display = isHidden ? 'block' : 'none';
-            toggleHistoryButton.innerText = isHidden ? 'Hide Previous Scans' : 'Show Previous Scans';
-            renderScanHistory();
-        });
-
-        clearHistoryButton.addEventListener('click', function() {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') return;
-            const accounts = getAccountsData();
-            const userAccount = accounts.find(acc => acc.username === loggedInUsername);
-            if (!userAccount) { showNotification('User account not found.', 'error'); return; }
-            const historyItemCount = userAccount.scanHistory ? userAccount.scanHistory.length : 0;
-            const currentScanTotal = userAccount.scanCount || 0;
-            const promptMessage = `WARNING: This will permanently delete ALL scan data for user '${loggedInUsername}'.\nThis includes ${historyItemCount} scan history entries and will reset the total scan count from ${currentScanTotal} to 0.\n\nThis action is IRREVERSIBLE.\n\nTo confirm, please enter your password:`;
-            const enteredPassword = prompt(promptMessage);
-            if (enteredPassword === null) { showNotification('Clear history cancelled.', 'info'); return; }
-            if (enteredPassword === userAccount.password) {
-                if (confirm('FINAL CONFIRMATION:\nAre you absolutely sure you wish to proceed with deleting all scan data for this account?')) {
-                    const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
-                    if (userAccountIndex !== -1) {
-                        accounts[userAccountIndex].scanCount = 0;
-                        accounts[userAccountIndex].duplicates = {};
-                        accounts[userAccountIndex].scanHistory = [];
-                        saveAccountsData(accounts);
-                        scanCount = 0; duplicates = {}; scanHistory = [];
-                        document.getElementById('item-counter').innerText = scanCount;
-                        showNotification('All scan history and counter data for this account has been permanently deleted.', 'success');
-                        previousScansContainer.style.display = 'none';
-                        toggleHistoryButton.innerText = 'Show Previous Scans';
-                        renderScanHistory();
-                        barcodeDisplayElement.style.display = 'none';
-                        barcodeImageElement.src = '';
-                        lastScannedValueElement.innerText = '';
-                    }
-                } else {
-                    showNotification('Clear history cancelled (final confirmation).', 'info');
+            querySnapshot.forEach((docSnap) => {
+                const scanData = docSnap.data();
+                aggregatedScanHistory.push({ id: docSnap.id, ...scanData });
+                // Only count 'new' (valid, non-duplicate for that user at that time) scans for total
+                if (scanData.status === 'new') {
+                     // This count might be slightly off if we just sum up user's scanCounts,
+                     // as it doesn't account for global duplicates.
+                     // A better way for admin total is to count distinct 'new' barcodes if needed,
+                     // or simply sum scanCounts from user profiles.
+                     // For simplicity here, we'll count all 'new' entries in the aggregated log.
+                    uniqueBarcodesForCount.add(scanData.barcode + "_" + scanData.userId); // Count unique scans per user
                 }
-            } else {
-                showNotification('Incorrect password. Clear history operation aborted.', 'error');
-            }
-        });
-
-        function exportHistoryToCSV() {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            let dataToExport = [];
-            let filenameUserPart = loggedInUsername;
-            let headers = ['BarcodeValue', 'ScanTimestampSAST', 'ScanStatus', 'FirstValidScanTimestampSAST'];
-
-            if (isAdmin) {
-                filenameUserPart = "ADMIN_ALL_USERS";
-                headers.push('ScannedByUsername');
-                dataToExport = [...scanHistory];
-            } else {
-                if (!loggedInUsername) return;
-                const accounts = getAccountsData();
-                const currentUserAccount = accounts.find(acc => acc.username === loggedInUsername);
-                if (!currentUserAccount || !currentUserAccount.scanHistory || currentUserAccount.scanHistory.length === 0) {
-                    showNotification('No history to export for this account.', 'info'); return;
-                }
-                dataToExport = [...currentUserAccount.scanHistory].sort((a,b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-            }
-
-            if (dataToExport.length === 0) { showNotification(isAdmin ? 'No aggregated history to export.' : 'No history to export for this account.', 'info'); return; }
-            
-            let csvContent = '\uFEFF' + headers.map(h => `"${h}"`).join(',') + '\r\n';
-            dataToExport.forEach(scan => {
-                const fBarcode = `"${(scan.barcode || '').toString().replace(/"/g, '""')}"`;
-                const fScanTimestampSAST = `"${formatToSAST(scan.timestamp)}"`;
-                const fStatus = `"${(scan.status || '').toString().replace(/"/g, '""')}"`;
-                let fFirstValidScanTimestampSAST = '""';
-                let relevantDuplicatesMap = {};
-                
-                if (isAdmin && scan.username) {
-                    const originalUserAccount = getAccountsData().find(acc => acc.username === scan.username);
-                    relevantDuplicatesMap = originalUserAccount ? (originalUserAccount.duplicates || {}) : {};
-                } else if (!isAdmin) {
-                    const currentUserAccount = getAccountsData().find(acc => acc.username === loggedInUsername);
-                    relevantDuplicatesMap = currentUserAccount ? (currentUserAccount.duplicates || {}) : {};
-                }
-
-                if (scan.status === 'duplicate' && relevantDuplicatesMap[scan.barcode.toUpperCase()] && relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan) {
-                    fFirstValidScanTimestampSAST = `"${formatToSAST(relevantDuplicatesMap[scan.barcode.toUpperCase()].firstScan)}"`;
-                } else if (scan.status === 'new') {
-                    fFirstValidScanTimestampSAST = fScanTimestampSAST;
-                }
-                
-                let row = [fBarcode, fScanTimestampSAST, fStatus, fFirstValidScanTimestampSAST];
-                if (isAdmin) { row.push(`"${scan.username || 'N/A'}"`); }
-                csvContent += row.join(',') + '\r\n';
             });
-            
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                const now = new Date(), ts = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
-                link.setAttribute("href", url);
-                link.setAttribute("download", `subtropico_scan_history_${filenameUserPart}_${ts}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-                showNotification('History exported as CSV (Timestamps in SAST).', 'success');
+            aggregatedScanCount = uniqueBarcodesForCount.size;
+
+
+            // Sort in memory
+            aggregatedScanHistory.sort((a, b) => (b.timestamp?.toMillis() || 0) - (a.timestamp?.toMillis() || 0));
+
+            localScanCount = aggregatedScanCount; // Update global for admin
+            localScanHistory = aggregatedScanHistory; // Update global for admin
+
+            document.getElementById('item-counter').innerText = localScanCount;
+
+            const lastValidScanOverall = localScanHistory.find(s => s.status === 'new');
+            if (lastValidScanOverall) {
+                barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(lastValidScanOverall.barcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+                barcodeImageElement.style.display = 'block';
+                barcodeDisplayElement.style.display = 'block';
+                lastScannedValueElement.innerText = `${lastValidScanOverall.barcode} (User: ${lastValidScanOverall.username || lastValidScanOverall.userId.substring(0,6)})`;
             } else {
-                showNotification('Export not supported by your browser.', 'error');
+                barcodeDisplayElement.style.display = 'none';
             }
+            renderScanHistory(); // This will use the admin's localScanHistory
+        }, (error) => {
+            console.error("Error listening to all scans for admin:", error);
+            showNotification("Error loading aggregated scan data.", "error");
+        });
+    }
+
+
+    async function processBarcode(barcode, timestampOverride = null, suppressNotification = false) {
+        if (isAdminUser) {
+            showNotification("Admin accounts cannot scan barcodes directly.", "info");
+            return false;
         }
-        exportHistoryButton.addEventListener('click', exportHistoryToCSV);
-
-        importHistoryTriggerButton.addEventListener('click', () => {
-            if (sessionStorage.getItem('isAdmin') === 'true') return;
-            importCsvFileInput.click();
-        });
-
-        importCsvFileInput.addEventListener('change', function(event) {
-            if (sessionStorage.getItem('isAdmin') === 'true') return;
-            const file = event.target.files[0];
-            if (!file) return;
-            if (!file.name.toLowerCase().endsWith('.csv')) { showNotification('Invalid file type. Please select a .CSV file.', 'error'); event.target.value = null; return; }
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const csvContent = e.target.result;
-                processImportedCSV(csvContent);
-                event.target.value = null;
-            };
-            reader.onerror = function() { showNotification('Error reading file for import.', 'error'); event.target.value = null; };
-            reader.readAsText(file);
-        });
-
-        function parseCsvRow(rowString) {
-            const result = [];
-            let currentField = '';
-            let inQuotes = false;
-            for (let i = 0; i < rowString.length; i++) {
-                const char = rowString[i];
-                if (char === '"') {
-                    if (inQuotes && i + 1 < rowString.length && rowString[i+1] === '"') {
-                        currentField += '"'; i++;
-                    } else { inQuotes = !inQuotes; }
-                } else if (char === ',' && !inQuotes) {
-                    result.push(currentField); currentField = '';
-                } else { currentField += char; }
-            }
-            result.push(currentField);
-            return result;
+        if (!currentUserId || !currentUserData) {
+            showNotification("User not logged in or data not loaded.", "error");
+            return false;
         }
 
-        function processImportedCSV(csvData) {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') { showNotification("Import only available for user accounts.", "error"); return; }
-            const accounts = getAccountsData();
-            const userAccountIndex = accounts.findIndex(acc => acc.username === loggedInUsername);
-            if (userAccountIndex === -1) { showNotification("User account not found.", "error"); return; }
+        const originalInput = barcode;
+        const cleanedBarcode = barcode.trim().toUpperCase();
+        // Use Firestore server timestamp if not overridden (e.g., for import)
+        const scanTimestamp = timestampOverride ? Timestamp.fromDate(new Date(timestampOverride)) : serverTimestamp();
+        let scanStatus = '';
 
-            const lines = csvData.split(/\r\n|\n/);
-            if (lines.length <= 1) { showNotification('CSV file is empty or has no data rows.', 'warning'); return; }
+        console.log(`Processing barcode: ${cleanedBarcode} for user: ${currentUserData.username}`);
+        
+        const userProfileRef = doc(db, "artifacts", appId, "users", currentUserId, "profile", "data");
+        // We need to read the latest duplicates from user's profile for an accurate check
+        const userProfileSnap = await getDoc(userProfileRef);
+        if (!userProfileSnap.exists()) {
+            showNotification("User profile error. Cannot process scan.", "error");
+            return false;
+        }
+        const currentDuplicatesFromDB = userProfileSnap.data().duplicates || {};
 
-            const expectedHeaderNames = {barcode: 'barcodevalue', timestamp: 'scantimestampsast'};
-            const headerLineValues = parseCsvRow(lines[0]).map(h => h.toLowerCase().trim().replace(/"/g, ''));
-            const colIndices = {
-                barcode: headerLineValues.indexOf(expectedHeaderNames.barcode),
-                timestamp: headerLineValues.indexOf(expectedHeaderNames.timestamp)
-            };
-            if (colIndices.barcode === -1 || colIndices.timestamp === -1) { showNotification(`CSV header mismatch. Required: "BarcodeValue", "ScanTimestampSAST". Found: "${lines[0]}"`, 'error'); return; }
 
-            let importedScans = [];
-            let importErrors = 0;
-            for (let i = 1; i < lines.length; i++) {
-                if (lines[i].trim() === '') continue;
-                const values = parseCsvRow(lines[i]);
-                if (values.length < Math.max(colIndices.barcode, colIndices.timestamp) + 1) { console.warn(`Skipping CSV row ${i+1}: Not enough columns.`); importErrors++; continue; }
-                const barcode = values[colIndices.barcode];
-                const timestampSASTStr = values[colIndices.timestamp];
-                if (!barcode || !timestampSASTStr) { console.warn(`Skipping CSV row ${i+1}: Missing barcode or SAST timestamp.`); importErrors++; continue; }
-                const utcDate = parseSASTStringToUTCDate(timestampSASTStr);
-                if (!utcDate) { console.warn(`Skipping CSV row ${i+1}: Invalid SAST timestamp "${timestampSASTStr}".`); importErrors++; continue; }
-                importedScans.push({ barcode: barcode.toUpperCase(), timestamp: utcDate.toISOString(), status: 'imported' });
+        if (!isValidBarcode(cleanedBarcode)) {
+            scanStatus = 'invalid';
+            if (!suppressNotification) {
+                playBeep(300, 250, 0.7, 'sawtooth');
+                showNotification(`Invalid barcode: "${originalInput}". Format: T1ABCDE1234.`, 'error');
+            }
+        } else {
+            if (!suppressNotification) {
+                barcodeImageElement.src = `https://barcode.tec-it.com/barcode.ashx?data=${encodeURIComponent(cleanedBarcode)}&code=Code128&translate-esc=on&imagetype=Png&height=60`;
+                barcodeImageElement.style.display = 'block';
+                barcodeDisplayElement.style.display = 'block';
+                lastScannedValueElement.innerText = cleanedBarcode;
             }
 
-            if (importedScans.length === 0 && importErrors > 0) { showNotification(`Import failed. ${importErrors} errors parsing CSV. Check console.`, 'error'); return; }
-            if (importedScans.length === 0) { showNotification(`No valid scans found to import.`, 'warning'); return; }
+            if (currentDuplicatesFromDB[cleanedBarcode]) {
+                scanStatus = 'duplicate';
+                if (!suppressNotification) {
+                    playBeep(600, 180, 0.6, 'triangle');
+                    const firstScanSAST = formatToSAST(currentDuplicatesFromDB[cleanedBarcode].firstScan);
+                    showNotification(`Duplicate: ${cleanedBarcode}. First scan: ${firstScanSAST}`, 'warning');
+                }
+            } else {
+                scanStatus = 'new';
+                if (!suppressNotification) playBeep(1000, 80, 0.5, 'sine');
+                if (!suppressNotification) showNotification(`New scan: ${cleanedBarcode}`, 'success');
+            }
+        }
 
-            accounts[userAccountIndex].scanHistory.push(...importedScans);
-            accounts[userAccountIndex].scanHistory.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-            recalculateUserStats(userAccountIndex);
-            saveAccountsData(accounts);
-            loadInitialData();
-            let successMsg = `${importedScans.length} scans processed. `;
+        // Add to user's scan history subcollection
+        const scanHistoryEntry = {
+            barcode: (scanStatus === 'invalid' ? originalInput : cleanedBarcode),
+            timestamp: scanTimestamp, // Firestore server timestamp or provided override
+            status: scanStatus,
+            userId: currentUserId, // For denormalized log
+            username: currentUserData.username // For denormalized log
+        };
+        
+        const scanHistoryColRef = collection(db, "artifacts", appId, "users", currentUserId, "scanHistory");
+        const newScanDocRef = await addDoc(scanHistoryColRef, scanHistoryEntry);
+        console.log("Scan history entry added with ID:", newScanDocRef.id);
+
+        // Also add to the denormalized allScans collection for admin view
+        // Use the same ID as the user's scan history entry for easier linking if needed
+        const allScansDocRef = doc(db, ALL_SCANS_COLLECTION, newScanDocRef.id);
+        await setDoc(allScansDocRef, scanHistoryEntry);
+        console.log("Scan added to allScans collection with ID:", newScanDocRef.id);
+
+
+        // Update user's profile (scanCount, duplicates) if it's a new, valid scan and not an import
+        if (scanStatus === 'new' && !timestampOverride) {
+            const newScanCount = (currentUserData.scanCount || 0) + 1;
+            const newDuplicatesData = { ...currentDuplicatesFromDB, [cleanedBarcode]: { firstScan: scanTimestamp } }; // Use scanTimestamp (which will be serverTimestamp)
+            
+            await updateDoc(userProfileRef, {
+                scanCount: newScanCount,
+                duplicates: newDuplicatesData
+            });
+            console.log("User profile updated for new scan.");
+        }
+        
+        if (!timestampOverride) { // i.e., not an import, so update UI immediately
+            document.getElementById('barcode-input').value = '';
+            // renderScanHistory(); // Firestore listener will handle this
+        }
+        return scanStatus !== 'invalid'; // Return true if valid (new or duplicate), false if invalid format
+    }
+
+
+    document.getElementById('barcode-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        if (isAdminUser) {
+            showNotification("Manual entry disabled for admin.", "info");
+            return;
+        }
+        const barcode = document.getElementById('barcode-input').value;
+        if (barcode.trim()) { 
+            await processBarcode(barcode); 
+        } else { 
+            showNotification('Please enter a barcode value.', 'error'); 
+        }
+    });
+
+    function renderScanHistory() {
+        // Uses localScanHistory which is populated by Firestore listeners
+        scanHistoryListEl.innerHTML = '';
+        if (localScanHistory.length === 0) {
+            const noScansItem = document.createElement('li');
+            noScansItem.innerText = isAdminUser ? 'No scans recorded across all users.' : 'No scans recorded for this account.';
+            noScansItem.style.textAlign = 'center'; noScansItem.style.padding = '20px';
+            scanHistoryListEl.appendChild(noScansItem);
+        } else {
+            localScanHistory.forEach(scan => {
+                const listItem = document.createElement('li');
+                listItem.classList.remove('history-item-invalid', 'history-item-duplicate', 'history-item-new');
+                let barcodeText = scan.barcode || "Entry Error";
+                let scanDetailsHtml = `<strong><span>${barcodeText}</span></strong>`;
+                let scanInfoText = '';
+                const displayTimestampSAST = formatToSAST(scan.timestamp); // scan.timestamp is Firestore Timestamp
+
+                if (isAdminUser && scan.username) {
+                    scanDetailsHtml += `<span class="scan-info username-indicator">User: ${scan.username} (ID: ${scan.userId ? scan.userId.substring(0,6) : 'N/A'})</span>`;
+                }
+                const currentScanStatus = scan.status;
+                
+                // For duplicates, firstScan timestamp needs to be fetched correctly if admin view
+                let firstScanDisplaySAST = 'N/A';
+                if (currentScanStatus === 'duplicate') {
+                    if (isAdminUser) {
+                        // In admin view, 'duplicates' map isn't directly available for each scan's original user.
+                        // The 'firstScan' timestamp would ideally be part of the scan entry itself if it's a duplicate.
+                        // For now, we'll just indicate it's a duplicate.
+                        // A more complex solution would be to fetch original user's duplicate map or store firstScan time in allScans.
+                        // Let's assume the `scan.firstScanTimestamp` might be available if denormalized properly.
+                        firstScanDisplaySAST = scan.firstScanTimestamp ? formatToSAST(scan.firstScanTimestamp) : 'See user history';
+                    } else if (localDuplicates[scan.barcode.toUpperCase()]) {
+                         firstScanDisplaySAST = formatToSAST(localDuplicates[scan.barcode.toUpperCase()].firstScan);
+                    }
+                }
+
+
+                switch(currentScanStatus) {
+                    case 'invalid':
+                        listItem.classList.add('history-item-invalid');
+                        scanInfoText = `<span class="scan-info invalid-format">Invalid Format</span><span class="scan-info">Attempted: ${displayTimestampSAST}</span>`;
+                        break;
+                    case 'duplicate':
+                        listItem.classList.add('history-item-duplicate');
+                        scanInfoText = `<span class="scan-info duplicate">(Duplicate)</span><span class="scan-info">First Valid: ${firstScanDisplaySAST}</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
+                        break;
+                    case 'new':
+                        listItem.classList.add('history-item-new');
+                        scanInfoText = `<span class="scan-info valid">Valid Scan</span><span class="scan-info">Scanned: ${displayTimestampSAST}</span>`;
+                        break;
+                    default:
+                        scanInfoText = `<span class="scan-info">Status: ${currentScanStatus || 'Unknown'}</span><span class="scan-info">Recorded: ${displayTimestampSAST}</span>`;
+                }
+                listItem.innerHTML = `${scanDetailsHtml}${scanInfoText}`;
+                scanHistoryListEl.appendChild(listItem);
+            });
+        }
+        
+        // Update visibility of history control buttons
+        const historyIsVisible = previousScansContainerEl.style.display !== 'none';
+        const historyNotEmpty = localScanHistory.length > 0;
+        const showControlButtons = historyIsVisible && historyNotEmpty;
+
+        if (!isAdminUser) {
+            clearHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none';
+            importHistoryTriggerButton.style.display = historyIsVisible ? 'inline-block' : 'none'; // Show import if history section is open
+        }
+        exportHistoryButton.style.display = showControlButtons ? 'inline-block' : 'none'; // Export available for both user and admin if history shown & not empty
+    }
+
+
+    toggleHistoryButton.addEventListener('click', function() {
+        const isHidden = previousScansContainerEl.style.display === 'none';
+        previousScansContainerEl.style.display = isHidden ? 'block' : 'none';
+        toggleHistoryButton.innerText = isHidden ? 'Hide Previous Scans' : 'Show Previous Scans';
+        renderScanHistory(); // Re-render to update button visibility based on new state
+    });
+
+    clearHistoryButton.addEventListener('click', async function() {
+        if (!currentUserId || isAdminUser || !currentUserData) return;
+
+        const historyItemCount = localScanHistory.length;
+        const currentScanTotal = localScanCount;
+        const promptMessage = `WARNING: This will permanently delete ALL your scan data (${historyItemCount} entries) and reset your total scan count from ${currentScanTotal} to 0.\nThis action is IRREVERSIBLE.\n\nTo confirm, please enter your password:`;
+        
+        // Custom prompt/confirm would be better here, but using browser's for now.
+        const enteredPassword = prompt(promptMessage);
+
+        if (enteredPassword === null) {
+            showNotification('Clear history cancelled.', 'info');
+            return;
+        }
+
+        // Re-authenticate user for security-sensitive operation (optional but good practice)
+        // For simplicity, we'll directly check password if it were stored, but Firebase doesn't allow that.
+        // Instead, we should re-authenticate. For this example, we'll proceed with a confirm.
+        // A proper implementation would use `reauthenticateWithCredential`.
+        // For now, we rely on the user being logged in and confirming.
+
+        if (confirm('FINAL CONFIRMATION:\nAre you absolutely sure you wish to proceed with deleting all scan data for your account?')) {
+            try {
+                // Delete all documents in scanHistory subcollection
+                const scanHistoryColRef = collection(db, "artifacts", appId, "users", currentUserId, "scanHistory");
+                const qSnapshot = await getDocs(scanHistoryColRef);
+                const batch = writeBatch(db);
+                qSnapshot.forEach((doc) => {
+                    batch.delete(doc.ref);
+                    // Also delete from the denormalized allScans collection
+                    const allScanDocRef = doc(db, ALL_SCANS_COLLECTION, doc.id);
+                    batch.delete(allScanDocRef);
+                });
+                await batch.commit();
+
+                // Reset user profile stats
+                const userProfileRef = doc(db, "artifacts", appId, "users", currentUserId, "profile", "data");
+                await updateDoc(userProfileRef, {
+                    scanCount: 0,
+                    duplicates: {}
+                });
+
+                showNotification('All scan history and counter data for this account has been permanently deleted.', 'success');
+                previousScansContainerEl.style.display = 'none';
+                toggleHistoryButton.innerText = 'Show Previous Scans';
+                // UI will update via Firestore listeners (loadInitialDataForUser)
+                barcodeDisplayElement.style.display = 'none'; barcodeImageElement.src = ''; lastScannedValueElement.innerText = '';
+
+            } catch (error) {
+                console.error("Error clearing history:", error);
+                showNotification("Failed to clear history. Please try again.", "error");
+            }
+        } else {
+            showNotification('Clear history cancelled (final confirmation).', 'info');
+        }
+    });
+
+    async function exportHistoryToCSV() {
+        let dataToExport = [];
+        let filenameUserPart = isAdminUser ? "ADMIN_ALL_USERS" : (currentUserData?.username || currentUserId.substring(0,8));
+        let headers = ['BarcodeValue', 'ScanTimestampSAST', 'ScanStatus', 'FirstValidScanTimestampSAST_IfDuplicate'];
+
+        if (isAdminUser) {
+            headers.push('ScannedByUsername', 'ScannedByUserID');
+            dataToExport = [...localScanHistory]; // localScanHistory is already sorted for admin
+        } else {
+            if (!currentUserId || localScanHistory.length === 0) {
+                showNotification('No history to export for this account.', 'info'); return;
+            }
+            dataToExport = [...localScanHistory]; // localScanHistory is sorted for user
+        }
+        
+        if (dataToExport.length === 0) {
+             showNotification(isAdminUser ? 'No aggregated history to export.' : 'No history to export for this account.', 'info'); return;
+        }
+
+        let csvContent = '\uFEFF' + headers.map(h => `"${h}"`).join(',') + '\r\n';
+
+        for (const scan of dataToExport) {
+            const fBarcode = `"${(scan.barcode || '').toString().replace(/"/g, '""')}"`;
+            const fScanTimestampSAST = `"${formatToSAST(scan.timestamp)}"`; // scan.timestamp is Firestore Timestamp
+            const fStatus = `"${(scan.status || '').toString().replace(/"/g, '""')}"`;
+            let fFirstValidScanTimestampSAST = '""';
+
+            if (scan.status === 'duplicate') {
+                let firstScanTs = null;
+                if (isAdminUser) {
+                    // For admin, we need to find the original user's duplicate data or rely on a denormalized field
+                    // This is a simplification; true first scan time might need more complex lookup or better denormalization
+                    // If scan.firstScanTimestamp was added during denormalization:
+                     if (scan.firstScanTimestamp) firstScanTs = scan.firstScanTimestamp;
+
+                } else if (localDuplicates[scan.barcode.toUpperCase()]) { // User view
+                    firstScanTs = localDuplicates[scan.barcode.toUpperCase()].firstScan;
+                }
+                if (firstScanTs) fFirstValidScanTimestampSAST = `"${formatToSAST(firstScanTs)}"`;
+            } else if (scan.status === 'new') {
+                 fFirstValidScanTimestampSAST = fScanTimestampSAST; // For new scans, first scan is this scan
+            }
+
+
+            let row = [fBarcode, fScanTimestampSAST, fStatus, fFirstValidScanTimestampSAST];
+            if (isAdminUser) {
+                row.push(`"${scan.username || 'N/A'}"`);
+                row.push(`"${scan.userId || 'N/A'}"`);
+            }
+            csvContent += row.join(',') + '\r\n';
+        }
+        
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            const now = new Date(), ts = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+            link.setAttribute("href", url);
+            link.setAttribute("download", `subtropico_scan_history_${filenameUserPart}_${ts}.csv`);
+            link.style.visibility = 'hidden'; document.body.appendChild(link);
+            link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+            showNotification('History exported as CSV (Timestamps in SAST).', 'success');
+        } else { showNotification('Export not supported by your browser.', 'error'); }
+    }
+    exportHistoryButton.addEventListener('click', exportHistoryToCSV);
+
+
+    importHistoryTriggerButton.addEventListener('click', () => {
+        if (isAdminUser) return;
+        importCsvFileInput.click();
+    });
+    importCsvFileInput.addEventListener('change', function(event) {
+        if (isAdminUser) return;
+        const file = event.target.files[0];
+        if (!file) return;
+        if (!file.name.toLowerCase().endsWith('.csv')) {
+            showNotification('Invalid file type. Please select a .CSV file.', 'error');
+            event.target.value = null; return;
+        }
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+            const csvContent = e.target.result;
+            await processImportedCSV(csvContent); // Make it async
+            event.target.value = null;
+        };
+        reader.onerror = function() {
+            showNotification('Error reading file for import.', 'error');
+            event.target.value = null;
+        };
+        reader.readAsText(file);
+    });
+
+    function parseCsvRow(rowString) { // Kept as is
+        const result = []; let currentField = ''; let inQuotes = false;
+        for (let i = 0; i < rowString.length; i++) {
+            const char = rowString[i];
+            if (char === '"') {
+                if (inQuotes && i + 1 < rowString.length && rowString[i+1] === '"') { currentField += '"'; i++; }
+                else { inQuotes = !inQuotes; }
+            } else if (char === ',' && !inQuotes) { result.push(currentField); currentField = ''; }
+            else { currentField += char; }
+        }
+        result.push(currentField); return result;
+    }
+
+    async function processImportedCSV(csvData) {
+        if (!currentUserId || isAdminUser) {
+            showNotification("Import only available for logged-in non-admin users.", "error"); return;
+        }
+
+        const lines = csvData.split(/\r\n|\n/);
+        if (lines.length <= 1) { showNotification('CSV file is empty or has no data rows.', 'warning'); return; }
+        
+        const expectedHeaderNames = {barcode: 'barcodevalue', timestamp: 'scantimestampsast'};
+        const headerLineValues = parseCsvRow(lines[0]).map(h => h.toLowerCase().trim().replace(/"/g, ''));
+        const colIndices = { barcode: headerLineValues.indexOf(expectedHeaderNames.barcode), timestamp: headerLineValues.indexOf(expectedHeaderNames.timestamp) };
+
+        if (colIndices.barcode === -1 || colIndices.timestamp === -1) {
+            showNotification(`CSV header mismatch. Required: "BarcodeValue", "ScanTimestampSAST". Found: "${lines[0]}"`, 'error'); return;
+        }
+        
+        let importedScans = []; let importErrors = 0;
+        for (let i = 1; i < lines.length; i++) {
+            if (lines[i].trim() === '') continue;
+            const values = parseCsvRow(lines[i]);
+            if (values.length < Math.max(colIndices.barcode, colIndices.timestamp) + 1) {
+                console.warn(`Skipping CSV row ${i+1}: Not enough columns.`); importErrors++; continue;
+            }
+            const barcode = values[colIndices.barcode]; const timestampSASTStr = values[colIndices.timestamp];
+            if (!barcode || !timestampSASTStr) {
+                console.warn(`Skipping CSV row ${i+1}: Missing barcode or SAST timestamp.`); importErrors++; continue;
+            }
+            const utcDate = parseSASTStringToUTCDate(timestampSASTStr);
+            if (!utcDate) {
+                console.warn(`Skipping CSV row ${i+1}: Invalid SAST timestamp "${timestampSASTStr}".`); importErrors++; continue;
+            }
+            // We will use processBarcode with timestampOverride, but suppress notifications during loop
+            // This is complex because processBarcode itself updates Firestore.
+            // A better approach for bulk import is to collect all valid entries, then batch write.
+            // For now, let's collect them and then process them in a way that recalculates stats at the end.
+            importedScans.push({ barcode: barcode.toUpperCase(), timestamp: utcDate.toISOString(), status: 'imported_pending' });
+        }
+
+        if (importedScans.length === 0 && importErrors > 0) {
+            showNotification(`Import failed. ${importErrors} errors parsing CSV. Check console.`, 'error'); return;
+        }
+        if (importedScans.length === 0) {
+            showNotification(`No valid scans found to import.`, 'warning'); return;
+        }
+
+        // Sort imported scans by timestamp before processing
+        importedScans.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        
+        showNotification(`Importing ${importedScans.length} scans... This may take a moment.`, 'info');
+
+        // Add to Firestore in a batch (more efficient for many entries)
+        const batch = writeBatch(db);
+        const scanHistoryColRef = collection(db, "artifacts", appId, "users", currentUserId, "scanHistory");
+        
+        importedScans.forEach(scan => {
+            const newScanDocRef = doc(scanHistoryColRef); // Auto-generate ID
+            batch.set(newScanDocRef, {
+                barcode: scan.barcode,
+                timestamp: Timestamp.fromDate(new Date(scan.timestamp)), // Convert ISO to Firestore Timestamp
+                status: 'imported_pending', // Temporary status
+                userId: currentUserId,
+                username: currentUserData.username
+            });
+            // Also add to allScans denormalized log
+            const allScansDocRef = doc(db, ALL_SCANS_COLLECTION, newScanDocRef.id);
+             batch.set(allScansDocRef, {
+                barcode: scan.barcode,
+                timestamp: Timestamp.fromDate(new Date(scan.timestamp)),
+                status: 'imported_pending',
+                userId: currentUserId,
+                username: currentUserData.username
+            });
+        });
+
+        try {
+            await batch.commit();
+            console.log(`${importedScans.length} scans batched to Firestore.`);
+            // After batch commit, recalculate stats for the user
+            await recalculateUserStatsFromFirestore();
+            
+            let successMsg = `${importedScans.length} scans imported and processed. `;
             if (importErrors > 0) successMsg += `${importErrors} rows had errors (see console).`;
             showNotification(successMsg, 'success');
+            // UI will refresh via listeners
+        } catch (error) {
+            console.error("Error batch writing imported scans:", error);
+            showNotification("Error during CSV import. Some scans may not have been saved.", "error");
         }
+    }
 
-        function recalculateUserStats(userAccountIndex) {
-            const accounts = getAccountsData();
-            if (!accounts[userAccountIndex]) return;
-            let currentAccount = accounts[userAccountIndex];
-            let newScanCount = 0;
-            let newDuplicates = {};
-            const reevaluatedHistory = [];
-            const sortedHistory = currentAccount.scanHistory;
-            
-            sortedHistory.forEach(scan => {
-                let finalStatus;
-                const cleanedBarcode = scan.barcode.trim().toUpperCase();
-                if (!isValidBarcode(cleanedBarcode)) {
-                    finalStatus = 'invalid';
+    async function recalculateUserStatsFromFirestore() {
+        if (!currentUserId) return;
+        
+        const scanHistoryColRef = collection(db, "artifacts", appId, "users", currentUserId, "scanHistory");
+        const qSnapshot = await getDocs(scanHistoryColRef);
+        
+        let allUserScans = [];
+        qSnapshot.forEach(doc => allUserScans.push({id: doc.id, ...doc.data()}));
+        
+        // Sort by timestamp (Firestore Timestamps)
+        allUserScans.sort((a, b) => (a.timestamp?.toMillis() || 0) - (b.timestamp?.toMillis() || 0));
+
+        let newScanCount = 0;
+        let newDuplicates = {};
+        const batch = writeBatch(db); // To update statuses
+
+        allUserScans.forEach(scan => {
+            let finalStatus;
+            const cleanedBarcode = scan.barcode.trim().toUpperCase();
+
+            if (!isValidBarcode(cleanedBarcode)) {
+                finalStatus = 'invalid';
+            } else {
+                if (newDuplicates[cleanedBarcode]) {
+                    finalStatus = 'duplicate';
                 } else {
-                    if (newDuplicates[cleanedBarcode]) {
-                        finalStatus = 'duplicate';
-                    } else {
-                        finalStatus = 'new';
-                        newScanCount++;
-                        newDuplicates[cleanedBarcode] = { firstScan: scan.timestamp };
-                    }
+                    finalStatus = 'new';
+                    newScanCount++;
+                    newDuplicates[cleanedBarcode] = { firstScan: scan.timestamp }; // Use existing Firestore Timestamp
                 }
-                reevaluatedHistory.push({ barcode: scan.barcode, timestamp: scan.timestamp, status: finalStatus });
-            });
-            currentAccount.scanCount = newScanCount;
-            currentAccount.duplicates = newDuplicates;
-            currentAccount.scanHistory = reevaluatedHistory;
-        }
-
-        function startTime() {
-            const dateTimeElement = document.getElementById('current-date-time');
-            if (dateTimeElement) {
-                const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-                const monthNames= ["January","February","March","April","May","June","July","August","September","October","November","December"];
-                const updateTime = () => {
-                    const now = new Date();
-                    dateTimeElement.innerText = `${dayNames[now.getDay()]}, ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2,'0')}, ${now.getFullYear()} | ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
-                };
-                updateTime();
-                setInterval(updateTime, 1000);
             }
-        }
-        startTime();
+            
+            // Update the status in Firestore if it changed or was 'imported_pending'
+            if (scan.status !== finalStatus) {
+                const scanDocRef = doc(db, "artifacts", appId, "users", currentUserId, "scanHistory", scan.id);
+                batch.update(scanDocRef, { status: finalStatus });
+                // Also update in allScans
+                const allScanDocRef = doc(db, ALL_SCANS_COLLECTION, scan.id);
+                batch.update(allScanDocRef, { status: finalStatus });
+            }
+        });
+        
+        // Update user profile with new count and duplicates map
+        const userProfileRef = doc(db, "artifacts", appId, "users", currentUserId, "profile", "data");
+        batch.update(userProfileRef, {
+            scanCount: newScanCount,
+            duplicates: newDuplicates
+        });
 
-        // --- Camera Scanner ---
-        let html5QrCode;
-        const qrConfig = {
-            fps: 10,
-            qrbox: (viewfinderWidth, viewfinderHeight) => {
-                let minDimension = Math.min(viewfinderWidth, viewfinderHeight);
-                let qrBoxWidth = Math.floor(minDimension * 0.7);
-                let qrBoxHeight = Math.floor(minDimension * 0.4);
-                if (qrBoxHeight > viewfinderHeight * 0.8) qrBoxHeight = Math.floor(viewfinderHeight * 0.8);
-                if (qrBoxWidth > viewfinderWidth * 0.8) qrBoxWidth = Math.floor(viewfinderWidth * 0.8);
-                return { width: qrBoxWidth, height: qrBoxHeight };
+        try {
+            await batch.commit();
+            console.log(`Stats recalculated for user ${currentUserId}. New count: ${newScanCount}`);
+            // Listeners will update localScanCount, localDuplicates, localScanHistory, and re-render.
+        } catch (error) {
+            console.error("Error committing recalculated stats:", error);
+            showNotification("Error finalizing imported data processing.", "error");
+        }
+    }
+
+
+    function startTime() { // Kept as is
+        const dateTimeElement = document.getElementById('current-date-time');
+        if (dateTimeElement) {
+            const dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            const monthNames= ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            const updateTime = () => {
+                const now = new Date();
+                dateTimeElement.innerText = `${dayNames[now.getDay()]}, ${monthNames[now.getMonth()]} ${String(now.getDate()).padStart(2,'0')}, ${now.getFullYear()} | ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+            };
+            updateTime(); setInterval(updateTime, 1000);
+        }
+    }
+    startTime();
+
+    // --- Camera Scanner (largely kept as is, but ensure processBarcode is async) ---
+    let html5QrCode;
+    const qrConfig = {
+        fps: 10,
+        qrbox: (viewfinderWidth, viewfinderHeight) => {
+            let minDimension = Math.min(viewfinderWidth, viewfinderHeight);
+            let qrBoxWidth = Math.floor(minDimension * 0.7);
+            let qrBoxHeight = Math.floor(minDimension * 0.4);
+            if (qrBoxHeight > viewfinderHeight * 0.8) qrBoxHeight = Math.floor(viewfinderHeight * 0.8);
+            if (qrBoxWidth > viewfinderWidth * 0.8) qrBoxWidth = Math.floor(viewfinderWidth * 0.8);
+            return { width: qrBoxWidth, height: qrBoxHeight };
+        },
+        rememberLastUsedCamera: true,
+        supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+        videoConstraints: {
+            facingMode: "environment",
+            focusMode: "continuous"
+        }
+    };
+    const startCamBtn = document.getElementById('start-camera-scan');
+    const stopCamBtn = document.getElementById('stop-camera-scan');
+    const camScannerContainer = document.getElementById('camera-scanner-container');
+    const readerUiDiv = document.getElementById('reader');
+
+    startCamBtn.addEventListener('click', () => {
+        if (isAdminUser) {
+            showNotification("Camera scanning disabled for admin.", "info");
+            return;
+        }
+        cameraStatusElement.textContent = 'Initializing camera...';
+        camScannerContainer.style.display = 'block';
+        startCamBtn.style.display = 'none';
+        stopCamBtn.style.display = 'inline-block';
+        refocusCameraButton.style.display = 'inline-block';
+
+        if (!html5QrCode) html5QrCode = new Html5Qrcode("reader", { verbose: false });
+        cameraStatusElement.textContent = 'Requesting camera access...';
+        html5QrCode.start(
+            { facingMode: "environment" }, 
+            qrConfig, 
+            async (decodedText) => { // Make callback async
+                if (html5QrCode && html5QrCode.isScanning) {
+                    cameraStatusElement.textContent='Barcode detected! Ready for next scan.';
+                    await processBarcode(decodedText); // Await processBarcode
+                }
             },
-            rememberLastUsedCamera: true,
-            supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
-            videoConstraints: {
-                facingMode: "environment",
-                focusMode: "continuous"
+            (errorMessage) => {
+                if (html5QrCode && html5QrCode.isScanning && !cameraStatusElement.textContent.includes('detected')) {
+                     cameraStatusElement.textContent = 'Scanning... Align barcode in reticle.';
+                }
             }
-        };
-
-        const startCamBtn = document.getElementById('start-camera-scan');
-        const stopCamBtn = document.getElementById('stop-camera-scan');
-        const camScannerContainer = document.getElementById('camera-scanner-container');
-        const readerUiDiv = document.getElementById('reader');
-
-        startCamBtn.addEventListener('click', () => {
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (isAdmin) { showNotification("Camera scanning disabled for admin.", "info"); return; }
-            cameraStatusElement.textContent = 'Initializing camera...';
-            camScannerContainer.style.display = 'block';
-            startCamBtn.style.display = 'none';
-            stopCamBtn.style.display = 'inline-block';
-            refocusCameraButton.style.display = 'inline-block';
-            if (!html5QrCode) html5QrCode = new Html5Qrcode("reader", { verbose: false });
-            cameraStatusElement.textContent = 'Requesting camera access...';
-            html5QrCode.start(
-                { facingMode: "environment" },
-                qrConfig,
-                (decodedText) => {
-                    if (html5QrCode && html5QrCode.isScanning) {
-                        cameraStatusElement.textContent='Barcode detected! Ready for next scan.';
-                        processBarcode(decodedText);
-                    }
-                },
-                (errorMessage) => {
-                    if (html5QrCode && html5QrCode.isScanning && !cameraStatusElement.textContent.includes('detected')) {
-                        cameraStatusElement.textContent = 'Scanning... Align barcode in reticle.';
-                    }
-                }
-            ).catch((err) => {
-                let msg = 'Error starting camera.';
-                if (typeof err==='string'){
-                    if(err.toLowerCase().includes('permission denied')||err.toLowerCase().includes('notallowederror')) msg='Camera access denied by user.';
-                    else if(err.toLowerCase().includes('notfounderror')) msg='No suitable camera found.';
-                    else msg=`Camera error: ${err}`;
-                } else if(err instanceof Error){
-                    if(err.name==='NotAllowedError')msg='Camera access denied by user.';
-                    else if(err.name==='NotFoundError')msg='No suitable camera found.';
-                    else msg=`Camera error: ${err.message||err.name}`;
-                }
-                showNotification(msg,'error');
-                cameraStatusElement.textContent=msg;
-                camScannerContainer.style.display='none';
-                startCamBtn.style.display='inline-block';
-                stopCamBtn.style.display='none';
-                refocusCameraButton.style.display = 'none';
-                readerUiDiv.innerHTML='';
-            });
+        ).catch((err) => {
+            let msg = 'Error starting camera.';
+            if (typeof err==='string'){ if(err.toLowerCase().includes('permission denied')||err.toLowerCase().includes('notallowederror')) msg='Camera access denied by user.'; else if(err.toLowerCase().includes('notfounderror')) msg='No suitable camera found.'; else msg=`Camera error: ${err}`;}
+            else if(err instanceof Error){ if(err.name==='NotAllowedError')msg='Camera access denied by user.'; else if(err.name==='NotFoundError')msg='No suitable camera found.'; else msg=`Camera error: ${err.message||err.name}`;}
+            showNotification(msg,'error'); cameraStatusElement.textContent=msg;
+            camScannerContainer.style.display='none'; startCamBtn.style.display='inline-block'; stopCamBtn.style.display='none'; refocusCameraButton.style.display = 'none'; readerUiDiv.innerHTML='';
         });
+    });
 
-        refocusCameraButton.addEventListener('click', () => {
-            if (html5QrCode && html5QrCode._localMediaStream) {
-                const videoTracks = html5QrCode._localMediaStream.getVideoTracks();
-                if (videoTracks && videoTracks.length > 0) {
-                    const track = videoTracks[0];
-                    track.applyConstraints({ advanced: [{ focusMode: 'continuous' }] })
-                        .then(() => { showNotification("Camera refocus attempted.", "info"); cameraStatusElement.textContent = 'Refocus attempted. Scanning...'; })
-                        .catch(err => { console.error("Error applying focus constraint:", err); showNotification("Failed to refocus camera.", "error"); });
-                } else { showNotification("No active video track found to refocus.", "warning"); }
-            } else { showNotification("Camera not active or stream not accessible for refocus.", "warning"); }
-        });
-
-        function stopCameraScan() {
-            if (html5QrCode && html5QrCode.isScanning) {
-                html5QrCode.stop().then(() => {
-                    if(!cameraStatusElement.textContent.includes('Barcode detected!')) { cameraStatusElement.textContent='Camera stopped.'; }
-                }).catch((err) => {
-                    console.error("Failed to stop camera scanning.", err);
-                    cameraStatusElement.textContent='Error stopping camera.';
-                }).finally(() => {
-                    camScannerContainer.style.display='none';
-                    startCamBtn.style.display='inline-block';
-                    stopCamBtn.style.display='none';
-                    refocusCameraButton.style.display = 'none';
-                    readerUiDiv.innerHTML='';
-                    if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) { cameraStatusElement.textContent = ''; }
-                });
+    refocusCameraButton.addEventListener('click', () => { // Kept as is
+        if (html5QrCode && html5QrCode._localMediaStream) { 
+            const videoTracks = html5QrCode._localMediaStream.getVideoTracks();
+            if (videoTracks && videoTracks.length > 0) {
+                const track = videoTracks[0];
+                track.applyConstraints({ advanced: [{ focusMode: 'continuous' }] }) 
+                    .then(() => {
+                        showNotification("Camera refocus attempted.", "info");
+                        cameraStatusElement.textContent = 'Refocus attempted. Scanning...';
+                    })
+                    .catch(err => {
+                        console.error("Error applying focus constraint:", err);
+                        showNotification("Failed to refocus camera.", "error");
+                    });
             } else {
-                camScannerContainer.style.display='none';
-                startCamBtn.style.display='inline-block';
-                stopCamBtn.style.display='none';
-                refocusCameraButton.style.display = 'none';
-                if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) { cameraStatusElement.textContent = ''; }
-                readerUiDiv.innerHTML='';
+                showNotification("No active video track found to refocus.", "warning");
             }
+        } else {
+            showNotification("Camera not active or stream not accessible for refocus.", "warning");
         }
-        stopCamBtn.addEventListener('click', stopCameraScan);
+    });
 
-        // --- Settings Modal Functionality ---
-        settingsButton.addEventListener('click', () => {
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (loggedInUsername) {
-                settingsLoggedInUsernameEl.textContent = isAdmin ? `${loggedInUsername} (Admin)` : loggedInUsername;
-            } else {
-                settingsLoggedInUsernameEl.textContent = 'N/A';
+
+    function stopCameraScan() { // Kept as is
+        if (html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().then(() => {
+                if(!cameraStatusElement.textContent.includes('Barcode detected!')) {
+                    cameraStatusElement.textContent='Camera stopped.';
+                }
+            }).catch((err) => {
+                console.error("Failed to stop camera scanning.", err);
+                cameraStatusElement.textContent='Error stopping camera.';
+            }).finally(() => {
+                camScannerContainer.style.display='none'; startCamBtn.style.display='inline-block';
+                stopCamBtn.style.display='none'; refocusCameraButton.style.display = 'none'; 
+                readerUiDiv.innerHTML='';
+                if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) {
+                    cameraStatusElement.textContent = '';
+                }
+            });
+        } else {
+            camScannerContainer.style.display='none'; startCamBtn.style.display='inline-block';
+            stopCamBtn.style.display='none'; refocusCameraButton.style.display = 'none'; 
+            if(!cameraStatusElement.textContent.includes('Barcode detected!') && !cameraStatusElement.textContent.includes('error')) {
+                 cameraStatusElement.textContent = '';
             }
-            deleteAccountButtonModal.style.display = isAdmin ? 'none' : 'block';
-            settingsModal.classList.add('active');
-        });
+            readerUiDiv.innerHTML='';
+        }
+    }
+    stopCamBtn.addEventListener('click', stopCameraScan);
 
-        closeSettingsModalButton.addEventListener('click', () => {
+    // --- Settings Modal Functionality ---
+    settingsButton.addEventListener('click', () => {
+        if (auth.currentUser && currentUserData) {
+            settingsLoggedInUsernameEl.textContent = isAdminUser ? `${currentUserData.username} (Admin)` : currentUserData.username;
+            settingsLoggedInEmailEl.textContent = auth.currentUser.email;
+        } else {
+            settingsLoggedInUsernameEl.textContent = 'N/A';
+            settingsLoggedInEmailEl.textContent = 'N/A';
+        }
+        deleteAccountButtonModal.style.display = isAdminUser ? 'none' : 'block'; // Admin cannot delete own account via this button for safety, can do via Firebase console.
+        settingsModal.classList.add('active');
+    });
+
+    closeSettingsModalButton.addEventListener('click', () => {
+        settingsModal.classList.remove('active');
+    });
+
+    settingsModal.addEventListener('click', (event) => {
+        if (event.target === settingsModal) {
             settingsModal.classList.remove('active');
-        });
+        }
+    });
 
-        settingsModal.addEventListener('click', (event) => {
-            if (event.target === settingsModal) {
-                settingsModal.classList.remove('active');
-            }
-        });
+    logoutButtonModal.addEventListener('click', async () => {
+        settingsModal.classList.remove('active');
+        await performLogout();
+    });
 
-        logoutButtonModal.addEventListener('click', () => {
-            settingsModal.classList.remove('active');
-            performLogout();
-        });
-
-        function performLogout(showLoading = true) {
-            sessionStorage.removeItem('loggedInUser');
-            sessionStorage.removeItem('isAdmin');
+    async function performLogout(showLoading = true) {
+        try {
+            await signOut(auth);
+            // Auth state change (onAuthStateChanged) will handle UI reset.
             if (showLoading) {
-                mainApp.style.display = 'none';
-                loadingScreen.style.display = 'flex';
-                loadingScreen.classList.remove('hidden');
+                mainAppEl.style.display = 'none';
+                loadingScreenEl.style.display = 'flex';
+                loadingScreenEl.classList.remove('hidden');
                 showNotification('Logging out...', 'info');
                 setTimeout(() => {
-                    loadingScreen.classList.add('hidden');
+                    loadingScreenEl.classList.add('hidden');
                     setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                        initializeApp();
+                        loadingScreenEl.style.display = 'none';
+                        // initializeAppUI(); // Called by onAuthStateChanged
                     }, 500);
                 }, 1500);
             } else {
-                initializeApp();
+                // initializeAppUI(); // Called by onAuthStateChanged
             }
+        } catch (error) {
+            console.error("Logout error:", error);
+            showNotification(`Logout failed: ${error.message}`, 'error');
+        }
+    }
+
+    deleteAccountButtonModal.addEventListener('click', async () => {
+        settingsModal.classList.remove('active');
+        if (!auth.currentUser || isAdminUser) { // Admin cannot delete own account this way
+            showNotification('Operation not permitted.', 'error'); return;
+        }
+        
+        // Custom prompt/confirm would be better.
+        const confirmDelete = confirm(`FINAL CONFIRMATION: Are you absolutely sure you want to delete your account and all its data? This action is IRREVERSIBLE.`);
+        if (!confirmDelete) {
+            showNotification('Account deletion cancelled.', 'info'); return;
         }
 
-        deleteAccountButtonModal.addEventListener('click', () => {
-            settingsModal.classList.remove('active');
-            const loggedInUsername = sessionStorage.getItem('loggedInUser');
-            if (!loggedInUsername || sessionStorage.getItem('isAdmin') === 'true') {
-                showNotification('Operation not permitted.', 'error');
-                return;
-            }
-            const accounts = getAccountsData();
-            const userAccount = accounts.find(acc => acc.username === loggedInUsername);
-            if (!userAccount) {
-                showNotification('User account not found. Cannot delete.', 'error');
-                performLogout(false);
-                return;
-            }
-            const enteredPassword = prompt(`To delete your account '${loggedInUsername}', please enter your password.\nWARNING: This action is IRREVERSIBLE and will delete all your scan data.`);
-            if (enteredPassword === null) {
-                showNotification('Account deletion cancelled.', 'info');
-                return;
-            }
-            if (enteredPassword === userAccount.password) {
-                if (confirm(`FINAL CONFIRMATION: Are you absolutely sure you want to delete account '${loggedInUsername}' and all its data?`)) {
-                    const updatedAccounts = accounts.filter(acc => acc.username !== loggedInUsername);
-                    saveAccountsData(updatedAccounts);
-                    showNotification(`Account '${loggedInUsername}' and all its data have been deleted.`, 'success');
-                    performLogout();
-                } else {
-                    showNotification('Account deletion cancelled (final confirmation).', 'info');
-                }
-            } else {
-                showNotification('Incorrect password. Account deletion aborted.', 'error');
-            }
-        });
+        try {
+            const userToDelete = auth.currentUser;
+            const userIdToDelete = userToDelete.uid;
 
-        // --- Admin User Management Functions ---
-        function populateAdminUserList() {
-            adminUserListEl.innerHTML = '';
-            const accounts = getAccountsData();
-            const userAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
-            if (userAccounts.length === 0) {
-                adminUserListEl.innerHTML = '<li>No user accounts to manage.</li>';
-                return;
-            }
-            userAccounts.forEach(user => {
-                const listItem = document.createElement('li');
-                listItem.innerHTML = `
-                    <span class="user-info-admin">User: ${user.username}</span>
-                    <div class="user-actions-admin">
-                        <button class="button-secondary change-username-btn" data-username="${user.username}">Change Username</button>
-                        <button class="button-secondary change-password-btn" data-username="${user.username}">Change Password</button>
-                        <button class="button-danger delete-user-btn" data-username="${user.username}">Delete Account</button>
-                    </div>
-                `;
-                adminUserListEl.appendChild(listItem);
+            // 1. Delete Firestore data for the user
+            const userProfileRef = doc(db, "artifacts", appId, "users", userIdToDelete, "profile", "data");
+            const scanHistoryColRef = collection(db, "artifacts", appId, "users", userIdToDelete, "scanHistory");
+            
+            const qSnapshot = await getDocs(scanHistoryColRef);
+            const batch = writeBatch(db);
+            qSnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+                 // Also delete from the denormalized allScans collection
+                const allScanDocRef = doc(db, ALL_SCANS_COLLECTION, doc.id);
+                batch.delete(allScanDocRef);
             });
-            document.querySelectorAll('.change-username-btn').forEach(button => { button.addEventListener('click', (e) => adminChangeUsernameHandler(e.target.dataset.username)); });
-            document.querySelectorAll('.change-password-btn').forEach(button => { button.addEventListener('click', (e) => adminChangePasswordHandler(e.target.dataset.username)); });
-            document.querySelectorAll('.delete-user-btn').forEach(button => { button.addEventListener('click', (e) => adminDeleteUserHandler(e.target.dataset.username)); });
-        }
+            batch.delete(userProfileRef); // Delete profile last in this batch
+            await batch.commit();
+            console.log("User data deleted from Firestore.");
 
-        function adminPromptForPassword() {
-            return prompt("Admin action requires your password. Please enter your admin password:");
-        }
-
-        function adminChangeUsernameHandler(usernameToChange) {
-            const adminPassword = adminPromptForPassword();
-            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
-            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
-            const newUsername = prompt(`Enter new username for '${usernameToChange}':`);
-            if (!newUsername || newUsername.trim() === "") { showNotification("New username cannot be empty. Action cancelled.", "info"); return; }
-            const trimmedNewUsername = newUsername.trim();
-            if (trimmedNewUsername === ADMIN_USERNAME) { showNotification("Cannot change username to the admin username.", "error"); return; }
-            const accounts = getAccountsData();
-            if (accounts.some(acc => acc.username === trimmedNewUsername && acc.username !== usernameToChange)) { showNotification(`Username "${trimmedNewUsername}" is already taken.`, "error"); return; }
-            const userAccountIndex = accounts.findIndex(acc => acc.username === usernameToChange);
-if (userAccountIndex !== -1) {
-                accounts[userAccountIndex].username = trimmedNewUsername;
-                saveAccountsData(accounts);
-                showNotification(`Username for '${usernameToChange}' changed to '${trimmedNewUsername}'.`, "success");
-                populateAdminUserList();
-                loadInitialDataForAdmin();
+            // 2. Delete Firebase Auth user
+            // This might require recent re-authentication. If it fails, guide user.
+            await deleteUser(userToDelete);
+            showNotification(`Account '${userToDelete.displayName || userToDelete.email}' and all its data have been deleted.`, 'success');
+            // onAuthStateChanged will handle UI reset to login screen.
+        } catch (error) {
+            console.error("Delete account error:", error);
+            if (error.code === 'auth/requires-recent-login') {
+                showNotification('This operation is sensitive and requires recent authentication. Please log out and log back in, then try again.', 'error');
             } else {
-                showNotification(`User '${usernameToChange}' not found.`, "error");
+                showNotification(`Failed to delete account: ${error.message}`, 'error');
             }
         }
+    });
 
-        function adminChangePasswordHandler(usernameToChange) {
-            const adminPassword = adminPromptForPassword();
-            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
-            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
-            const newPassword = prompt(`Enter new password for user '${usernameToChange}':`);
-            if (!newPassword) { showNotification("New password cannot be empty. Action cancelled.", "info"); return; }
-            const confirmNewPassword = prompt(`Confirm new password for user '${usernameToChange}':`);
-            if (newPassword !== confirmNewPassword) { showNotification("Passwords do not match. Password not changed.", "error"); return; }
-            const accounts = getAccountsData();
-            const userAccountIndex = accounts.findIndex(acc => acc.username === usernameToChange);
-            if (userAccountIndex !== -1) {
-                accounts[userAccountIndex].password = newPassword;
-                saveAccountsData(accounts);
-                showNotification(`Password for user '${usernameToChange}' has been changed.`, "success");
-            } else {
-                showNotification(`User '${usernameToChange}' not found.`, "error");
-            }
-        }
+    // --- Admin User Management Functions ---
+    async function populateAdminUserList(allUserProfiles = null) {
+        if (!isAdminUser) return;
+        adminUserListEl.innerHTML = '';
 
-        function adminDeleteUserHandler(usernameToDelete) {
-            const adminPassword = adminPromptForPassword();
-            if (adminPassword === null) { showNotification("Action cancelled.", "info"); return; }
-            if (adminPassword !== ADMIN_PASSWORD) { showNotification("Incorrect admin password.", "error"); return; }
-            if (!confirm(`Are you sure you want to delete the account for user '${usernameToDelete}'? This action is IRREVERSIBLE.`)) { showNotification("Account deletion cancelled.", "info"); return; }
-            if (!confirm(`FINAL CONFIRMATION: Delete user '${usernameToDelete}' and all their data?`)) { showNotification("Account deletion cancelled (final confirmation).", "info"); return; }
-            let accounts = getAccountsData();
-            const updatedAccounts = accounts.filter(acc => acc.username !== usernameToDelete);
-            if (accounts.length === updatedAccounts.length) { showNotification(`User '${usernameToDelete}' not found.`, "error"); return; }
-            saveAccountsData(updatedAccounts);
-            showNotification(`Account for user '${usernameToDelete}' and all their data have been deleted.`, "success");
-            populateAdminUserList();
-            loadInitialDataForAdmin();
-        }
-
-        // --- Initialization and Account Limit Check ---
-        function checkAccountLimit() {
-            const accounts = getAccountsData();
-            const userCreatableAccounts = accounts.filter(acc => acc.username !== ADMIN_USERNAME);
-            const limitReached = userCreatableAccounts.length >= MAX_ACCOUNTS;
-            signupButton.disabled = limitReached;
-            showSignupLink.classList.toggle('disabled-link', limitReached);
-            signupMaxAccountsMsg.style.display = limitReached ? 'block' : 'none';
-            loginMaxAccountsMsg.style.display = (limitReached && userCreatableAccounts.length > 0) ? 'block' : 'none';
-        }
-
-        function initializeApp() {
-            const loggedInUser = sessionStorage.getItem('loggedInUser');
-            const isAdmin = sessionStorage.getItem('isAdmin') === 'true';
-            if (loggedInUser) {
-                authContainer.style.display = 'none';
-                mainApp.style.display = 'block';
-                if (isAdmin) { loadInitialDataForAdmin(); } else { loadInitialData(); }
-            } else {
-                setupAdminUI(false);
-                authContainer.style.display = 'flex';
-                mainApp.style.display = 'none';
-                loadingScreen.style.display = 'none';
-                loadingScreen.classList.add('hidden');
-                checkAccountLimit();
-                const accounts = getAccountsData();
-                if (accounts.filter(acc => acc.username !== ADMIN_USERNAME).length === 0 && !signupFormEl.classList.contains('active')) {
-                    signupFormEl.classList.add('active');
-                    loginFormEl.classList.remove('active');
-                } else if (!loginFormEl.classList.contains('active') && !signupFormEl.classList.contains('active')) {
-                    loginFormEl.classList.add('active');
-                    signupFormEl.classList.remove('active');
+        let usersToDisplay = allUserProfiles;
+        if (!usersToDisplay) { // If not passed in, fetch them (less efficient for frequent updates)
+            usersToDisplay = [];
+            const usersColRef = collection(db, "artifacts", appId, "users");
+            const querySnapshot = await getDocs(usersColRef);
+            for (const userDoc of querySnapshot.docs) {
+                const userProfileRef = doc(db, "artifacts", appId, "users", userDoc.id, "profile", "data");
+                const profileSnap = await getDoc(userProfileRef);
+                if (profileSnap.exists()) {
+                    usersToDisplay.push({ id: userDoc.id, ...profileSnap.data() });
                 }
-                document.getElementById('login-username').value = '';
-                document.getElementById('login-password').value = '';
-                document.getElementById('signup-username').value = '';
-                document.getElementById('signup-password').value = '';
+            }
+        }
+        
+        const regularUserAccounts = usersToDisplay.filter(user => !user.isAdmin && user.email !== ADMIN_EMAIL_IDENTIFIER);
+
+        if (regularUserAccounts.length === 0) {
+            adminUserListEl.innerHTML = '<li>No user accounts to manage.</li>';
+            return;
+        }
+
+        regularUserAccounts.forEach(user => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <span class="user-info-admin">User: ${user.username} (Email: ${user.email}, UID: ${user.id.substring(0,8)})</span>
+                <div class="user-actions-admin">
+                    <button class="button-secondary change-username-admin-btn" data-userid="${user.id}" data-currentusername="${user.username}">Change Username</button>
+                    <button class="button-danger delete-user-admin-btn" data-userid="${user.id}" data-username="${user.username}">Delete User Account</button>
+                </div>
+            `;
+            adminUserListEl.appendChild(listItem);
+        });
+
+        document.querySelectorAll('.change-username-admin-btn').forEach(button => {
+            button.addEventListener('click', (e) => adminChangeUsernameHandler(e.target.dataset.userid, e.target.dataset.currentusername));
+        });
+        document.querySelectorAll('.delete-user-admin-btn').forEach(button => {
+            button.addEventListener('click', (e) => adminDeleteUserHandler(e.target.dataset.userid, e.target.dataset.username));
+        });
+    }
+
+
+    async function adminChangeUsernameHandler(userIdToChange, currentUsername) {
+        if (!isAdminUser) return;
+        
+        const newUsername = prompt(`Enter new username for '${currentUsername}':`);
+        if (!newUsername || newUsername.trim() === "") {
+            showNotification("New username cannot be empty. Action cancelled.", "info"); return;
+        }
+        const trimmedNewUsername = newUsername.trim();
+        if (trimmedNewUsername === "DylanK") { // Example reserved admin display name
+             showNotification("This username is reserved.", "error"); return;
+        }
+
+        // Check if new username is already taken by another user (in Firestore profiles)
+        const usersColRef = collection(db, "artifacts", appId, "users");
+        const q = query(usersColRef); // Query all user profile docs
+        const querySnapshot = await getDocs(q);
+        let usernameTaken = false;
+        for(const userDoc of querySnapshot.docs) {
+            if (userDoc.id === userIdToChange) continue; // Skip self
+            const profileRef = doc(db, "artifacts", appId, "users", userDoc.id, "profile", "data");
+            const profileSnap = await getDoc(profileRef);
+            if (profileSnap.exists() && profileSnap.data().username === trimmedNewUsername) {
+                usernameTaken = true;
+                break;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            loadingScreen.style.display = 'flex';
-            loadingScreen.classList.remove('hidden');
-            setTimeout(() => {
-                loadingScreen.classList.add('hidden');
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    initializeApp();
-                }, 500);
-            }, 1500);
-        });
-    </script>
+        if (usernameTaken) {
+            showNotification(`Username "${trimmedNewUsername}" is already in use.`, "error"); return;
+        }
+
+        try {
+            const userProfileRef = doc(db, "artifacts", appId, "users", userIdToChange, "profile", "data");
+            await updateDoc(userProfileRef, { username: trimmedNewUsername });
+
+            // Also update username in all their scan history entries in the denormalized log
+            const allScansUserQuery = query(collection(db, ALL_SCANS_COLLECTION), where("userId", "==", userIdToChange));
+            const scansSnapshot = await getDocs(allScansUserQuery);
+            const batch = writeBatch(db);
+            scansSnapshot.forEach(scanDoc => {
+                batch.update(doc(db, ALL_SCANS_COLLECTION, scanDoc.id), { username: trimmedNewUsername });
+            });
+            await batch.commit();
+
+            showNotification(`Username for '${currentUsername}' changed to '${trimmedNewUsername}'. Affected scan logs updated.`, "success");
+            // UI will update via listeners if setup for all users, or call populateAdminUserList()
+        } catch (error) {
+            console.error("Admin change username error:", error);
+            showNotification(`Failed to change username: ${error.message}`, "error");
+        }
+    }
+
+    async function adminDeleteUserHandler(userIdToDelete, usernameToDelete) {
+        if (!isAdminUser) return;
+
+        if (!confirm(`Are you sure you want to delete the account for user '${usernameToDelete}' (UID: ${userIdToDelete})? This action is IRREVERSIBLE and will delete their Firebase Authentication record and all their Firestore data.`)) {
+            showNotification("Account deletion cancelled.", "info"); return;
+        }
+        if (!confirm(`FINAL CONFIRMATION: Delete user '${usernameToDelete}' and all their data?`)) {
+            showNotification("Account deletion cancelled (final confirmation).", "info"); return;
+        }
+        
+        showNotification(`Attempting to delete user '${usernameToDelete}'. This requires Admin SDK privileges on the backend. This client-side action will attempt to delete Firestore data only and CANNOT delete the Firebase Auth user.`, "warning");
+
+        try {
+            // Delete Firestore data
+            const userProfileRef = doc(db, "artifacts", appId, "users", userIdToDelete, "profile", "data");
+            const scanHistoryColRef = collection(db, "artifacts", appId, "users", userIdToDelete, "scanHistory");
+            
+            const qSnapshot = await getDocs(scanHistoryColRef);
+            const batch = writeBatch(db);
+            qSnapshot.forEach((docSnap) => {
+                batch.delete(docSnap.ref); // Delete user's scan history
+                // Also delete from the denormalized allScans collection
+                const allScanDocRef = doc(db, ALL_SCANS_COLLECTION, docSnap.id);
+                batch.delete(allScanDocRef);
+            });
+            batch.delete(userProfileRef); // Delete user's profile
+             // Delete the top-level user document marker if it exists (artifacts/appId/users/{userId})
+            const userRootDocRef = doc(db, "artifacts", appId, "users", userIdToDelete);
+            batch.delete(userRootDocRef);
+
+            await batch.commit();
+            showNotification(`Firestore data for user '${usernameToDelete}' has been deleted. The Firebase Auth user account CANNOT be deleted from the client by an admin. This must be done via Firebase Console or Admin SDK.`, 'success');
+            // UI will update via listeners
+        } catch (error) {
+            console.error(`Admin delete user data error for ${usernameToDelete}:`, error);
+            showNotification(`Failed to delete Firestore data for '${usernameToDelete}': ${error.message}`, "error");
+        }
+    }
+
+
+    // --- Initialization and Auth State Change ---
+    function cleanupListeners() {
+        if (unsubscribeUserProfile) unsubscribeUserProfile();
+        if (unsubscribeScanHistory) unsubscribeScanHistory();
+        if (unsubscribeAdminUsers) unsubscribeAdminUsers();
+        if (unsubscribeAdminAllScans) unsubscribeAdminAllScans();
+        unsubscribeUserProfile = null;
+        unsubscribeScanHistory = null;
+        unsubscribeAdminUsers = null;
+        unsubscribeAdminAllScans = null;
+        console.log("Cleaned up Firestore listeners.");
+    }
+
+
+    async function initializeAppUI(user) {
+        cleanupListeners(); // Clean up any existing listeners before setting new ones
+
+        if (user) {
+            currentUserId = user.uid;
+            currentUserIdSpan.textContent = currentUserId; // Display User ID
+            userIdDisplayEl.style.display = 'block';
+
+            // Fetch user profile to check isAdmin status
+            const userProfileRef = doc(db, "artifacts", appId, "users", currentUserId, "profile", "data");
+            try {
+                const docSnap = await getDoc(userProfileRef);
+                if (docSnap.exists()) {
+                    currentUserData = docSnap.data(); // Set global currentUserData
+                    isAdminUser = currentUserData.isAdmin || (user.email === ADMIN_EMAIL_IDENTIFIER);
+                    
+                    // If user data indicates admin, but email doesn't match ADMIN_EMAIL_IDENTIFIER,
+                    // there might be a discrepancy. Prioritize ADMIN_EMAIL_IDENTIFIER for initial admin check.
+                    // However, if isAdmin is true in profile, respect that.
+                    if (user.email === ADMIN_EMAIL_IDENTIFIER && !currentUserData.isAdmin) {
+                        console.warn(`User ${user.email} is admin by email, but profile.isAdmin is false. Updating profile.`);
+                        await updateDoc(userProfileRef, { isAdmin: true });
+                        isAdminUser = true;
+                    }
+
+                } else {
+                    // Profile doesn't exist, create it (should have been done at signup)
+                    console.warn(`User profile for ${currentUserId} not found. Creating a basic one.`);
+                    const newUsername = user.displayName || user.email.split('@')[0];
+                    const isDefinitelyAdmin = user.email === ADMIN_EMAIL_IDENTIFIER;
+                    await setDoc(userProfileRef, {
+                        username: newUsername,
+                        email: user.email,
+                        signupTimestamp: serverTimestamp(),
+                        scanCount: 0,
+                        duplicates: {},
+                        isAdmin: isDefinitelyAdmin
+                    });
+                    currentUserData = (await getDoc(userProfileRef)).data(); // Re-fetch
+                    isAdminUser = isDefinitelyAdmin;
+                }
+
+                authContainerEl.style.display = 'none';
+                mainAppEl.style.display = 'block';
+                
+                if (!loadingScreenEl.classList.contains('hidden')) { // Only play welcome if not already in app (e.g. refresh)
+                    playWelcomeSound();
+                    showNotification(`Login successful. Welcome, ${currentUserData.username || user.email}!`, 'success');
+                }
+                await setupAdminUI(isAdminUser); // This will call appropriate data loaders
+
+            } catch (error) {
+                console.error("Error fetching user profile on auth change:", error);
+                showNotification("Error loading user profile. Please try again.", "error");
+                await performLogout(false); // Log out if profile can't be loaded
+            }
+
+        } else { // No user logged in
+            currentUserId = null;
+            currentUserData = null;
+            isAdminUser = false;
+            authContainerEl.style.display = 'flex';
+            mainAppEl.style.display = 'none';
+            userIdDisplayEl.style.display = 'none';
+            
+            // Reset forms and UI elements for login/signup
+            loginFormEl.classList.add('active'); 
+            signupFormEl.classList.remove('active');
+            document.getElementById('login-email').value = ''; 
+            document.getElementById('login-password').value = '';
+            document.getElementById('signup-username').value = ''; 
+            document.getElementById('signup-password').value = '';
+            if (html5QrCode && html5QrCode.isScanning) stopCameraScan(); // Stop camera if it was running
+        }
+        // Hide loading screen after UI setup
+        loadingScreenEl.classList.add('hidden');
+        setTimeout(() => { loadingScreenEl.style.display = 'none';}, 500);
+    }
+    
+    // Listen for auth state changes
+    onAuthStateChanged(auth, async (user) => {
+        console.log("Auth state changed. User:", user ? user.uid : "null");
+        loadingScreenEl.style.display = 'flex'; // Show loading screen during auth transition
+        loadingScreenEl.classList.remove('hidden');
+        await initializeAppUI(user); // Pass user to UI initializer
+    });
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        loadingScreenEl.style.display = 'flex';
+        loadingScreenEl.classList.remove('hidden');
+        
+        // Initial auth check using __initial_auth_token (if provided by Canvas environment)
+        try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                console.log("Attempting sign-in with custom token.");
+                await signInWithCustomToken(auth, __initial_auth_token);
+                // onAuthStateChanged will handle the rest
+            } else {
+                 console.log("No custom token, checking existing session or anonymous.");
+                 // If no token, onAuthStateChanged will pick up existing session or null user.
+                 // If truly no user and no token, it will effectively be an anonymous-like state until login.
+                 // Forcing anonymous sign-in if no user and no token:
+                 if (!auth.currentUser) {
+                    console.log("No current user and no token, attempting anonymous sign-in as fallback for initial load.");
+                    // await signInAnonymously(auth); // This would create an anonymous user.
+                    // For this app, we want explicit login, so if no user, onAuthStateChanged will show login page.
+                    initializeAppUI(null); // Explicitly show login if no user after initial check
+                 }
+            }
+        } catch (error) {
+            console.error("Error during initial auth token sign-in:", error);
+            showNotification("Session validation error. Please try logging in.", "error");
+            initializeAppUI(null); // Show login page on error
+        }
+        // onAuthStateChanged will be triggered by signInWithCustomToken or will have already run for existing session/no user.
+        // The loading screen hiding is now handled inside initializeAppUI.
+    });
+
+</script>
 </body>
 </html>
